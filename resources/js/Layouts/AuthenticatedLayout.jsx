@@ -16,7 +16,8 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-red-500" />
+                                    {/* <ApplicationLogo className="block h-9 w-auto fill-current text-red-500" /> */}
+                                    <h3 className='text-2xl text-red-500'> Marcan.</h3>
                                 </Link>
                             </div>
 
