@@ -119,7 +119,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                               <div class="flex items-center justify-between">
                               <a href="#" class="-m-1.5 p-1.5">
                                   <span class="sr-only">Your Company</span>
-                                  <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""/>
+                                  <h3 className='text-3xl text-red-500 mb-4'> Marcan.</h3>
                               </a>
                               <button type="button" onClick={() => setOpenResponsiveNavOption(false)} class="-m-2.5 rounded-md p-2.5 text-gray-700">
                                   <span class="sr-only">Close menu</span>
