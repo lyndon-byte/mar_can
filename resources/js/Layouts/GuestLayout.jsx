@@ -7,7 +7,7 @@ export default function Guest({ children }) {
             <div>
                 <Link href="/">
                     {/* <ApplicationLogo className="w-20 h-20 fill-current text-red-500" /> */}
-                     <h3 className='text-3xl text-red-500 mb-4'> Marcan.</h3>
+                     <h3 className='text-3xl text-green-500 mb-4'> Marcan.</h3>
                 </Link>
             </div>
 

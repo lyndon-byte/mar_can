@@ -10,7 +10,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
    const aboutRef = useRef(null)
    const testimonialsRef = useRef(null)
    const contactRef = useRef(null)
-
+   const milestonesRef = useRef(null)
 
    const [isVisible, setIsVisible] = useState(false);
 
@@ -49,16 +49,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
             <div>
               {isVisible && (
-                <button className='inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+                <button className='inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
                    <i className='fa-solid fa-arrow-up'></i>
                 </button>
               )}  
              </div>
-
-                <div class="bg-white">
-                <header class="absolute inset-x-0 top-0 z-50 ">
-                    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                    <div class="flex lg:flex-1">
+             <nav class="flex items-center justify-between p-6 lg:px-8  sticky top-0  z-50 bg-green-600" aria-label="Global">
+                    <div class="flex lg:flex-1 sticky">
                         <a href="#" class="-m-1.5 p-1.5 text-white">
                         
                            Marcan
@@ -74,16 +71,17 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </button>
                     </div>
                     <div class="hidden lg:flex lg:gap-x-12">
-                        <button href="#" class="text-sm font-semibold leading-6 text-slate-100"  onClick={() => scrollToSection(servicesRef)}>Services</button>
-                        <button href="#" class="text-sm font-semibold leading-6 text-slate-100" onClick={() => scrollToSection(aboutRef)}>About Us</button>
-                        <button href="#" class="text-sm font-semibold leading-6 text-slate-100" onClick={() => scrollToSection(testimonialsRef)}>Testimonials</button>
-                        <button href="#" class="text-sm font-semibold leading-6 text-slate-100" onClick={() => scrollToSection(contactRef)}>Contact Us</button>
+                        <button href="#" class="text-sm font-semibold leading-6 text-white"  onClick={() => scrollToSection(servicesRef)}>Services</button>
+                        <button href="#" class="text-sm font-semibold leading-6 text-white" onClick={() => scrollToSection(aboutRef)}>About Us</button>
+                        <button href="#" class="text-sm font-semibold leading-6 text-white" onClick={() => scrollToSection(milestonesRef)}>Milestones</button>
+                        <button href="#" class="text-sm font-semibold leading-6 text-white" onClick={() => scrollToSection(testimonialsRef)}>Testimonials</button>
+                        <button href="#" class="text-sm font-semibold leading-6 text-white" onClick={() => scrollToSection(contactRef)}>Contact Us</button>
                     </div>
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                                 {auth.user ? (
                                         <Link
                                             href={route('dashboard')}
-                                            className="font-semibold text-slate-100 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="font-semibold text-white hover:text-gray-400 dark:text-gray-200 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
                                         >
                                             Dashboard
                                         </Link>
@@ -91,7 +89,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         <>
                                             <Link
                                                 href={route('login')}
-                                                className="text-sm font-semibold leading-6 text-slate-100 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                                className="text-sm font-semibold leading-6 text-white hover:text-gray-200 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
                                             >
                                                 Log in
                                                 
@@ -99,7 +97,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                                             <Link
                                                 href={route('register')}
-                                                className="ms-4 text-sm font-semibold leading-6 text-slate-100 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                                className="ms-4 text-sm font-semibold leading-6 text-white hover:text-gray-200 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
                                             >
                                                 Register
                                             </Link>
@@ -110,6 +108,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                     </div>
                     </nav>
+              <div class="bg-white">
+                <header class="absolute inset-x-0 top-0 z-50 ">
+                  
                     { openResponsiveNavOption && (
 
                         <div class="lg:hidden" role="dialog" aria-modal="true">
@@ -133,6 +134,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                   <div class="space-y-2 py-6">
                                       <button class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" onClick={() => handleResponsiveOptionSelection(servicesRef)}>Services</button>
                                       <button class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" onClick={() => handleResponsiveOptionSelection(aboutRef)}>About Us</button>
+                                      <button class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" onClick={() => handleResponsiveOptionSelection(milestonesRef)}>Milestones</button>
+
                                       <button class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" onClick={() => handleResponsiveOptionSelection(testimonialsRef)}>Testimonials</button>
                                       <button class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" onClick={() => handleResponsiveOptionSelection(contactRef)}>Contact Us</button>
                                   </div>
@@ -182,7 +185,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Dream, Work & Succeed</h1>
                         <p class="mt-6 text-lg leading-8 text-slate-200">A visa consultancy that serves every filipino applicants for canadian dream</p>
                         <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="#" class="rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">Get started</a>
+                        <a href="/register" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Get started</a>
                         <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a>
                         </div>
                     </div>
@@ -194,7 +197,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
  <section ref={servicesRef} class="bg-white py-24 sm:py-32" >
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl lg:text-center">
-      <h2 class="font-semibold leading-7 text-xl text-red-500">" The best immigration consultancy in negros and panay "</h2>
+      <h2 class="font-semibold leading-7 text-xl text-green-600">" The best immigration consultancy in negros and panay "</h2>
       <p class="mt-5 text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">What can we offer?</p>
       <p class="mt-6 text-lg leading-8 text-gray-600"></p>
     </div>
@@ -202,7 +205,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
       <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
         <div class="relative pl-16">
           <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500">
+            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
             <i class="fa-solid fa-school text-white"></i>
             </div>
             Student Visa
@@ -211,7 +214,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </div>
         <div class="relative pl-16">
           <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500">
+            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
               <i class="fa-solid fa-briefcase text-white"></i>
             </div>
             Working Visa
@@ -220,7 +223,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </div>
         <div class="relative pl-16">
           <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500">
+            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
               <i class="fa-solid fa-globe text-white"></i>
             </div>
             Visitor Visa
@@ -229,7 +232,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </div>
         <div class="relative pl-16">
           <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500">
+            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
                 <i class="fa-brands fa-canadian-maple-leaf text-white"></i>
             </div>
             Permanent resident visa
@@ -238,7 +241,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </div>
         <div class="relative pl-16">
           <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500">
+            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
                 <i class="fa-solid fa-users text-white"></i>
             </div>
             Citizenship
@@ -265,8 +268,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
               </div>
               <div class="md:7/12 lg:w-6/12">
                 <h2 class="text-2xl text-gray-900 font-bold md:text-4xl">We Rise Above!</h2>
-                <p class="mt-6 text-gray-600">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum omnis voluptatem accusantium nemo perspiciatis delectus atque autem! Voluptatum tenetur beatae unde aperiam, repellat expedita consequatur! Officiis id consequatur atque doloremque!</p>
-                <p class="mt-4 text-gray-600"> Nobis minus voluptatibus pariatur dignissimos libero quaerat iure expedita at? Asperiores nemo possimus nesciunt dicta veniam aspernatur quam mollitia.</p>
+                <p class="mt-6 text-gray-600"></p>
+                <p class="mt-4 text-gray-600"> We were able to get a favorable outcome from a very difficult case wherein Passports were inadvertently switched to another nationality. It was very difficult but we have a good resolution of the case at a friendly price. We never thought that it was that difficult. But when we quote a price whether it is low or high, it will never change come hell or high water. </p>
+                <p className='mt-4 text-gray-600'>The company strives to realize the Canadian Dream by providing correct vision to each client. This means that a client may come in as a student or worker, but that is not the end goal. The real end goal is to get Permanent Residency in Canada. </p>
               </div>
             </div>
         </div>
@@ -276,33 +280,39 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
 
 <div class="bg-white py-24 sm:py-32">
-  <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+  <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-2">
     <div class="max-w-2xl">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet our leadership</h2>
-      <p class="mt-6 text-lg leading-8 text-gray-600">Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper suspendisse.</p>
+      <p class="mt-6 mb-3 text-lg leading-8 text-gray-600">The company has been established in January of 2020 right after the successful board passing of the <span className='text-slate-600 font-bold'>CEO Nestor Aprecio</span>. </p>
+      <a href="/nestor-aprechio" class="text-lg font-semibold leading-6 text-green-600 hover:text-green-500">Learn more about Nestor Aprecio<span aria-hidden="true">→</span></a>
     </div>
-    <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+    <div class="w-full max-w-xl px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+      <div class="flex justify-center -mt-16 md:justify-end">
+          <img class="object-cover w-20 h-20 rounded-full " alt="Testimonial avatar" src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg"/>
+      </div>
+
+      <h2 class="mt-2 text-xl font-semibold text-gray-500 dark:text-white md:mt-0">Nestor Aprecio</h2>
+
+      <p class="mt-2 text-lg text-gray-600 text-center dark:text-gray-200"><span className='font-bold text-3xl'>"</span> Truly we were successful in building BAYANIHAN in order to be successful in helping our Kababayan achieve their Canadian Dream.<span className='font-bold text-3xl'>"</span></p>
+
+      <div class="flex justify-end mt-4">
+          <a class="text-lg font-medium text-green-600 dark:text-green-300" tabindex="0">Consultant / CEO</a>
+      </div>
+    </div>
+    {/* <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
       <li>
         <div class="flex items-center gap-x-6">
           <img class="h-16 w-16 rounded-full" src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt=""/>
           <div>
             <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">Nestor Aprecio</h3>
-            <p class="text-sm font-semibold leading-6 text-red-500">Consultant / CEO</p>
+            <p class="text-sm font-semibold leading-6 text-green-600">Consultant / CEO</p>
           </div>
         </div>
       </li>
-      <li>
-        <div class="flex items-center gap-x-6">
-          <img class="h-16 w-16 rounded-full" src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt=""/>
-          <div>
-            <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">Juan Dela Cruz</h3>
-            <p class="text-sm font-semibold leading-6 text-red-500">Position</p>
-          </div>
-        </div>
-      </li>
+      
           
     
-    </ul>
+    </ul> */}
   </div>
 </div>          
 
@@ -314,7 +324,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
        
 
         <main class="relative z-20 w-full mt-8 md:flex md:items-center xl:mt-12">
-            <div class="absolute w-full bg-red-500 -z-10 md:h-96 rounded-2xl"></div>
+            <div class="absolute w-full bg-green-600 -z-10 md:h-96 rounded-2xl"></div>
             
             <div class="w-full p-6 bg-blue-600 md:flex md:items-center rounded-2xl md:bg-transparent md:p-0 lg:px-12 md:justify-evenly">
                 <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/33/f2/6b/caption.jpg?w=1400&h=1400&s=1" alt="client photo" />
@@ -339,7 +349,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
        
 
         <main class="relative z-20 w-full mt-8 md:flex md:items-center xl:mt-12">
-            <div class="absolute w-full bg-red-500 -z-10 md:h-96 rounded-2xl"></div>
+            <div class="absolute w-full bg-green-500 -z-10 md:h-96 rounded-2xl"></div>
             
             <div class="w-full p-6 bg-blue-600 md:flex md:items-center rounded-2xl md:bg-transparent md:p-0 lg:px-12 md:justify-evenly">
                 <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src="https://www.planetware.com/wpimages/2022/02/canada-tourist-attractions-quebec-city-chateau-frontenac-boardwalk.jpg" alt="client photo" />
@@ -361,7 +371,56 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 </section>
 
 
-       
+{/* Milestones */}
+
+
+
+
+<section ref={milestonesRef}>
+<div class="relative mt-48 isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+  
+  <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
+    <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+      <div class="lg:pr-4">
+        <div class="lg:max-w-lg">
+        
+          <h1 class="mt-2 text-3xl font-bold tracking-tight text-green-600 sm:text-4xl">Our Milestones</h1>
+          <p class="mt-6 text-xl leading-8 text-gray-700">Discover our key milestones that highlight our journey of growth and achievement.</p>
+        </div>
+      </div>
+    </div>
+    <div class="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+      <img class="w-[48rem] max-w-xl rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ihS89gjTRT54/v1/1200x799.jpg" alt=""/>
+    </div>
+    <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+      <div class="lg:pr-4">
+        <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
+          
+          <ul role="list" class="mt-8 space-y-8 text-gray-600">
+            <li class="flex gap-x-3">
+              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
+              <span><strong class="font-semibold text-gray-900">Resolved an authorization issue</strong> for a student who initially had no authorization to work. </span>
+            </li>
+            <li class="flex gap-x-3">
+            <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
+              <span><strong class="font-semibold text-gray-900">Assisted a K12 student</strong> in becoming a Permanent Resident after one year of PSW study and one year of work.</span>
+            </li>
+            <li class="flex gap-x-3">
+              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
+              <span><strong class="font-semibold text-gray-900">Successfully had one student get IRCC</strong> approval for three different courses at a single school.</span>
+            </li>
+            <li class="flex gap-x-3">
+              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
+              <span><strong class="font-semibold text-gray-900">Established links</strong> at least eight active referral agents and affiliates across Canada and the Philippines.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
                
 
 {/* Testimonials */}
@@ -453,7 +512,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 <section class="bg-white dark:bg-gray-900 mb-48" ref={contactRef}>
     <div class="container px-6 py-12 mx-auto">
         <div class="text-center">
-            <p class="font-medium text-red-500 dark:text-blue-400">Contact us</p>
+            <p class="font-medium text-green-600 dark:text-blue-400">Contact us</p>
 
             <h1 class="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">Get in touch</h1>
 
@@ -462,7 +521,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
         <div class="grid grid-cols-1 gap-12 mt-10 md:grid-cols-2 lg:grid-cols-3">
             <div class="flex flex-col items-center justify-center text-center">
-                <span class="p-3 text-red-500 rounded-full bg-red-100/80 dark:bg-gray-800">
+                <span class="p-3 text-green-500 rounded-full bg-green-100/80 dark:bg-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                     </svg>
@@ -470,11 +529,11 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Email</h2>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Our friendly team is here to help.</p>
-                <p class="mt-2 text-red-500 dark:text-blue-400">marcanvisaconsultancy2024@gmail.com</p>
+                <p class="mt-2 text-green-600 dark:text-blue-400">marcanvisaconsultancy2024@gmail.com</p>
             </div>
 
             <div class="flex flex-col items-center justify-center text-center">
-                <span class="p-3 text-red-500 rounded-full bg-red-100/80 dark:bg-gray-800">
+                <span class="p-3 text-green-500 rounded-full bg-green-100/80 dark:bg-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -483,11 +542,11 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Office</h2>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Come say hello at our office</p>
-                <p class="mt-2 text-red-500 dark:text-blue-400">Door No.4 JP Building, Corner Rosario Verbena St. Brgy. 33, Bacolod City, Negros Occidental</p>
+                <p class="mt-2 text-green-600 dark:text-blue-400">Door No.4 JP Building, Corner Rosario Verbena St. Brgy. 33, Bacolod City, Negros Occidental</p>
             </div>
 
             <div class="flex flex-col items-center justify-center text-center">
-                <span class="p-3 text-red-500 rounded-full bg-red-100/80 dark:bg-gray-800">
+                <span class="p-3 text-green-500 rounded-full bg-green-100/80 dark:bg-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
@@ -495,7 +554,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Phone</h2>
                 {/* <p class="mt-2 text-gray-500 dark:text-gray-400">Mon-Fri from 8am to 5pm.</p> */}
-                <p class="mt-2 text-red-500 dark:text-blue-400">+639127709548</p>
+                <p class="mt-2 text-green-500 dark:text-blue-400">+639127709548</p>
             </div>
         </div>
     </div>
@@ -510,7 +569,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <div class="mt-6 flex max-w-md gap-x-4">
                     <label for="email-address" class="sr-only">Email address</label>
                     <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="Enter your email"/>
-                    <button type="submit" class="flex-none rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Subscribe</button>
+                    <button type="submit" class="flex-none rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Subscribe</button>
                     </div>
                 </div>
                 <dl class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">

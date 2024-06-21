@@ -16,6 +16,12 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/nestor-aprechio',function(){
+
+    return Inertia::render('Biography');
+
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
