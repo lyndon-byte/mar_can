@@ -96,7 +96,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             </Link>
 
                                             <Link
-                                                href={route('register')}
+                                                href={route('select_account_type')}
                                                 className="ms-4 text-sm font-semibold leading-6 text-white hover:text-gray-200 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
                                             >
                                                 Register
@@ -149,7 +149,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                                               <Link href={route('login')} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</Link>
 
-                                              <Link href={route('register')} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register</Link>
+                                              <Link href={route('select_account_type')} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register</Link>
 
                                           </>
                                       )}  
@@ -185,7 +185,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Dream, Work & Succeed</h1>
                         <p class="mt-6 text-lg leading-8 text-slate-200">A visa consultancy that serves every filipino applicants for canadian dream</p>
                         <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="/register" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Get started</a>
+                        <a href="/select-account-type" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Get started</a>
                         <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a>
                         </div>
                     </div>

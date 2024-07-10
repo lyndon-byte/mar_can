@@ -19,9 +19,20 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): Response
+    public function create(Request $request)
     {
-        return Inertia::render('Auth/Register');
+        if($request->has('type')){
+
+            return Inertia::render('Auth/Register',[
+
+                'type' => $request->type
+    
+            ]);
+
+        }else{
+
+            return redirect()->route('select_account_type');
+        }
     }
 
     /**
@@ -32,14 +43,17 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 

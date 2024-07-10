@@ -22,6 +22,12 @@ Route::get('/nestor-aprechio',function(){
 
 });
 
+Route::get('/select-account-type',function(){
+
+    return Inertia::render('AccountRegistrationType');
+
+})->name('select_account_type');
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

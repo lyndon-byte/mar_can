@@ -31,8 +31,14 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
+            <div>
+                <Link href="/">
+                           
+                    <h3 className='text-2xl text-center mt-3 text-slate-500'>Log in to Marcan</h3>
+       
+                </Link>
+            </div>
+            <form className='mt-10' onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
