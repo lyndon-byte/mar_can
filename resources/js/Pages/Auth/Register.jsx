@@ -96,8 +96,7 @@ export default function Register({type=''}) {
 
                         <TextInput
 
-                            id="first_name"
-                            name="first_name"
+                           
                             value={data.first_name}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('first_name', e.target.value)}
@@ -114,8 +113,7 @@ export default function Register({type=''}) {
 
                         <TextInput
 
-                            id="last_name"
-                            name="last_name"
+                         
                             value={data.last_name}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('last_name', e.target.value)}
@@ -132,8 +130,7 @@ export default function Register({type=''}) {
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
-                        id="email"
-                        name="email"
+                     
                         value={data.email}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('email', e.target.value)}
@@ -150,8 +147,7 @@ export default function Register({type=''}) {
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
-                        id="password"
-                        name="password"
+                     
                         value={data.password}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('password', e.target.value)}
@@ -177,8 +173,7 @@ export default function Register({type=''}) {
                     <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
 
                     <TextInput
-                        id="password_confirmation"
-                        name="password_confirmation"
+                       
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('password_confirmation', e.target.value)}
