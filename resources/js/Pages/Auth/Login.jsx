@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
+import { useEffect, useState } from 'react';
+import { Checkbox,Button } from '@nextui-org/react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -8,11 +8,19 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
+
+    const [isRemember,setIsRemember] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: false,
+        remember: isRemember,
     });
+
+   
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+    const toggleVisibilityForPassword = () => setIsVisiblePassword(!isVisiblePassword)
 
     useEffect(() => {
         return () => {
@@ -20,11 +28,14 @@ export default function Login({ status, canResetPassword }) {
         };
     }, []);
 
-    const submit = (e) => {
-        e.preventDefault();
+    const submit = () => {
+        
 
         post(route('login'));
+
     };
+
+
 
     return (
         <GuestLayout>
@@ -34,11 +45,11 @@ export default function Login({ status, canResetPassword }) {
             <div>
                 <Link href="/">
                            
-                    <h3 className='text-2xl text-center mt-3 text-slate-500'>Log in to Marcan</h3>
+                    <h3 className='text-2xl text-center mt-5 mb-10 text-slate-500'>Log in to Marcan</h3>
        
                 </Link>
             </div>
-            <form className='mt-10' onSubmit={submit}>
+            
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -48,12 +59,12 @@ export default function Login({ status, canResetPassword }) {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        isInvalid={errors.email ? true : false}
+                        errorMessage={errors.email}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    
                 </div>
 
                 <div className="mt-4">
@@ -61,25 +72,38 @@ export default function Login({ status, canResetPassword }) {
 
                     <TextInput
                         id="password"
-                        type="password"
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
-                        autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        isInvalid={errors.password ? true : false}
+                        errorMessage={errors.password}
+                        endContent={
+                            <button className="focus:outline-none" type="button" onClick={toggleVisibilityForPassword}>
+                              {isVisiblePassword ? (
+                                <i class="fa-solid fa-eye text-slate-600"></i>
+                              ) : (
+                                <i class="fa-solid fa-eye-slash text-slate-600"></i>
+                              )}
+                            </button>
+                        }
+                        type={isVisiblePassword ? 'text' : 'password'}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    
                 </div>
 
                 <div className="block mt-4">
                     <label className="flex items-center">
-                        <Checkbox
+                    <Checkbox color='success' isSelected={isRemember} radius='sm' onValueChange={setIsRemember}>
+                        Remember me
+                    </Checkbox>
+                        {/* <Checkbox
                             name="remember"
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                        /> */}
+                        <span className="ms-2 text-sm text-gray-600"></span>
                     </label>
                 </div>
 
@@ -93,11 +117,11 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <Button onPress={() => submit()} color="success" className="ms-4 text-white" radius='sm' isLoading={processing}>
                         Log in
-                    </PrimaryButton>
+                    </Button>
                 </div>
-            </form>
+            
         </GuestLayout>
     );
 }

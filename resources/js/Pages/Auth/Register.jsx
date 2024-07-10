@@ -64,7 +64,7 @@ export default function Register({type=''}) {
                 <ModalContent>
                
                     <>
-                        <ModalHeader className="flex flex-col gap-1 text-lg">warning</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1 text-lg"></ModalHeader>
                         <ModalBody>
                             <p> 
                                 You must agree first to marcan's Terms of Service, User agreement and privacy policy.  
@@ -85,7 +85,7 @@ export default function Register({type=''}) {
             <div>
                 
                            
-                    <h3 className='text-3xl text-slate-500'> { type == 'Applicant' ? 'Sign up to find a job' : 'Sign up to hire an applicant' }</h3>
+                    <h3 className='text-3xl text-slate-500 mt-4'> { type == 'Applicant' ? 'Sign up to find a job' : 'Sign up to hire an applicant' }</h3>
 
                 
             </div>
