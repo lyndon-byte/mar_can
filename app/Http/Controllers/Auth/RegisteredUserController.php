@@ -21,6 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(Request $request)
     {
+        //checks if request has type or nothing
+        
         if($request->has('type')){
 
             return Inertia::render('Auth/Register',[
