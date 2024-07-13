@@ -44,4 +44,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function resume(){
+
+        return $this->hasOne(ApplicantResume::class,'resume_id');
+    }
+
+    public function contactInformation(){
+
+        return $this->hasOne(ApplicantContactInfomation::class,'contact_id');
+    }
 }

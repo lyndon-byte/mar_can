@@ -12,3 +12,20 @@
     inset: 0;
     z-index: -10;
   }
+
+  /* App.css */
+
+
+.dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f9f9f9;
+}
+
+img {
+  display: block;
+  width: auto;
+  height: 100%;
+}

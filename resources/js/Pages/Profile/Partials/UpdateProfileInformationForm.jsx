@@ -30,6 +30,19 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+            <div>
+                    <InputLabel htmlFor="role" value="Role" />
+
+                    <TextInput
+                        id="name"
+                        className="mt-1 block w-full"
+                        value={user.role}
+                        isReadOnly
+                        
+                    />
+
+                </div>
+
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 

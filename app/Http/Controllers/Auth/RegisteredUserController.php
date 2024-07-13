@@ -26,7 +26,7 @@ class RegisteredUserController extends Controller
             return Inertia::render('Auth/Register',[
 
                 'type' => $request->type
-    
+
             ]);
 
         }else{

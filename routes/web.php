@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApplicantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,46 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/index', function () {
+
+
+    $user = Auth::user();
+
+    switch($user->role){
+
+        case 'Applicant':
+
+                return Inertia::render('ApplicantHome',[
+
+                    'isProfileInformationExists' => $user->resume()->exists()
+
+                ]);
+
+            break;
+            
+        case 'Employer':
+
+                return Inertia::render('EmployerDashboard');
+
+            break;
+        
+        case 'Admin':
+            
+            break;
+    }
+
+
+    
+})->middleware(['auth', 'verified'])->name('index');
+
+Route::get('/employment-profile',[ApplicantController::class,'index'])->middleware(['auth', 'verified'])->name('employment.profile');
+
+Route::post('/set-resume-file',[ApplicantController::class,'setResumeFile'])->middleware(['auth', 'verified'])->name('set_resume_file');
+
+Route::post('/delete-resume',[ApplicantController::class,'deleteResume'])->middleware(['auth', 'verified'])->name('delete_resume');
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

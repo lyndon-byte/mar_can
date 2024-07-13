@@ -58,6 +58,7 @@ export default function Login({ status, canResetPassword }) {
                         type="email"
                         name="email"
                         value={data.email}
+                        onKeyDown={(e) => { if (e.key === 'Enter') submit(); }}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('email', e.target.value)}
                         isInvalid={errors.email ? true : false}
@@ -74,6 +75,7 @@ export default function Login({ status, canResetPassword }) {
                         id="password"
                         name="password"
                         value={data.password}
+                        onKeyDown={(e) => { if (e.key === 'Enter') submit(); }}
                         className="mt-1 block w-full"
                         onChange={(e) => setData('password', e.target.value)}
                         isInvalid={errors.password ? true : false}
@@ -117,7 +119,7 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <Button onPress={() => submit()} color="success" className="ms-4 text-white" radius='sm' isLoading={processing}>
+                    <Button  onPress={() => submit()} color="success" className="ms-4 text-white" radius='sm' isLoading={processing}>
                         Log in
                     </Button>
                 </div>
