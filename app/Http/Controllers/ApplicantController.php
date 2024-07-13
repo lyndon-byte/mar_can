@@ -38,7 +38,7 @@ class ApplicantController extends Controller
 
         $user = Auth::user();
 
-        $pdfPath = $request->file('pdf')->store('resumes', 'public');
+        $pdfPath = $request->file('pdf')->store('','public');
 
         if($user->resume()->exists()){
 

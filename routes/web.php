@@ -38,7 +38,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/index', function () {
+Route::get('/home', function () {
 
 
     $user = Auth::user();
@@ -68,7 +68,7 @@ Route::get('/index', function () {
 
 
     
-})->middleware(['auth', 'verified'])->name('index');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::get('/employment-profile',[ApplicantController::class,'index'])->middleware(['auth', 'verified'])->name('employment.profile');
 

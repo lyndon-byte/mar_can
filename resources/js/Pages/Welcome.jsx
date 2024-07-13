@@ -80,7 +80,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                                 {auth.user ? (
                                         <Link
-                                            href={route('index')}
+                                            href={route('home')}
                                             className="font-semibold text-white hover:text-gray-400 dark:text-gray-200 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
                                         >
                                             {auth.user.role === 'Applicant' ? 'Home' : 'Dashboard'}
@@ -142,7 +142,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                   <div class="py-6">
                                     {auth.user ? (
 
-                                          <Link href={route('index')} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Dashboard</Link>
+                                          <Link href={route('home')} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Dashboard</Link>
 
                                       ) : (
                                           <>
