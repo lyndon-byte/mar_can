@@ -40,7 +40,7 @@ class ApplicantController extends Controller
 
         $file = $request->file('pdf');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-        $pdfPath = $file->move(public_path('pdfs'), $filename);
+        $file->move(public_path('pdfs'), $filename);
 
         
 
@@ -48,14 +48,14 @@ class ApplicantController extends Controller
 
             $user->resume()->update([
 
-                'file_name' => $pdfPath
+                'file_name' => $filename
             ]);
 
         }else{
 
             $user->resume()->create([
 
-                'file_name' => $pdfPath
+                'file_name' => $filename
             ]);
 
         }
