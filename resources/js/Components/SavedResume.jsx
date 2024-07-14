@@ -103,7 +103,7 @@ export default function SavedResume({fileName}){
 
                          <iframe
 
-                            src={fileName}
+                            src={'https://47.128.194.113/' + fileName}
                             width="100%"
                             height="600px"
                             title="PDF Viewer"
