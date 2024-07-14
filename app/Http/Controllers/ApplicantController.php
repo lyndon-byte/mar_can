@@ -38,7 +38,11 @@ class ApplicantController extends Controller
 
         $user = Auth::user();
 
-        $pdfPath = $request->file('pdf')->store('','public');
+        $file = $request->file('pdf');
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+        $pdfPath = $file->move(public_path('pdfs'), $filename);
+
+        
 
         if($user->resume()->exists()){
 
