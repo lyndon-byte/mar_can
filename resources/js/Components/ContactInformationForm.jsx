@@ -4,24 +4,19 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
+import { Button } from '@nextui-org/react';
 
-export default function ContactInformationForm({contactInfo}) {
+export default function ContactInformationForm({user}) {
+
    
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
 
-        name: ''
-        
+        name: user.name + " " + user.last_name,
+        email: user.email
 
 
     });
 
-
-    useEffect(() => {
-
-        console.log('from contact info form',contactInfo)
-
-    },[contactInfo])
 
 
     const submit = (e) => {
@@ -42,50 +37,53 @@ export default function ContactInformationForm({contactInfo}) {
 
             <form className="mt-3 grid grid-cols-2 gap-10">
                 <div>
-                <div>
-                    <InputLabel className='mt-2' htmlFor="full_name" value="Full Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        
-                    />
-
-                </div>
-
-                <div>
-                    <InputLabel className='mt-2' htmlFor="phone_number" value="Phone Number" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.phone_number}
-                        onChange={(e) => setData('phone_number', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    {/* <InputError className="mt-2" message={errors.name} /> */}
-                </div>
-
                     <div>
-                        <InputLabel  className='mt-2' htmlFor="email_address" value="Email Address" />
+                        
+                        <InputLabel className='mt-2' htmlFor="full_name" value="Full Name" />
 
                         <TextInput
-                            id="email"
-                            type="email"
+                            id="name"
                             className="mt-1 block w-full"
-                            // value={data.email}
-                            // onChange={(e) => setData('email', e.target.value)}
-                            required
-                            autoComplete="username"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            
                         />
 
-                        {/* <InputError className="mt-2" message={errors.email} /> */}
                     </div>
+
+                    
+                    <div>
+                            <InputLabel  className='mt-2' htmlFor="email_address" value="Email Address" />
+
+                            <TextInput
+                                id="email"
+                                type="email"
+                                className="mt-1 block w-full"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                required
+                                autoComplete="username"
+                            />
+
+                            {/* <InputError className="mt-2" message={errors.email} /> */}
+                    </div>
+
+                    <div>
+                        <InputLabel className='mt-2' htmlFor="phone_number" value="Phone Number" />
+
+                        <TextInput
+                            id="name"
+                            className="mt-1 block w-full"
+                            value={data.phone_number}
+                            onChange={(e) => setData('phone_number', e.target.value)}
+                            required
+                            isFocused
+                            autoComplete="name"
+                        />
+
+                        {/* <InputError className="mt-2" message={errors.name} /> */}
+                    </div>
+
 
               
 
@@ -156,7 +154,7 @@ export default function ContactInformationForm({contactInfo}) {
                         </div>
 
                         <div>
-                            <InputLabel className='mt-2' htmlFor="country" value="Country" />
+                                <InputLabel className='mt-2' htmlFor="country" value="Country" />
 
                                 <TextInput
                                     id="email"
@@ -170,9 +168,18 @@ export default function ContactInformationForm({contactInfo}) {
 
                                 {/* <InputError className="mt-2" message={errors.email} /> */}
                         </div>
+
+                        
                     </div>
 
+                    <Button 
 
+                        className='float-end mt-10 text-white bg-slate-700' 
+                        radius='sm'                       
+                    >
+                        Save 
+
+                    </Button>
                     
                 </div>
             </form>

@@ -7,7 +7,7 @@ import { useState } from "react"
 
 export default function SavedResume({fileName}){
 
-    const [showResume,setShowResume] = useState(true)
+    const [showResume,setShowResume] = useState(false)
 
     
 

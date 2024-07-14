@@ -5,6 +5,14 @@ import SavedResume from '@/Components/SavedResume';
 import { Link, Button } from "@nextui-org/react";
 import { useEffect , useState} from 'react';
 import ContactInformationForm from '@/Components/ContactInformationForm';
+import ProfessionalSummaryForm from '@/Components/ProfessionalSummaryForm';
+import WorkExperienceForm from '@/Components/WorkExperienceForm';
+import SkillsForm from '@/Components/SkillsForm';
+import EducationalBackgroundFrom from '@/Components/EducationalBackgroundFrom';
+import SpokenLanguagesForm from '@/Components/SpokenLanguagesForm';
+import CertificationForm from '@/Components/CertificationForm';
+import AwardsForm from '@/Components/AwardsForm';
+import CharacterReferencesForm from '@/Components/CharacterReferencesForm';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
 
 
@@ -80,15 +88,63 @@ export default function EmploymentProfile({status,auth,resume}) {
 
                     </div>
 
-                    {/* <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <ContactInformationForm  />
+                        <ContactInformationForm user={auth.user} />
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        
-                    </div> */}
+
+                        <ProfessionalSummaryForm/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <WorkExperienceForm/>
+
+                    </div>
+
+                    
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <EducationalBackgroundFrom/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <CertificationForm/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <AwardsForm/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <SkillsForm/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <SpokenLanguagesForm/>
+
+                    </div>
+
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        <CharacterReferencesForm/>
+
+                    </div>
+
+                    
+
                 </div>
             </div>
         </AuthenticatedLayout>

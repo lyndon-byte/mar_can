@@ -77,20 +77,7 @@ export default function ResumePicker(){
         <input {...getInputProps()} />
         <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-file-pdf text-2xl"></i>&nbsp; PDF file here, or click to select one </p>
       </div>
-      {pdfUrl && (
-
-        <div className='mt-5'>
-
-            <Tooltip content="Remove this file" className='bg-slate-900 text-white' radius='sm'>
-              <Button variant='bordered' isIconOnly className='float-end border-none mb-3' onPress={handleRemovePdf}><i class="fa-solid fa-circle-xmark text-2xl text-slate-700"></i></Button>
-            </Tooltip>
-
-           
-          
-          
-         </div>
-       
-      )}
+      
     </div>
   );
 };
