@@ -14,22 +14,40 @@ import CertificationForm from '@/Components/CertificationForm';
 import AwardsForm from '@/Components/AwardsForm';
 import CharacterReferencesForm from '@/Components/CharacterReferencesForm';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
+import { router } from '@inertiajs/react';
 
+export default function EmploymentProfile({status,auth,resume,contact_information}) {
 
-export default function EmploymentProfile({status,auth,resume}) {
+    const [isOpenModal,setIsOpenModal] = useState(false)
 
- const [isOpenModal,setIsOpenModal] = useState(false)
+    const [infoModalText,setInfoModalText] = useState('')
 
-  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+    const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
 
+    function handleInfoModalClose(){
+
+        router.get('/employment-profile',{},{preserveState: true, onSuccess: () => {setIsOpenModal(false)}})
+        
+    }
 
     useEffect(() => {
 
-      
+       
 
         if(status === 'resume-saved'){
 
             setIsOpenModal(true) 
+            setInfoModalText('resume was saved')
+           
+
+        }
+        
+        else if(status === 'personal-info-saved'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('personal information was saved')
+            
+
         }
 
     },[status])
@@ -37,19 +55,20 @@ export default function EmploymentProfile({status,auth,resume}) {
     return (
         <>
 
-        <Modal isOpen={isOpenModal} onClose={setIsOpenModal} >
+        <Modal isDismissable={false} isOpen={isOpenModal} onClose={() => handleInfoModalClose()} >
             <ModalContent>
         
                 <>
                 <ModalHeader className="flex flex-col gap-1">Info</ModalHeader>
                 <ModalBody>
+
                     <p> 
-                        Resume was saved
+                        {infoModalText}
                     </p>
                     
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="default" variant="light" onPress={() => setIsOpenModal(false)}>
+                    <Button color="default" variant="light" onPress={() => handleInfoModalClose()}>
                     ok
                     </Button>
                 
@@ -90,7 +109,7 @@ export default function EmploymentProfile({status,auth,resume}) {
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <ContactInformationForm user={auth.user} />
+                        <ContactInformationForm info={contact_information}/>
 
                     </div>
 

@@ -21,6 +21,8 @@ class ApplicantController extends Controller
 
         $resume = $user->resume()->get()->first();
 
+        $contact_information = $user->contactInformation()->get()->first();
+
         if($request->has('status')){
 
             $status = $request->status;
@@ -29,6 +31,7 @@ class ApplicantController extends Controller
         return Inertia::render('EmploymentProfile',[
  
             'resume' => $resume,
+            'contact_information' => $contact_information,
             'status' => $status,
             
         ]);
@@ -41,8 +44,6 @@ class ApplicantController extends Controller
         $file = $request->file('pdf');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('pdfs'), $filename);
-
-        
 
         if($user->resume()->exists()){
 
@@ -64,10 +65,6 @@ class ApplicantController extends Controller
 
         return redirect()->route('employment.profile',['status' => 'resume-saved']);
         
-
-
-       
-        
     }
 
     public function deleteResume()
@@ -82,9 +79,54 @@ class ApplicantController extends Controller
 
     }
 
-    public function SaveOrUpdateEmploymentProfile(Request $request){
+    public function updateContactInformation(Request $request){
+
+        $user = Auth::user();
+
+        $request->validate([
+
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required',
+            'street_address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postal_code' => 'required',
+            'country' => 'required',
+
+        ]);
 
 
+        if($user->contactInformation()->exists()){
 
+            $user->contactInformation()->update([
+
+                'full_name' => $request->full_name,
+                'email_address' => $request->email,
+                'phone_number' =>  $request->phone_number,
+                'street_address' => $request->street_address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'postal_code' => $request->postal_code,
+                'country' => $request->country,
+            ]);
+
+        }else{
+
+            $user->contactInformation()->create([
+
+                'full_name' => $request->full_name,
+                'email_address' => $request->email,
+                'phone_number' =>  $request->phone_number,
+                'street_address' => $request->street_address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'postal_code' => $request->postal_code,
+                'country' => $request->country,
+            ]);
+
+        }
+
+        return redirect()->route('employment.profile',['status' => 'personal-info-saved']);
     }
 }

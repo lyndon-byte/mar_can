@@ -70,6 +70,9 @@ Route::get('/dashboard', function () {
     
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+// Applicant Routes
+
 Route::get('/employment-profile',[ApplicantController::class,'index'])->middleware(['auth', 'verified'])->name('employment.profile');
 
 Route::post('/set-resume-file',[ApplicantController::class,'setResumeFile'])->middleware(['auth', 'verified'])->name('set_resume_file');
@@ -77,7 +80,9 @@ Route::post('/set-resume-file',[ApplicantController::class,'setResumeFile'])->mi
 Route::post('/delete-resume',[ApplicantController::class,'deleteResume'])->middleware(['auth', 'verified'])->name('delete_resume');
 
 
+Route::post('/update-contact-information',[ApplicantController::class,'updateContactInformation'])->middleware(['auth', 'verified'])->name('update_contact_information');
 
+//End of Applicant Routes
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
