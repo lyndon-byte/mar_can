@@ -54,4 +54,27 @@ class User extends Authenticatable
 
         return $this->hasOne(ApplicantContactInfomation::class,'contact_id');
     }
+
+    
+    public function professionalSummary(){
+
+        return $this->hasOne(ApplicantProfessionalSummary::class,'pro_summary_id');
+    }
+
+    public function workExperiences(){
+
+        return $this->hasMany(ApplicantWorkExperiences::class,'work_exp_id');
+    }
+
+    public function educationalBackground(){
+
+        return $this->hasMany(ApplicantEducationalBackGround::class,'educational_background_id');
+    }
+
+    public function certifications(){
+
+        return $this->hasMany(ApplicantCertifications::class,'cert_id');
+    }
+
+
 }

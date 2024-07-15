@@ -79,8 +79,22 @@ Route::post('/set-resume-file',[ApplicantController::class,'setResumeFile'])->mi
 
 Route::post('/delete-resume',[ApplicantController::class,'deleteResume'])->middleware(['auth', 'verified'])->name('delete_resume');
 
-
 Route::post('/update-contact-information',[ApplicantController::class,'updateContactInformation'])->middleware(['auth', 'verified'])->name('update_contact_information');
+
+Route::post('/update-professional-summary',[ApplicantController::class,'updateProfessionalSummary'])->middleware(['auth', 'verified'])->name('update_professional_summary');
+
+Route::post('/add-work-experience',[ApplicantController::class,'addWorkExperience'])->middleware(['auth', 'verified'])->name('add_work_experience');
+
+Route::post('/delete-work-experience',[ApplicantController::class,'deleteWorkExperience'])->middleware(['auth', 'verified'])->name('delete_work_experience');
+
+Route::post('/add-educational-background',[ApplicantController::class,'addEducationalBackground'])->middleware(['auth', 'verified'])->name('add_educational_background');
+
+Route::post('/delete-educational-background',[ApplicantController::class,'deleteEducationalBackground'])->middleware(['auth', 'verified'])->name('delete_educational_background');
+
+Route::post('/add-certificate',[ApplicantController::class,'addCertificate'])->middleware(['auth', 'verified'])->name('add_certificate');
+
+
+
 
 //End of Applicant Routes
 

@@ -41,7 +41,7 @@ export default function ContactInformationForm({user,info}) {
 
     const submit = () => {
 
-        post(route('update_contact_information'),{onSuccess: () => {setIsEditMode(false)}});
+        post(route('update_contact_information'),{preserveScroll:true, preserveState:true, onSuccess: () => {setIsEditMode(false)}});
 
     };
 

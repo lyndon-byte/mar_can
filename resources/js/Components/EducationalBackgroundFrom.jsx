@@ -4,33 +4,94 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { Button , DatePicker } from '@nextui-org/react';
-import {parseDate} from "@internationalized/date";
+import { Button , DatePicker,Tooltip } from '@nextui-org/react';
+import {today,getLocalTimeZone} from "@internationalized/date";
+import { router } from '@inertiajs/react';
 
 
-export default function EducationalBackgroundFrom() {
+export default function EducationalBackgroundFrom({educational_background}) {
 
    
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
 
-        // name: user.name + " " + user.last_name,
-        // email: user.email
+        degree: '',
+        school_name: '',
+        graduation_date: today(getLocalTimeZone()),
 
 
     });
+    
+
+    const [isAddMode,setIsAddMode] = useState(false)
+
+    function handleAddMode(){
+
+        setIsAddMode(true)
+        setData({
+
+            degree: '',
+            school_name: ''
+        })
+
+    }
+
+    function handleDeleteEducBackground(id){
+
+        router.post('/delete-educational-background',{id:id},{preserveState:true,preserveScroll:true})
+    }
+
+    const submit = () => {
+    
+
+        post(route('add_educational_background'),{preserveState: true, preserveScroll:true, onSuccess: () => {setIsAddMode(false)}});
 
 
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('profile.update'));
     };
 
     return (
         <section>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Educational Background</h2>
+                <div className="text-lg font-medium text-gray-900">
+                    Educational Background
+                    &nbsp;
+                    {
+
+                            isAddMode !== null && (
+                            
+                            
+                                !isAddMode ? (
+
+                                    <Tooltip content="Add educational background" className='bg-slate-800 text-white' radius='sm'>
+                                        <Button
+                                            className='border-0'
+                                            variant='ghost'
+                                            isIconOnly
+                                            onPress={() => handleAddMode()}
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                        </Button>
+                                    </Tooltip>
+
+                                ) : (
+                                    
+                                    <Tooltip content="View educational background" className='bg-slate-800 text-white' radius='sm'>
+                                        <Button
+                                            className='border-0'
+                                            variant='ghost'
+                                            isIconOnly
+                                            onPress={() => setIsAddMode(false)}
+                                        >
+                                            <i class="fa-solid fa-eye"></i>
+                                        </Button>
+                                    </Tooltip>
+                                )
+
+
+                            
+                        )
+
+                    }
+                </div>
 
                 <p className="mt-1 text-sm text-gray-600">
 
@@ -39,66 +100,148 @@ export default function EducationalBackgroundFrom() {
                 </p>
             </header>
 
-            <form >
+                {
+
+                    educational_background === null || isAddMode ? (
+
+                        <>
+                            <div className="mt-3 grid grid-cols-3 gap-5">
+
+                                <div>
+                                    
+                                    <InputLabel className='mt-2' htmlFor="degree" value="Degree" />
+
+                                    <TextInput
+                                    
+                                        className="mt-1 block w-full"
+                                        value={data.degree}
+                                        onChange={(e) => setData('degree', e.target.value)}
+                                        isInvalid={errors.degree ? true : false}
+                                        errorMessage={errors.degree}
+                                    />
+
+                                </div>
+
+
+                                <div>
+                                        <InputLabel  className='mt-2' htmlFor="school_name" value="School Name" />
+
+                                        <TextInput
+                                            
+                                            className="mt-1 block w-full"
+                                            value={data.school_name}
+                                            onChange={(e) => setData('school_name', e.target.value)}
+                                            isInvalid={errors.school_name ? true : false}
+                                            errorMessage={errors.school_name}
+                                        />
+
+                                    
+                                </div>
+
+                                <div>
+
+                                    <InputLabel className='mt-2' htmlFor="graduation_date" value="Graduation date" />
+
+                                    <DatePicker 
+                                        className='mt-1' 
+                                        radius='sm' 
+                                        color='success' 
+                                        variant="bordered" 
+                                        showMonthAndYearPickers
+                                        value={data.graduation_date}
+                                        onChange={(value) => setData('graduation_date',value)}
+                                    />
+
+                                
+                                </div>
+
+
+
+                                </div>
+                                    
+                                <div className='grid justify-end'>
+
+                                <Button 
+
+                                    className='mt-10 max-w-sm text-white bg-slate-700' 
+                                    radius='sm'    
+                                    isLoading={processing}
+                                    onPress={() => submit()}                   
+                                >
+                                    Save
+
+                                </Button>
+                                </div>
+                        
+                        </>
+
+                    ) : (
+
+                        <>
+
+                            {
+
+                                educational_background.map((element) => (
+
+
+
+                                    <div class="mt-6 p-5 border-t border-gray-100">
+                                        <dl class="divide-y divide-gray-100">
+        
+                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    
+                                                <dt class="text-sm font-medium leading-6 text-gray-900">
+                                            
+                                                    &nbsp;
+                                                
+                                                    {element.graduation_date}
+                                                
+                                                </dt>
+                                                <dd class="mt-1 sm:mt-0">
+
+                                                    <span className='leading-6 font-bold text-gray-700'>
+                                                        {element.school_name} 
+                                                    </span>
+                                                    <br></br>
+                                                    <span className='text-slate-700 '>
+                                                        {element.degree}
+                                                    </span>
+
+                                                </dd>
+                                                <dd class="mt-1 sm:mt-0">
+
+                                                    <Tooltip content="Delete this educational background" className='bg-slate-800 text-white' radius='sm'>
+                                                        <Button
+                                                            className='border-0'
+                                                            variant='ghost'
+                                                            isIconOnly
+                                                            color='danger'
+                                                            onPress={() => handleDeleteEducBackground(element.id)}
+                                                        >
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </Button>
+                                                    </Tooltip>
+
+                                                </dd>
+                                                
+                                            </div>
+        
+                                        </dl>
+                                    </div>
+
+                                ))
+
+                            }
+                        
+                        </>
+                    )
+
+                }
                 
-                <div className="mt-3 grid grid-cols-3 gap-5">
+                
+                
 
-                    <div>
-                        
-                        <InputLabel className='mt-2' htmlFor="degree" value="Degree" />
-
-                        <TextInput
-                            id="name"
-                            className="mt-1 block w-full"
-                            // value={data.name}
-                            // onChange={(e) => setData('name', e.target.value)}
-                            
-                        />
-
-                    </div>
-
-                    
-                    <div>
-                            <InputLabel  className='mt-2' htmlFor="school_name" value="School Name" />
-
-                            <TextInput
-                                id="email"
-                                type="email"
-                                className="mt-1 block w-full"
-                                // value={data.email}
-                                // onChange={(e) => setData('email', e.target.value)}
-                                required
-                                autoComplete="username"
-                            />
-
-                            {/* <InputError className="mt-2" message={errors.email} /> */}
-                    </div>
-
-                    <div>
-
-                        <InputLabel className='mt-2' htmlFor="graduation_date" value="Graduation date" />
-
-                        <DatePicker className='mt-1' radius='sm' color='success' variant="bordered" showMonthAndYearPickers/>
-
-                        {/* <InputError className="mt-2" message={errors.name} /> */}
-                    </div>
-
-                    
-
-                  </div>
-                        
-                <div className='grid justify-end'>
-                    <Button 
-
-                        className='mt-10 max-w-sm text-white bg-slate-700' 
-                        radius='sm'                       
-                        >
-                        Save
-
-                    </Button>
-                </div>
-
-                </form>
+                
         </section>
     );
 }

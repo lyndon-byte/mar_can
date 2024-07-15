@@ -16,7 +16,7 @@ import CharacterReferencesForm from '@/Components/CharacterReferencesForm';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
 import { router } from '@inertiajs/react';
 
-export default function EmploymentProfile({status,auth,resume,contact_information}) {
+export default function EmploymentProfile({status,auth,resume,contact_information,proSummaryData,work_exp_data,educational_background_data,certificates_data}) {
 
     const [isOpenModal,setIsOpenModal] = useState(false)
 
@@ -26,7 +26,7 @@ export default function EmploymentProfile({status,auth,resume,contact_informatio
 
     function handleInfoModalClose(){
 
-        router.get('/employment-profile',{},{preserveState: true, onSuccess: () => {setIsOpenModal(false)}})
+        router.get('/employment-profile',{},{preserveState: true, preserveScroll:true, onSuccess: () => {setIsOpenModal(false)}})
         
     }
 
@@ -49,6 +49,39 @@ export default function EmploymentProfile({status,auth,resume,contact_informatio
             
 
         }
+
+        else if (status === 'pro-summary-info-saved'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('professional summary was saved')
+        }
+
+        else if (status === 'work-experience-saved'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('work experience was saved')
+        }
+
+        else if (status === 'work-experience-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('work experience was deleted')
+        }
+
+        else if (status === 'educational-background-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('educational background was deleted')
+        }
+
+        else if (status === 'certificate-added'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('certificate was added')
+
+        }
+
+        
 
     },[status])
 
@@ -115,26 +148,26 @@ export default function EmploymentProfile({status,auth,resume,contact_informatio
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <ProfessionalSummaryForm/>
+                        <ProfessionalSummaryForm proSummary={proSummaryData}/>
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <WorkExperienceForm/>
+                        <WorkExperienceForm work_exp={work_exp_data}/>
 
                     </div>
 
                     
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <EducationalBackgroundFrom/>
+                        <EducationalBackgroundFrom educational_background={educational_background_data}/>
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <CertificationForm/>
+                        <CertificationForm certificates={certificates_data}/>
 
                     </div>
 
