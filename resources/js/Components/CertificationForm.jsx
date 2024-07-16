@@ -1,11 +1,8 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage , router} from '@inertiajs/react';
-import { Button , DatePicker , Tooltip } from '@nextui-org/react';
-import {parseDate} from "@internationalized/date";
+import { useForm, router} from '@inertiajs/react';
+import { Button ,Tooltip } from '@nextui-org/react';
 
 
 export default function CertificationForm({certificates}) {
@@ -58,7 +55,7 @@ export default function CertificationForm({certificates}) {
                             
                                 !isAddMode ? (
 
-                                    <Tooltip content="Add educational background" className='bg-slate-800 text-white' radius='sm'>
+                                    <Tooltip content="Add certificate" className='bg-slate-800 text-white' radius='sm'>
                                         <Button
                                             className='border-0'
                                             variant='ghost'
@@ -71,7 +68,7 @@ export default function CertificationForm({certificates}) {
 
                                 ) : (
                                     
-                                    <Tooltip content="View educational background" className='bg-slate-800 text-white' radius='sm'>
+                                    <Tooltip content="View certificate" className='bg-slate-800 text-white' radius='sm'>
                                         <Button
                                             className='border-0'
                                             variant='ghost'
@@ -129,8 +126,7 @@ export default function CertificationForm({certificates}) {
                                             className="mt-1 block w-full"
                                             value={data.cert_code_reference}
                                             onChange={(e) => setData('cert_code_reference', e.target.value)}
-                                            // isInvalid={errors.cert_code_reference ? true : false}
-                                            // errorMessage={errors.cert_code_reference}
+                                            
                                         />
 
                                         

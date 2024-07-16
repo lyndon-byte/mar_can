@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage , router } from '@inertiajs/react';
-import { Button , Textarea  } from '@nextui-org/react';
-import {Card, CardHeader, CardBody, CardFooter, Divider, Tooltip, Image,Chip} from "@nextui-org/react";
+import { useForm, router } from '@inertiajs/react';
+import { Button   } from '@nextui-org/react';
+import {Card, Chip, CardHeader, CardBody, CardFooter, Tooltip} from "@nextui-org/react";
 
 
 export default function SkillsForm({skills}) {
@@ -166,14 +166,7 @@ export default function SkillsForm({skills}) {
                                                 value={inputtedskill}
                                                 onChange={(e) => setInputtedskill(e.target.value)}
                                                 onKeyDown={(e) => { if (e.key === 'Enter') handkeSetSkill(); }}
-                                                label="Type your skills one by one and press enter.
-
-
-
-
-
-
-                                                "
+                                                label="Type your skills one by one and press enter."
                                             
                                                 
                                             />

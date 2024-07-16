@@ -1,9 +1,5 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import { useForm } from '@inertiajs/react';
 import { Button , Textarea , Tooltip } from '@nextui-org/react';
 
 export default function ProfessionalSummaryForm({proSummary}) {

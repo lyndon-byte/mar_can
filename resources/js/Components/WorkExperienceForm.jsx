@@ -1,9 +1,7 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage, router } from '@inertiajs/react';
+import {useForm, router } from '@inertiajs/react';
 import { Button , DatePicker , Tooltip } from '@nextui-org/react';
 import {today,getLocalTimeZone} from "@internationalized/date";
 
@@ -12,7 +10,7 @@ export default function WorkExperienceForm({work_exp}) {
 
     const [addNewMode,setAddNewMode] = useState(false)
    
-    const { data, setData, post, errors, processing ,reset } = useForm({
+    const { data, setData, post, errors, processing  } = useForm({
 
         job_title: '',
         company_name:'',

@@ -1,11 +1,8 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
+import { useState } from 'react';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage , router} from '@inertiajs/react';
-import { Button , Textarea ,Chip , Tooltip} from '@nextui-org/react';
-import {Card, CardHeader, CardBody, CardFooter, Divider, Image} from "@nextui-org/react";
+import { useForm , router} from '@inertiajs/react';
+import { Button ,  Chip , Tooltip} from '@nextui-org/react';
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
 
 
 export default function SpokenLanguagesForm({languages}) {

@@ -1,11 +1,8 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage,router } from '@inertiajs/react';
-import { Button , DatePicker, Tooltip} from '@nextui-org/react';
-import {parseDate} from "@internationalized/date";
+import { useForm,router } from '@inertiajs/react';
+import { Button , Tooltip} from '@nextui-org/react';
 
 
 export default function AwardsForm({awards}) {
@@ -58,7 +55,7 @@ export default function AwardsForm({awards}) {
                             
                                 !isAddMode ? (
 
-                                    <Tooltip content="Add educational background" className='bg-slate-800 text-white' radius='sm'>
+                                    <Tooltip content="Add awards" className='bg-slate-800 text-white' radius='sm'>
                                         <Button
                                             className='border-0'
                                             variant='ghost'
@@ -71,7 +68,7 @@ export default function AwardsForm({awards}) {
 
                                 ) : (
                                     
-                                    <Tooltip content="View educational background" className='bg-slate-800 text-white' radius='sm'>
+                                    <Tooltip content="View awards" className='bg-slate-800 text-white' radius='sm'>
                                         <Button
                                             className='border-0'
                                             variant='ghost'

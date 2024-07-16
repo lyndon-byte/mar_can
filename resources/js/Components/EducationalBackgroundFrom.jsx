@@ -1,9 +1,7 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { Button , DatePicker,Tooltip } from '@nextui-org/react';
 import {today,getLocalTimeZone} from "@internationalized/date";
 import { router } from '@inertiajs/react';
@@ -12,7 +10,7 @@ import { router } from '@inertiajs/react';
 export default function EducationalBackgroundFrom({educational_background}) {
 
    
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
 
         degree: '',
         school_name: '',

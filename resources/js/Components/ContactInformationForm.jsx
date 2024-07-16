@@ -1,16 +1,14 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { Button , Tooltip} from '@nextui-org/react';
 
-export default function ContactInformationForm({user,info}) {
+export default function ContactInformationForm({info}) {
 
     const [isEditMode,setIsEditMode] = useState(false)
    
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
 
         full_name: '',
         email: '',
@@ -210,7 +208,6 @@ export default function ContactInformationForm({user,info}) {
                                             errorMessage={errors.country}
                                         />
 
-                                        {/* <InputError className="mt-2" message={errors.email} /> */}
                                 </div>
 
                                 

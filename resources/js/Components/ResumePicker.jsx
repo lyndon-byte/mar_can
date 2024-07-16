@@ -1,7 +1,6 @@
 // PdfDropzone.js
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import {Button, Tooltip }  from '@nextui-org/react'
 import { useForm } from '@inertiajs/react';
 
 
@@ -9,7 +8,7 @@ export default function ResumePicker(){
 
   
 
-  const { data, setData, post, progress } = useForm({
+  const { data, setData, post } = useForm({
 
      pdf: '',
 
@@ -37,10 +36,6 @@ export default function ResumePicker(){
 
   });
 
-  const handleRemovePdf = () => {
-    setPdfUrl(null);
-    setPdfFile(null);
-  };
 
   useEffect(() => {
 

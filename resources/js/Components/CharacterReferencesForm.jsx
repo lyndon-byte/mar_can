@@ -1,11 +1,8 @@
-import InputError from '@/Components/InputError';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage , router} from '@inertiajs/react';
-import { Button , DatePicker, Tooltip } from '@nextui-org/react';
-import {parseDate} from "@internationalized/date";
+import { useForm , router} from '@inertiajs/react';
+import { Button , Tooltip } from '@nextui-org/react';
 
 
 export default function CharacterReferencesForm({character_reference}) {
