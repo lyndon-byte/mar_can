@@ -16,7 +16,21 @@ import CharacterReferencesForm from '@/Components/CharacterReferencesForm';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
 import { router } from '@inertiajs/react';
 
-export default function EmploymentProfile({status,auth,resume,contact_information,proSummaryData,work_exp_data,educational_background_data,certificates_data}) {
+export default function EmploymentProfile({
+    
+        status,auth,
+        resume,
+        contact_information,
+        proSummaryData,
+        work_exp_data,
+        educational_background_data,
+        certificates_data,
+        award_data,
+        character_reference_data,
+        skill_data,
+        language_data
+
+    }) {
 
     const [isOpenModal,setIsOpenModal] = useState(false)
 
@@ -80,6 +94,70 @@ export default function EmploymentProfile({status,auth,resume,contact_informatio
             setInfoModalText('certificate was added')
 
         }
+
+        else if (status === 'certificate-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('certificate was deleted')
+
+        }
+
+        else if (status === 'award-added'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('award was added')
+
+        }
+
+        else if (status === 'award-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('award was deleted')
+
+        }
+        
+        else if (status === 'character-reference-added'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('character reference was added')
+
+        }
+        
+        else if (status === 'character-reference-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('character reference was deleted')
+
+        }
+
+        else if (status === 'skill-added'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('Skills was added')
+
+        }
+
+        else if (status === 'skill-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('skill was deleted')
+
+        }
+
+        else if (status === 'language-added'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('languages was added')
+
+        }
+
+        else if (status === 'language-deleted'){
+
+            setIsOpenModal(true) 
+            setInfoModalText('language was deleted')
+
+        }
+        
 
         
 
@@ -173,25 +251,25 @@ export default function EmploymentProfile({status,auth,resume,contact_informatio
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <AwardsForm/>
+                        <AwardsForm awards={award_data}/>
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <SkillsForm/>
+                        <SkillsForm skills={skill_data}/>
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <SpokenLanguagesForm/>
+                        <SpokenLanguagesForm languages={language_data}/>
 
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
 
-                        <CharacterReferencesForm/>
+                        <CharacterReferencesForm character_reference={character_reference_data}/>
 
                     </div>
 

@@ -3,97 +3,203 @@ import { useEffect, useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { Button , Textarea  } from '@nextui-org/react';
+import { Link, useForm, usePage , router} from '@inertiajs/react';
+import { Button , Textarea ,Chip , Tooltip} from '@nextui-org/react';
 import {Card, CardHeader, CardBody, CardFooter, Divider, Image} from "@nextui-org/react";
 
 
-export default function SpokenLanguagesForm() {
+export default function SpokenLanguagesForm({languages}) {
 
    
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+    const [inputtedLanguage,setInputtedLanguage] = useState('')
 
-        // name: user.name + " " + user.last_name,
-        // email: user.email
+    const { data, setData, post, errors, processing } = useForm({
 
-
+        language: '',
+    
     });
 
+    function handleSetLanguage(){
+
+        setData('language',[...data.language,inputtedLanguage])
+        setInputtedLanguage('')
+    }
+
+    const handleRemoveLanguange = (languageToRemove) => {
+
+       
+        setData('language',data.language.filter(language => language !== languageToRemove ))
 
 
-    const submit = (e) => {
-        e.preventDefault();
+    };
 
-        post(route('profile.update'));
+    const [isAddMode,setIsAddMode] = useState(false)
+
+    function handleAddMode(){
+
+        setIsAddMode(true)
+        setData({
+
+            language: '',
+            
+        })
+
+    }
+
+    function handleDeleteLanguage(id){
+
+        router.post('/delete-language',{id:id},{preserveState:true,preserveScroll:true})
+    }
+
+    const submit = () => {
+        
+
+        post(route('add_language'),{preserveScroll:true, preserveState:true, onSuccess: ()=> {setIsAddMode(false)}});
+
     };
 
     return (
         <section>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Spoken Languages</h2>
+                <div className="text-lg font-medium text-gray-900">
+                   
+                   Spoken Languages
+                   &nbsp;
+                    {
+
+                        languages !== null && (
+                            
+                            
+                                !isAddMode ? (
+
+                                    <Tooltip content="Add Language" className='bg-slate-800 text-white' radius='sm'>
+                                        <Button
+                                            className='border-0'
+                                            variant='ghost'
+                                            isIconOnly
+                                            onPress={() => handleAddMode()}
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                        </Button>
+                                    </Tooltip>
+
+                                ) : (
+                                    
+                                    <Tooltip content="View Languages" className='bg-slate-800 text-white' radius='sm'>
+                                        <Button
+                                            className='border-0'
+                                            variant='ghost'
+                                            isIconOnly
+                                            onPress={() => setIsAddMode(false)}
+                                        >
+                                            <i class="fa-solid fa-eye"></i>
+                                        </Button>
+                                    </Tooltip>
+                                )
+
+
+                            
+                        )
+
+                    }
+                    
+                </div>
 
                 <p className="mt-1 text-sm text-gray-600">
                     Opens up opportunities in roles that specifically require language skills, such as translation, interpretation, customer service, and international business.
                 </p>
             </header>
+            {
 
-            <form className="mt-3 grid ">
+                languages === null || isAddMode ? (
+
+                    <div className="mt-3 grid ">
                 
 
+                          <div>
+                                <Card 
+                                        radius='sm' 
+                                        className={errors.language ? 'w-full mt-2 border-2 shadow-none border-danger-400' : 'w-full mt-2 border-2 shadow-none'}
+                                        classNames={{
 
-                    <div>
+                                            body: 'shadow-none'
+                                        }}
+                                    >
+                                        
                         
-                      
+                                        <CardBody className='p-5'>
 
-                        <Card 
-                            radius='sm' 
-                            className="w-full mt-2 border-2 shadow-none"
-                            classNames={{
+                                            <div className='flex flex-wrap gap-2'>
+                                                {
+                                                    data.language.length != 0 ? (
 
-                                body: 'shadow-none'
-                            }}
-                        >
-                            
-            
-                            <CardBody className='p-5'>
-                                <p className='text-slate-500'>No entered spoken languages yet</p>
-                            </CardBody>
-                            <CardFooter  className='justify-end gap-2'>
-                            
+                                                        <>
+                                                            { data.language.map((element, index) => (
+                                                                <Chip key={index} size="lg" onClose={() => handleRemoveLanguange(element)} color="success" className='text-slate-900' variant="flat">
+                                                                {element}
+                                                                </Chip>
+                                                            ))}
+                                                        </>
 
-                                <TextInput
-                                    id="email"
-                                    type="email"
-                                    className=" block max-w-sm"
-                                    // value={data.email}
-                                    // onChange={(e) => setData('email', e.target.value)}
-                                    required
-                                    autoComplete="username"
-                                />
+                                                    ) : (
 
-                                <Button
-                                    radius='sm'
-                                    variant='solid'
-                                    color='success'
-                                    className='text-white'
-                                >
-                                   Set
-                                </Button>
-                            </CardFooter>
-                        </Card>
+                                                        <p className='text-slate-500'>No language entered yet</p>
+                                                    )
 
-                        <Button 
+                                                }
+                                            </div>
+                                        
+                                            {/* <p className='text-slate-500'>No entered skills yet</p> */}
+                                        </CardBody>
+                                        <CardFooter  className='gap-2'>
+                                        
 
-                            className='float-end mt-10 text-white bg-slate-700' 
-                            radius='sm'                       
-                        >
-                        Save
+                                            <TextInput
+                                            
+                                                className="text-slate-700 block max-w-sm"
+                                                value={inputtedLanguage}
+                                                onChange={(e) => setInputtedLanguage(e.target.value)}
+                                                onKeyDown={(e) => { if (e.key === 'Enter') handleSetLanguage(); }}
+                                                label="Type your spoken language one by one and press enter."
+                                            
+                                                
+                                            />
 
-                        </Button>
-                    </div>
+                                        </CardFooter>
+                                    
+                                    </Card>
+                                    <p className='text-danger-400 mt-2'>{errors.language}</p>
+                                    <Button 
 
+                                        className='float-end mt-10 text-white bg-slate-700' 
+                                        radius='sm'
+                                        isLoading={processing}     
+                                        onPress={() => submit()}                  
+                                    >
+                                    Save
+
+                                    </Button>
+                            </div>
                     
-            </form>
+                        </div>
+
+                ):(
+
+
+                   
+                    <>
+
+                        <div className='gap-2 flex flex-wrap mt-3'>
+                        { languages.map((element, index) => (
+                                    <Chip key={index} size="lg"  onClose={() => handleDeleteLanguage(element.id)} className='text-slate-900' variant="flat">
+                                            {element.language}
+                                    </Chip>
+                            ))}
+                        </div>
+                      
+                    </>
+                )
+        }            
         </section>
     );
 }

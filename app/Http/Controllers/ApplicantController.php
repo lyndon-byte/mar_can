@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\ApplicantAwards;
 use App\Models\ApplicantResume;
+use App\Models\ApplicantSkills;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ApplicantCertifications;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ApplicantSpokenLanguages;
 use App\Models\ApplicantWorkExperiences;
+use App\Models\ApplicantCharacterReferences;
 use App\Models\ApplicantEducationalBackGround;
 
 
@@ -33,6 +38,14 @@ class ApplicantController extends Controller
 
         $certificates = null;
 
+        $award = null;
+
+        $skill = null;
+
+        $character_referemce = null;
+
+        $language = null;
+
         if($user->workExperiences()->exists()){
 
             $work_exp = $user->workExperiences()->get();
@@ -48,6 +61,26 @@ class ApplicantController extends Controller
             $certificates = $user->certifications()->get();
         }
 
+        if($user->awards()->exists()){
+
+            $award = $user->awards()->get();
+        }
+
+        if($user->characterReferences()->exists()){
+
+            $character_referemce = $user->characterReferences()->get();
+        }
+
+        if($user->skills()->exists()){
+
+            $skill = $user->skills()->get();
+        }
+
+        if($user->languages()->exists()){
+
+            $language = $user->languages()->get();
+        }
+
         if($request->has('status')){
 
             $status = $request->status;
@@ -61,6 +94,10 @@ class ApplicantController extends Controller
             'work_exp_data' => $work_exp,
             'educational_background_data' => $educational_background, 
             'certificates_data' => $certificates,
+            'character_reference_data' => $character_referemce,
+            'award_data' => $award,
+            'skill_data' => $skill,
+            'language_data' => $language,
             'status' => $status,
             
         ]);
@@ -298,7 +335,7 @@ class ApplicantController extends Controller
 
             'cert_name' => $request->cert_name,
             'cert_code_reference' => $request->cert_code_reference,
-            'cert_provider' => $request->provider,
+            'cert_provider' => $request->cert_provider,
 
         ]);
 
@@ -306,4 +343,145 @@ class ApplicantController extends Controller
 
 
     }
+
+    public function deleteCertificate(Request $request){
+
+        ApplicantCertifications::where('id',$request->id)->delete();
+
+        return redirect()->route('employment.profile',['status' => 'certificate-deleted']);
+    }
+
+    public function addAward(Request $request){
+
+
+        $user = Auth::user();
+
+        $request->validate([
+
+            'award_name' => 'required',
+            'award_provider' => 'required',
+
+        ]);
+
+        $user->awards()->create([
+
+            'award_name' => $request->award_name,
+            'award_provider' => $request->award_provider,
+            
+
+        ]);
+
+        return redirect()->route('employment.profile',['status' => 'award-added']);
+
+
+    }
+
+    public function deleteAward(Request $request){
+
+        ApplicantAwards::where('id',$request->id)->delete();
+
+        return redirect()->route('employment.profile',['status' => 'award-deleted']);
+    }
+
+    public function addCharacterReference(Request $request){
+
+
+        $user = Auth::user();
+
+        $request->validate([
+
+            'name' => 'required',
+            'contact_number' => 'required',
+            'job' => 'required',
+            'company' => 'required',
+
+        ]);
+
+        $user->characterReferences()->create([
+
+            'name' => $request->name,
+            'contact_number' => $request->contact_number,
+            'job' => $request->job,
+            'company' => $request->company,
+
+        ]);
+
+        return redirect()->route('employment.profile',['status' => 'character-reference-added']);
+
+
+    }
+
+    public function deleteCharacterReference(Request $request){
+
+        ApplicantCharacterReferences::where('id',$request->id)->delete();
+
+        return redirect()->route('employment.profile',['status' => 'character-reference-deleted']);
+    }
+
+    public function addSkill(Request $request){
+
+        $user = Auth::user();
+
+        $request->validate([
+
+            'skill_name' => 'required',
+            
+        ]);
+
+        foreach($request->skill_name as $skill){
+
+            $user->skills()->create([
+
+                'skill_name' => $skill,
+              
+    
+            ]);
+        }
+
+        return redirect()->route('employment.profile',['status' => 'skill-added']);
+    }
+
+    public function deleteSkill(Request $request){
+
+        ApplicantSkills::where('id',$request->id)->delete();
+
+        return redirect()->route('employment.profile',['status' => 'skill-deleted']);
+    }
+
+
+    public function addLanguage(Request $request){
+
+
+        $user = Auth::user();
+
+        $request->validate([
+
+            'language' => 'required',
+            
+        ]);
+
+        foreach($request->language as $language){
+
+            $user->languages()->create([
+
+                'language' => $language,
+              
+    
+            ]);
+        }
+
+        return redirect()->route('employment.profile',['status' => 'language-added']);
+
+
+    }
+
+    public function deleteLanguage(Request $request){
+
+        ApplicantSpokenLanguages::where('id',$request->id)->delete();
+
+        return redirect()->route('employment.profile',['status' => 'language-deleted']);
+
+    }
+
+
 }

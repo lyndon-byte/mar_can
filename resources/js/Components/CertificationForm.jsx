@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage , router} from '@inertiajs/react';
 import { Button , DatePicker , Tooltip } from '@nextui-org/react';
 import {parseDate} from "@internationalized/date";
 
@@ -34,6 +34,11 @@ export default function CertificationForm({certificates}) {
         })
     }
 
+    function handleDeleteCertificate(id){
+
+        router.post('/delete-certificate',{id:id},{preserveState:true,preserveScroll:true})
+    }
+
     const submit = () => {
         
         post(route('add_certificate'),{preserveState: true, preserveScroll:true, onSuccess: () => {setIsAddMode(false)}});
@@ -48,7 +53,7 @@ export default function CertificationForm({certificates}) {
                     &nbsp;
                     {
 
-                            isAddMode !== null && (
+                            certificates !== null && (
                             
                             
                                 !isAddMode ? (
@@ -171,43 +176,71 @@ export default function CertificationForm({certificates}) {
                             
                             {
 
-                                certificates.map((element) => (
+                               
 
-                                    <>
-                                        <div class="bg-white py-24 sm:py-32">
-                                            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                                    
+                                    
+
+                                       
+                                           certificates.map((element) => (
+                                                <>
                                                 
-                                                <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16  border-gray-200 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                                                    <div class="mt-6 p-5 border-t border-gray-100">
+                                                        <dl class="divide-y divide-gray-100">
+                        
+                                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                     
-                                                    <article class="flex max-w-xl flex-col items-start justify-between">
-                                                        
-                                                        <div class="group relative">
-                                                        <h3 class="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                                                                <dt class="text-sm font-medium leading-6 text-slate-500">
                                                             
-                                                           
-                                                            {element.cert_name}
-                                                            
-                                                        </h3>
-                                                        <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{element.cert_code_reference}</p>
-                                                        </div>
-                                                        <div class="relative mt-8 flex items-center gap-x-4">
+                                                                    &nbsp;
+                                                                
+                                                                    {element.cert_code_reference !== null ? element.cert_code_reference : 'no certificate code'}
+                                                                
+                                                                </dt>
+                                                                <dd class="mt-1 sm:mt-0">
+
+                                                                    <span className='leading-6 font-bold text-gray-700'>
+                                                                        {element.cert_name} 
+                                                                    </span>
+                                                                    <br></br>
+                                                                    <span className='text-slate-700 '>
+                                                                        {element.cert_provider}
+                                                                    </span>
+
+                                                                </dd>
+                                                                <dd class="mt-1 sm:mt-0">
+
+                                                                    <Tooltip content="Delete this certificate" className='bg-slate-800 text-white' radius='sm'>
+                                                                        <Button
+                                                                            className='border-0'
+                                                                            variant='ghost'
+                                                                            isIconOnly
+                                                                            color='danger'
+                                                                            onPress={() => handleDeleteCertificate(element.id)}
+                                                                        >
+                                                                            <i class="fa-solid fa-trash"></i>
+                                                                        </Button>
+                                                                    </Tooltip>
+
+                                                                </dd>
+                                                                
+                                                            </div>
+                        
+                                                        </dl>
+                                                    </div>
+
                                                         
-                                                        <div class="text-sm leading-6">
-                                                          
-                                                            <p class="text-gray-600">{element.cert_provider}</p>
 
-                                                        </div>
-                                                        </div>
-                                                    </article>
-
-                                                    
+                                                </>
                                                 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </>
+                                            ))
 
-                                ))
+                                           
+                                       
+
+                                    
+
+                               
                             }                        
                         </>
 

@@ -56,7 +56,7 @@ export default function EducationalBackgroundFrom({educational_background}) {
                     &nbsp;
                     {
 
-                            isAddMode !== null && (
+                        educational_background !== null && (
                             
                             
                                 !isAddMode ? (

@@ -76,5 +76,30 @@ class User extends Authenticatable
         return $this->hasMany(ApplicantCertifications::class,'cert_id');
     }
 
+    public function awards(){
+
+        return $this->hasMany(ApplicantAwards::class,'award_id');
+    }
+
+    public function characterReferences(){
+
+        return $this->hasMany(ApplicantCharacterReferences::class,'reference_id');
+        
+    }
+
+    public function skills(){
+
+        return $this->hasMany(ApplicantSkills::class,'skill_id');
+
+    }
+
+
+    public function languages(){
+
+        return $this->hasMany(ApplicantSpokenLanguages::class,'language_id');
+
+    }
+
+
 
 }

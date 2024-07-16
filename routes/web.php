@@ -93,7 +93,23 @@ Route::post('/delete-educational-background',[ApplicantController::class,'delete
 
 Route::post('/add-certificate',[ApplicantController::class,'addCertificate'])->middleware(['auth', 'verified'])->name('add_certificate');
 
+Route::post('/delete-certificate',[ApplicantController::class,'deleteCertificate'])->middleware(['auth', 'verified'])->name('delete_certificate');
 
+Route::post('/add-award',[ApplicantController::class,'addAward'])->middleware(['auth', 'verified'])->name('add_award');
+
+Route::post('/delete-award',[ApplicantController::class,'deleteAward'])->middleware(['auth', 'verified'])->name('delete_award');
+
+Route::post('/add-character-reference',[ApplicantController::class,'addCharacterReference'])->middleware(['auth', 'verified'])->name('add_character_reference');
+
+Route::post('/delete-character-reference',[ApplicantController::class,'deleteCharacterReference'])->middleware(['auth', 'verified'])->name('delete_character_reference');
+
+Route::post('/add-skill',[ApplicantController::class,'addSkill'])->middleware(['auth', 'verified'])->name('add_skill');
+
+Route::post('/delete-skill',[ApplicantController::class,'deleteSkill'])->middleware(['auth', 'verified'])->name('delete_skill');
+
+Route::post('/add-language',[ApplicantController::class,'addLanguage'])->middleware(['auth', 'verified'])->name('add_language');
+
+Route::post('/delete-language',[ApplicantController::class,'deleteLanguage'])->middleware(['auth', 'verified'])->name('delete_language');
 
 
 //End of Applicant Routes
