@@ -103,7 +103,7 @@ export default function EducationalBackgroundFrom({educational_background}) {
                     educational_background === null || isAddMode ? (
 
                         <>
-                            <div className="mt-3 grid grid-cols-3 gap-5">
+                            <div className="mt-3 grid sm:grid-cols-3 gap-5">
 
                                 <div>
                                     
@@ -186,7 +186,7 @@ export default function EducationalBackgroundFrom({educational_background}) {
                                     <div class="mt-6 p-5 border-t border-gray-100">
                                         <dl class="divide-y divide-gray-100">
         
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                            <div class="px-4 py-6 sm:text-start text-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     
                                                 <dt class="text-sm font-medium leading-6 text-gray-900">
                                             

@@ -100,7 +100,7 @@ export default function WorkExperienceForm({work_exp}) {
 
                         <>
                         
-                            <div className="mt-3 grid grid-cols-3 gap-5">
+                            <div className="mt-3 grid sm:grid-cols-3 grid-cols-1 gap-5">
 
                                 <div>
                                     
@@ -206,13 +206,13 @@ export default function WorkExperienceForm({work_exp}) {
                                     <div class="mt-6 p-5 border-t border-gray-100">
                                         <dl class="divide-y divide-gray-100">
         
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                            <div class="px-4 py-6 text-center sm:text-start sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                        
                                                 <dt class="text-sm font-medium leading-6 text-gray-900">
-                                               
-                                                    &nbsp;
-                                                   
-                                                    {element.employment_dates}
+                                                
+                                                        &nbsp;
+                                                    
+                                                        {element.employment_dates}
                                                 
                                                 </dt>
                                                 <dd class="mt-1 sm:mt-0">

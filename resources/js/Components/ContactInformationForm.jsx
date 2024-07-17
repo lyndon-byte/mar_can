@@ -72,12 +72,13 @@ export default function ContactInformationForm({info}) {
                 <p className="mt-1 text-sm text-gray-600">
                      Some informations here provides a way for potential employers to reach you easily for interviews, job offers, and follow-up questions
                 </p>
+
             </header>
             {
 
                 info === null || isEditMode ? (
 
-                        <div className="mt-3 grid grid-cols-2 gap-10">
+                        <div className="mt-3 grid sm:grid-cols-2 grid-cols-1 gap-10">
                             <div>
                                 <div>
                                     
@@ -167,7 +168,7 @@ export default function ContactInformationForm({info}) {
                             
                             </div>
 
-                            <div className='grid grid-cols-3 gap-4'>
+                            <div className='grid sm:grid-cols-3 grid-cols-1 gap-4'>
                                 <div>
                                     <InputLabel className='mt-2' htmlFor="state" value="Province or State" />
 

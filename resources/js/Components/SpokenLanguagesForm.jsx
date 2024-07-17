@@ -105,6 +105,7 @@ export default function SpokenLanguagesForm({languages}) {
                 <p className="mt-1 text-sm text-gray-600">
                     Opens up opportunities in roles that specifically require language skills, such as translation, interpretation, customer service, and international business.
                 </p>
+                
             </header>
             {
 

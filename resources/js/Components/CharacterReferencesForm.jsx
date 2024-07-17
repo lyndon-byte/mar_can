@@ -101,7 +101,7 @@ export default function CharacterReferencesForm({character_reference}) {
 
                     <>
 
-                        <div className="mt-3 grid grid-cols-3 gap-5">
+                        <div className="mt-3 grid sm:grid-cols-3 gap-5">
 
                                 <div>
                                         <InputLabel  className='mt-2' htmlFor="name" value="Name" />
@@ -199,7 +199,7 @@ export default function CharacterReferencesForm({character_reference}) {
                                 <div class="mt-6 p-5 border-t border-gray-100">
                                     <dl class="divide-y divide-gray-100">
 
-                                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                        <div class="px-4 py-6 text-center sm:text-start sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 
                                             <dt class="text-sm font-medium leading-6 text-gray-900">
                                         
@@ -209,6 +209,7 @@ export default function CharacterReferencesForm({character_reference}) {
                                             
                                             </dt>
                                             <dd class="mt-1 sm:mt-0">
+
                                                 <span className='leading-6 font-bold text-gray-700'>
                                                     {element.name} 
                                                 </span>
