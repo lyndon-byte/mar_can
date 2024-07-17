@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
 {
     public function index(){
 
-        return 'hello boss';
+      return Inertia::render('OrgProfile',[
+
+
+        ]);
     }
 }
