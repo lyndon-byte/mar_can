@@ -1,7 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ProfileCompletionBanner from '@/Components/ProfileCompletionBanner';
 import { Head } from '@inertiajs/react';
 
-export default function EmployerDashboard({ auth }) {
+export default function EmployerDashboard({ auth ,isOrgProfileExists}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -12,7 +13,22 @@ export default function EmployerDashboard({ auth }) {
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">Welcome <span className='font-bold'>{auth.user.name}!</span> this is a dashboard</div>
+                        
+
+                        { 
+                          isOrgProfileExists ? (
+                              
+                               <p>test dashboard</p>
+                             
+
+                          ) : (
+
+                               <ProfileCompletionBanner role={auth.user.role} profile_name={auth.user.name}/>
+
+                          )
+                        
+                        
+                        }
                     </div>
                 </div>
             </div>

@@ -57,9 +57,19 @@ export default function Authenticated({ user, header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}><i class="fa-solid fa-user"></i> &nbsp; User Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('employment.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Employment Profile</Dropdown.Link>
+                                        {
+                                            user.role === 'Applicant' ? (
+
+                                                <Dropdown.Link href={route('employment.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Employment Profile</Dropdown.Link>
+
+                                            ) : (
+
+                                                <Dropdown.Link href={route('org.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Organization Profile</Dropdown.Link>
+                                            )
+
+                                        }
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
-                                        <i class="fa-solid fa-right-from-bracket"></i> &nbsp;   Log Out
+                                            <i class="fa-solid fa-right-from-bracket"></i> &nbsp;   Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>

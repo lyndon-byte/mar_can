@@ -4,7 +4,7 @@ import ProfileCompletionBanner from '@/Components/ProfileCompletionBanner';
 import JobListings from '@/Components/JobListings';
 import { Link, Button } from "@nextui-org/react";
 
-export default function ApplicantHome({ auth,isProfileInformationExists }) {
+export default function ApplicantHome({ auth,isProfileInformationExists,isResumeExists }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -16,13 +16,14 @@ export default function ApplicantHome({ auth,isProfileInformationExists }) {
                 <div className="mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         { 
-                          !isProfileInformationExists ? (
-
-                             <ProfileCompletionBanner profile_name={auth.user.name}/>
+                          isProfileInformationExists || isResumeExists  ? (
+                              
+                                <JobListings/>
+                             
 
                           ) : (
 
-                            <JobListings/>
+                               <ProfileCompletionBanner role={auth.user.role} profile_name={auth.user.name}/>
 
                           )
                         
