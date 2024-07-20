@@ -61,7 +61,7 @@ Route::get('/dashboard', function () {
 
                 return Inertia::render('EmployerDashboard',[
 
-                    'isOrgProfileExists' => false
+                    'isOrgProfileExists' => $user->orgInformation()->exists()
 
                 ]);
 
@@ -136,7 +136,8 @@ Route::group(['middleware' => ['role:Employer']], function () {
 
 
     Route::get('/organization-profile',[EmployerController::class,'index'])->middleware(['auth', 'verified'])->name('org.profile');
-
+    Route::post('/update-org-profile-info',[EmployerController::class,'updateOrgProfileInfo'])->middleware(['auth', 'verified'])->name('update_org_profile_info');
+    Route::post('/delete-industry',[EmployerController::class,'deleteIndustry'])->middleware(['auth', 'verified'])->name('delete_industry');
   
 });
 

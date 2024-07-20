@@ -104,6 +104,17 @@ class User extends Authenticatable
 
     // Employer Related tables
 
+    public function orgInformation(){
+
+        return $this->hasOne(OrgInformation::class,'org_id');
+
+    }
+
+    public function orgIndustry(){
+
+        return $this->hasOne(OrgIndustry::class,'org_industry_id');
+
+    }
     
 
 
