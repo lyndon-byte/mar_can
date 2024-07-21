@@ -18,8 +18,9 @@ export default function SkillsForm({skills}) {
 
         skill_name: [],
 
-        
     });
+
+    
 
     function handkeSetSkill(){
 

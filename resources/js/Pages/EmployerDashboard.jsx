@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ProfileCompletionBanner from '@/Components/ProfileCompletionBanner';
+import EmployerDashboardInterface from '@/Components/EmployerDashboardInterface';
 import { Head } from '@inertiajs/react';
 
 export default function EmployerDashboard({ auth ,isOrgProfileExists}) {
@@ -18,7 +19,9 @@ export default function EmployerDashboard({ auth ,isOrgProfileExists}) {
                         { 
                           isOrgProfileExists ? (
                               
-                               <p>test dashboard</p>
+                               <>
+                                    <EmployerDashboardInterface />
+                               </>
                              
 
                           ) : (

@@ -127,4 +127,9 @@ class EmployerController extends Controller
 
         return redirect()->route('org.profile',['status' => 'company-info-deleted']);
     }
+
+    public function addNewJob(){
+
+        return Inertia::render('JobPosting');
+    }
 }
