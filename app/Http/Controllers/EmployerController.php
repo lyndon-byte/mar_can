@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\PostedJobs;
 use App\Models\OrgIndustry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -130,6 +131,180 @@ class EmployerController extends Controller
 
     public function addNewJob(){
 
-        return Inertia::render('JobPosting');
+        return Inertia::render('JobPosting',[
+            
+            'job_data' => null
+
+        ]);
+    }
+
+    public function saveNewJob(Request $request){
+
+        $request->validate([
+
+            'job_title' => 'required'
+
+        ]);
+
+        $start_date = '';
+
+        if($request->start_date !== null){
+
+            $start_date = $request->start_date['month'] . '/' . $request->start_date['day'] . '/' . $request->start_date['year'];
+        }
+
+        $user = Auth::user();
+
+        $posted_jobs =  $user->postedJob()->create([
+
+            'job_title' => $request->job_title,
+            'job_description' => $request->job_description,
+            'location' => $request->location,
+            'salary' => $request->salary,
+            'employment_type' => $request->employment_type,
+            'start_date' => $start_date,
+            'status' => 'active',
+
+
+        ]);
+
+        if($request->resposnsibility !== [] || $request->resposnsibility !== null){
+
+            foreach($request->resposnsibility as $item){
+
+                $posted_jobs->responsibilities()->create([
+
+                    'responsibility' => $item,
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->education !== [] || $request->education !== null){
+
+            foreach($request->education as $item){
+
+                $posted_jobs->requiredEducation()->create([
+
+                    'education' => $item,
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->experiences !== [] || $request->experiences !== null){
+
+            foreach($request->experiences as $item){
+
+                $posted_jobs->requiredExperiences()->create([
+
+                    'experience' => $item,
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->skills !== [] || $request->skills !== null){
+
+            foreach($request->skills as $item){
+
+                $posted_jobs->requiredSkills()->create([
+
+                    'skill' => $item,
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->certifications !== [] || $request->certifications !== null){
+
+            foreach($request->certifications as $item){
+
+                $posted_jobs->requiredCertifications()->create([
+
+                    'certification' => $item,
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->benefits !== [] || $request->benefits !== null){
+
+            foreach($request->benefits as $item){
+
+                $posted_jobs->benefits()->create([
+
+                    'benefit' => $item,
+                   
+                ]);
+
+            }
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    public function viewPostedJob(Request $request){
+
+        // $job_data = PostedJobs::where('id',$request->id)->get()->first();
+
+        $job_data = PostedJobs::with(['responsibilities','requiredEducation','requiredExperiences','requiredSkills','requiredCertifications','benefits'])->findOrFail($request->id);
+
+        return Inertia::render('JobPosting',[
+            
+            'job_data' => $job_data
+
+        ]);
+       
+    }
+
+    public function deletePostedJob(Request $request){
+
+       $posted_job = PostedJobs::find($request->id);
+
+       $posted_job->responsibilities()->delete();
+
+       $posted_job->requiredEducation()->delete();
+
+       $posted_job->requiredExperiences()->delete();
+
+       $posted_job->requiredSkills()->delete();
+
+       $posted_job->requiredCertifications()->delete();
+
+       $posted_job->benefits()->delete();
+
+       $posted_job->delete();
+    }
+
+    public function filterJobs(Request $request){
+
+        $user = Auth::user();
+
+        $job_postings = PostedJobs::where('job_id', $user->id)
+        ->where(function($query) use ($request) {
+            $query->where('status', $request->filter)
+                ->orWhere('job_title', 'ILIKE', '%'.$request->filter.'%');
+        })
+        ->orderBy('created_at', 'DESC')
+        ->paginate(8);
+        // $job_postings = PostedJobs::where('job_id',$user->id)->where('status',$request->filter)->orWhere('job_title','LIKE','%'.$request->filter.'%')->orderBy('created_at','DESC')->paginate(8);
+
+        return Inertia::render('EmployerDashboard',[
+
+            'isOrgProfileExists' => $user->orgInformation()->exists(),
+            'jobPostings' =>  $job_postings
+           
+        ]);
     }
 }

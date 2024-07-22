@@ -113,9 +113,14 @@ class User extends Authenticatable
     public function orgIndustry(){
 
         return $this->hasOne(OrgIndustry::class,'org_industry_id');
-
+    
     }
     
+    public function postedJob(){
+
+        return $this->hasMany(PostedJobs::class,'job_id');
+    
+    }
 
 
 }

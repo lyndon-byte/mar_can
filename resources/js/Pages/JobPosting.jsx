@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import JobPostForm from '@/Components/JobPostForm';
-export default function JobPosting({ auth }) {
+export default function JobPosting({ auth,job_data }) {
     return (
         
         <AuthenticatedLayout
@@ -14,7 +14,7 @@ export default function JobPosting({ auth }) {
                 <div className="mx-auto sm:px-6 lg:px-8 space-y-6">
                     
                         
-                    <JobPostForm/>
+                    <JobPostForm jobData={job_data}/>
                        
                     
                 </div>

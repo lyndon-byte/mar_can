@@ -1,26 +1,115 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback} from 'react';
 import { router } from '@inertiajs/react';
-import { Badge,Button, Input,Dropdown,DropdownTrigger,DropdownMenu} from "@nextui-org/react";
+import { Badge,Button, Input,Dropdown,DropdownItem,DropdownTrigger,DropdownMenu} from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
+import { debounce } from 'lodash';
 
 
 
 
-export default function EmployerDashboardInterface({}){
+export default function EmployerDashboardInterface({jobs}){
 
-   const [isLoading,setIsLoading] = useState(false);
+   const [isLoading,setIsLoading] = useState(false)
 
+   const [isOpenModal,setIsOpenModal] = useState(false)
+
+   const [infoModalText,setInfoModalText] = useState('')
+
+   const [filter,setFilter] = useState('Status');
+
+   const [searchQuery, setSearchQuery] = useState('');
+
+
+   const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+
+   
+   const handleSearch = useCallback(debounce((query) => {
+
+        setSearchQuery(query);
+        router.visit(route('filter_jobs', {filter: query}), {
+            preserveScroll: true,
+            preserveState: true
+        });
+    }, 100),[]);
+    
+   function handleInfoModalClose(){
+
+        router.get('/dashboard',{},{preserveState: true, preserveScroll:true, onSuccess: () => {setIsOpenModal(false)}})
+    
+   }
+   
    function handleRedirecToAddNewJobForm (){
 
-        router.get('/add-new-job',{},{onStart: () => { setIsLoading(true) }, onSuccess: () => {setIsLoading(false) }});
+        router.get('/add-new-job',{},{onStart: () => { setIsLoading(true) }, onSuccess: () => {setIsLoading(false)}});
+
+   }    
+
+
+   function handlePageChange(page){
+
+      router.get('/dashboard',{page},{preserveScroll: true, preserveState: true})
 
    }
+
+   
+
+   function handleViewPostedJob(id){
+
+     router.get('/view-posted-job',{id:id},{preserveScroll: true, preserveState: true})
+
+    }
+
+   function handleDeletePostedJob(id){
+
+        router.post('/delete-posted-job',{id:id},{preserveScroll: true, preserveState: true, 
+            
+            onSuccess: () => { 
+
+                setInfoModalText('posted job was deleted')
+                setIsOpenModal(true)
+            }
+        
+     })
+
+   }
+
+
+   function setStatusFilter(e){
+
+      
+        setFilter(e.anchorKey)
+        router.get('/filter-jobs',{filter: e.anchorKey},{preserveState: true});
+   }
+
 
     return (
 
         <>
 
-       
+          <Modal isDismissable={false} isOpen={isOpenModal} onClose={() => handleInfoModalClose()} >
+            <ModalContent>
+        
+                <>
+                <ModalHeader className="flex flex-col gap-1">Info</ModalHeader>
+                <ModalBody>
+
+                    <p> 
+                        {infoModalText}
+                    </p>
+                    
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="default" variant="light" onPress={() => handleInfoModalClose()}>
+                    ok
+                    </Button>
+                
+                </ModalFooter>
+                </>
+            
+            </ModalContent>
+          </Modal>
+
         
         
           <Table 
@@ -32,7 +121,7 @@ export default function EmployerDashboardInterface({}){
                    <div className='flex gap-2 text-gray-500'>
                             
                                 <Chip variant="bordered" className='p-4'>
-                                    Posted jobs: <span className="text-gray-700 font-bold text-md">0</span>
+                                    Posted jobs: <span className="text-gray-700 font-bold text-md">{jobs.total}</span>
                                 </Chip>
                             
                                 <Chip variant="bordered" className='p-4'>
@@ -50,53 +139,37 @@ export default function EmployerDashboardInterface({}){
 
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             }
-                            // value={filterValue}
-                            // onClear={() => onClear()}
-                            // onValueChange={onSearchChange}
+                            value={searchQuery}
+                            onClear={() => setSearchQuery('')}
+                            onValueChange={handleSearch}
                         />
                         <div className="flex gap-3">
                             <Dropdown>
-                            <DropdownTrigger className="hidden sm:flex" radius="sm">
-                                <Button endContent={<i class="fa-solid fa-chevron-down"></i>} variant="flat">
-                                Status
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                disallowEmptySelection
-                                aria-label="Table Columns"
-                                closeOnSelect={false}
-                                // selectedKeys={statusFilter}
-                                // selectionMode="multiple"
-                                // onSelectionChange={setStatusFilter}
-                            >
-                                {/* {statusOptions.map((status) => (
-                                <DropdownItem key={status.uid} className="capitalize">
-                                    {capitalize(status.name)}
-                                </DropdownItem>
-                                ))} */}
-                            </DropdownMenu>
+                                <DropdownTrigger className="hidden sm:flex" radius="sm">
+                                    <Button endContent={<i class="fa-solid fa-chevron-down"></i>} variant="flat">
+                                        {filter}
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    
+                                    aria-label="Table Columns"
+                                    closeOnSelect={false}
+                                    
+                                    selectionMode="single"
+                                    onSelectionChange={setStatusFilter}
+                                >
+                                 
+                                    <DropdownItem key="active">
+                                        Active
+                                    </DropdownItem>
+
+                                    <DropdownItem key="in-active">
+                                        In-Active
+                                    </DropdownItem>
+                                    
+                                </DropdownMenu>
                             </Dropdown>
-                            <Dropdown>
-                            <DropdownTrigger className="hidden sm:flex " radius="sm">
-                                <Button endContent={<i class="fa-solid fa-chevron-down"></i>} variant="flat">
-                                Columns
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                disallowEmptySelection
-                                aria-label="Table Columns"
-                                closeOnSelect={false}
-                                // selectedKeys={visibleColumns}
-                                selectionMode="multiple"
-                                // onSelectionChange={setVisibleColumns}
-                            >
-                                {/* {columns.map((column) => (
-                                <DropdownItem key={column.uid} className="capitalize">
-                                    {capitalize(column.name)}
-                                </DropdownItem>
-                                ))} */}
-                            </DropdownMenu>
-                            </Dropdown>
+            
                         
                             <Tooltip content="Add new job post" className="bg-slate-900 text-white">
                                 <Button 
@@ -124,11 +197,10 @@ export default function EmployerDashboardInterface({}){
                     isCompact
                     showControls
                     showShadow
-                    color="success"
-
-                    // page={page}
-                    // total={pages}
-                    // onChange={(page) => setPage(page)}
+                    color="primary"
+                    total={jobs.last_page}
+                    initialPage={jobs.current_page}
+                    onChange={handlePageChange}
                 />
                 </div>
             }
@@ -136,92 +208,114 @@ export default function EmployerDashboardInterface({}){
                 wrapper: "min-h-[222px] p-5",
 
             }}
+            isStriped 
             >
             <TableHeader>
+
                 <TableColumn key="JOB">JOB TITLE</TableColumn>
                 <TableColumn key="DESCRIPTION">DESCRIPTION</TableColumn>
+                <TableColumn key="LOCATION">LOCATION</TableColumn>
+                <TableColumn key="SALARY">SALARY</TableColumn>
                 <TableColumn key="EMPLOYMENT">EMPLOYMENT TYPE</TableColumn>
-                <TableColumn key="WORK">WORK SCHEDULE</TableColumn>
                 <TableColumn key="START">START DATE</TableColumn>
                 <TableColumn key="STATUS">STATUS</TableColumn>
                 <TableColumn key="ACTIONS" className="">
                     <div className="flex justify-end pr-16">ACTIONS</div>
                 </TableColumn>
-            </TableHeader>
-                <TableBody 
-                
+
+             </TableHeader>
+                <TableBody
+                   
+                    items={jobs.data}
                     emptyContent={
 
-                        <div className="text-center">
-                            <span className="text-gray-600">no posted jobs yet </span>
-                        </div>
+                        <p className='mt-5 text-center'>No posted job yet</p>
                     }
                 >
-                    
-                    <TableRow>
-                        <TableCell> test data</TableCell>
-                        <TableCell> test data</TableCell>
-                        <TableCell> test data</TableCell>
-                        <TableCell> test data</TableCell>
-                        <TableCell> test data</TableCell>
-                        <TableCell> test data</TableCell>
-                       
-                        <TableCell >
-                        <div className="relative flex justify-end  items-center gap-2">
 
-                                
-                                <Badge content="1" color="danger">
-                                     <Tooltip content="View applicants who applied" className="bg-slate-900 text-white">
-                                        <Button
-                                            variant="ghost"
-                                            className="border-0"
+                        {(job) => (
+
+                             
+                            <TableRow key={job.id}>
+                                <TableCell>{job.job_title}</TableCell>
+                                <TableCell>{job.job_description}</TableCell>
+                                <TableCell>{job.location}</TableCell>
+                                <TableCell>{job.salary}</TableCell>
+                                <TableCell>{job.employment_type}</TableCell>
+                                <TableCell>{job.start_date}</TableCell>
+                                <TableCell>{job.status}</TableCell>
+                                <TableCell >
+
+                                        <div className="relative flex justify-end  items-center gap-2">
+
+                                            
+                                            <Badge content="1" color="danger" isInvisible={true}>
+                                                <Tooltip content="View applicants who applied" className="bg-slate-900 text-white">
+                                                    <Button
+                                                        variant="ghost"
+                                                        className="border-0"
+                                                    
+                                                        isIconOnly
+                                                    >
+                                                    <i class="fa-solid fa-user"></i>
+                                                    </Button>
+                                                </Tooltip>
+                                            </Badge>
                                         
-                                            isIconOnly
-                                        >
-                                        <i class="fa-solid fa-user"></i>
-                                        </Button>
-                                       </Tooltip>
-                                </Badge>
-                               
-                            
-                                <Tooltip content="View Details" className="bg-slate-900 text-white">
-                                       <Button
-                                        variant="ghost"
-                                        className="border-0"
-                                     
-                                        isIconOnly
-                                       >
-                                        <i class="fa-solid fa-eye"></i>
-                                       </Button>
-                                </Tooltip>
-                                <Tooltip content="Edit Details" className="bg-slate-900 text-white">
-                                       <Button
-                                        variant="ghost"
-                                        className="border-0"
-                                     
-                                        isIconOnly
-                                       >
-                                       <i class="fa-solid fa-pen-to-square"></i>
-                                       </Button>
-                                </Tooltip>
-                                <Tooltip content="Delete" className="bg-slate-900 text-white">
-                                       <Button
-                                        variant="ghost"
-                                        className="border-0"
-                                        color="danger"
-                                        isIconOnly
-                                       >
-                                        <i class="fa-solid fa-trash"></i>
-                                       </Button>
-                                </Tooltip>
-                                
-                        </div>
-                           
+                                        
+                                            <Tooltip content="View All Details" className="bg-slate-900 text-white">
+                                                <Button
+                                                    variant="ghost"
+                                                    className="border-0"
+                                                    isIconOnly
+                                                    onPress={() => handleViewPostedJob(job.id)}
+                                                >
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </Button>
+                                            </Tooltip>
 
-                        </TableCell>
-                    </TableRow>
+                                            <Tooltip content="Edit Details" className="bg-slate-900 text-white">
+                                                <Button
+                                                    variant="ghost"
+                                                    className="border-0"
+                                                    isIconOnly
+                                                    onPress={() => handleViewPostedJob(job.id)}
+                                                >
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                </Button>
+                                            </Tooltip>
+
+                                            <Tooltip content="Delete" className="bg-slate-900 text-white">
+                                                <Button
+                                                    variant="ghost"
+                                                    className="border-0"
+                                                    color="danger"
+                                                    isIconOnly
+                                                    onPress={() => handleDeletePostedJob(job.id)}
+                                                >
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </Button>
+                                            </Tooltip>
+                                            
+                                     </div>
+                                    
+
+                                    </TableCell>
+                                </TableRow>
+                            
+
+                            )
+
+
+                        }
+
+                        
+                       
+                        
+                   
                   
                 </TableBody>
+
             </Table>
                 
                                     

@@ -12,7 +12,7 @@ class Benefits extends Model
     protected $fillable = [
 
         'benefit_id',
-        'benefit_id',
+        'benefit',
        
 
     ];

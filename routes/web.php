@@ -1,6 +1,8 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\PostedJobs;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
@@ -39,10 +41,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function (Request $request) {
 
 
     $user = Auth::user();
+
+    $job_postings = PostedJobs::where('job_id',$user->id)->orderBy('created_at','DESC')->paginate(8);
+
+   
 
     switch($user->role){
 
@@ -51,7 +57,8 @@ Route::get('/dashboard', function () {
                 return Inertia::render('ApplicantHome',[
 
                     'isResumeExists' => $user->resume()->exists(),
-                    'isProfileInformationExists' => $user->contactInformation()->exists()
+                    'isProfileInformationExists' => $user->contactInformation()->exists(),
+                    
 
                 ]);
 
@@ -61,8 +68,9 @@ Route::get('/dashboard', function () {
 
                 return Inertia::render('EmployerDashboard',[
 
-                    'isOrgProfileExists' => $user->orgInformation()->exists()
-
+                    'isOrgProfileExists' => $user->orgInformation()->exists(),
+                    'jobPostings' =>  $job_postings
+                   
                 ]);
 
             break;
@@ -136,10 +144,20 @@ Route::group(['middleware' => ['role:Employer']], function () {
 
 
     Route::get('/organization-profile',[EmployerController::class,'index'])->middleware(['auth', 'verified'])->name('org.profile');
+    
     Route::post('/update-org-profile-info',[EmployerController::class,'updateOrgProfileInfo'])->middleware(['auth', 'verified'])->name('update_org_profile_info');
+   
     Route::post('/delete-industry',[EmployerController::class,'deleteIndustry'])->middleware(['auth', 'verified'])->name('delete_industry');
-
+   
     Route::get('/add-new-job',[EmployerController::class,'addNewJob'])->middleware(['auth', 'verified'])->name('add_new_job');
+
+    Route::post('/save-new-job',[EmployerController::class,'saveNewJob'])->middleware(['auth', 'verified'])->name('save_new_job');
+
+    Route::post('/delete-posted-job',[EmployerController::class,'deletePostedJob'])->middleware(['auth', 'verified'])->name('delete_posted_job');
+
+    Route::get('/view-posted-job',[EmployerController::class,'viewPostedJob'])->middleware(['auth', 'verified'])->name('view_posted_job');
+
+    Route::get('/filter-jobs',[EmployerController::class,'filterJobs'])->middleware(['auth', 'verified'])->name('filter_jobs');
   
 });
 
