@@ -426,7 +426,7 @@ class EmployerController extends Controller
         $job_postings = PostedJobs::where('job_id', $user->id)
         ->where(function($query) use ($request) {
             $query->where('status', $request->filter)
-                ->orWhere('job_title', 'ILIKE', '%'.$request->filter.'%');
+                ->orWhere('job_title', 'LIKE', '%'.$request->filter.'%');
         })
         ->orderBy('updated_at', 'DESC')
         ->paginate(8);
