@@ -31,6 +31,7 @@ export default function EmployerDashboardInterface({jobs}){
             preserveScroll: true,
             preserveState: true
         });
+
     }, 100),[]);
     
    function handleInfoModalClose(){
@@ -58,7 +59,7 @@ export default function EmployerDashboardInterface({jobs}){
 
      router.get('/view-posted-job',{id:id},{preserveScroll: true, preserveState: true})
 
-    }
+   }
 
    function handleDeletePostedJob(id){
 

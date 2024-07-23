@@ -140,11 +140,14 @@ class EmployerController extends Controller
 
     public function saveNewJob(Request $request){
 
+        
         $request->validate([
 
             'job_title' => 'required'
 
         ]);
+
+       
 
         $start_date = '';
 
@@ -174,7 +177,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->responsibilities()->create([
 
-                    'responsibility' => $item,
+                    'responsibility' => $item['responsibility'],
                    
         
                 ]);
@@ -188,7 +191,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->requiredEducation()->create([
 
-                    'education' => $item,
+                    'education' => $item['education'],
                    
         
                 ]);
@@ -202,7 +205,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->requiredExperiences()->create([
 
-                    'experience' => $item,
+                    'experience' => $item['experience'],
                    
         
                 ]);
@@ -216,7 +219,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->requiredSkills()->create([
 
-                    'skill' => $item,
+                    'skill' => $item['skill'],
                    
         
                 ]);
@@ -230,7 +233,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->requiredCertifications()->create([
 
-                    'certification' => $item,
+                    'certification' => $item['certification'],
                    
         
                 ]);
@@ -244,7 +247,7 @@ class EmployerController extends Controller
 
                 $posted_jobs->benefits()->create([
 
-                    'benefit' => $item,
+                    'benefit' => $item['benefit'],
                    
                 ]);
 
@@ -252,6 +255,135 @@ class EmployerController extends Controller
         }
 
         return redirect()->route('dashboard');
+    }
+
+    public function updateJob(Request $request){
+
+       $request->validate([
+
+            'job_title' => 'required'
+
+        ]);
+
+        $start_date = '';
+
+        if($request->start_date !== null){
+
+            $start_date = $request->start_date['month'] . '/' . $request->start_date['day'] . '/' . $request->start_date['year'];
+        }
+
+       
+
+        $posted_jobs = PostedJobs::find($request->job_id);
+
+        $posted_jobs->update([
+
+            'job_title' => $request->job_title,
+            'job_description' => $request->job_description,
+            'location' => $request->location,
+            'salary' => $request->salary,
+            'employment_type' => $request->employment_type,
+            'start_date' => $start_date,
+            'status' => 'active',
+
+
+        ]);
+
+        if($request->resposnsibility !== [] || $request->resposnsibility !== null){
+
+            $posted_jobs->responsibilities()->delete();
+
+            foreach($request->resposnsibility as $item){
+
+                $posted_jobs->responsibilities()->create([
+
+                    'responsibility' => $item['responsibility'],
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->education !== [] || $request->education !== null){
+
+            $posted_jobs->requiredEducation()->delete();
+
+            foreach($request->education as $item){
+
+                $posted_jobs->requiredEducation()->create([
+
+                    'education' => $item['education'],
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->experiences !== [] || $request->experiences !== null){
+
+            $posted_jobs->requiredExperiences()->delete();
+
+            foreach($request->experiences as $item){
+
+                $posted_jobs->requiredExperiences()->create([
+
+                    'experience' => $item['experience'],
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->skills !== [] || $request->skills !== null){
+
+            $posted_jobs->requiredSkills()->delete();
+
+            foreach($request->skills as $item){
+
+                $posted_jobs->requiredSkills()->create([
+
+                    'skill' => $item['skill'],
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->certifications !== [] || $request->certifications !== null){
+
+            $posted_jobs->requiredCertifications()->delete();
+            
+            foreach($request->certifications as $item){
+
+                $posted_jobs->requiredCertifications()->create([
+
+                    'certification' => $item['certification'],
+                   
+        
+                ]);
+
+            }
+        }
+
+        if($request->benefits !== [] || $request->benefits !== null){
+
+            $posted_jobs->benefits()->delete();
+
+            foreach($request->benefits as $item){
+
+                $posted_jobs->benefits()->create([
+
+                    'benefit' => $item['benefit'],
+                   
+                ]);
+
+            }
+        }
+    
     }
 
     public function viewPostedJob(Request $request){
@@ -296,7 +428,7 @@ class EmployerController extends Controller
             $query->where('status', $request->filter)
                 ->orWhere('job_title', 'ILIKE', '%'.$request->filter.'%');
         })
-        ->orderBy('created_at', 'DESC')
+        ->orderBy('updated_at', 'DESC')
         ->paginate(8);
         // $job_postings = PostedJobs::where('job_id',$user->id)->where('status',$request->filter)->orWhere('job_title','LIKE','%'.$request->filter.'%')->orderBy('created_at','DESC')->paginate(8);
 

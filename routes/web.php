@@ -46,7 +46,7 @@ Route::get('/dashboard', function (Request $request) {
 
     $user = Auth::user();
 
-    $job_postings = PostedJobs::where('job_id',$user->id)->orderBy('created_at','DESC')->paginate(8);
+    $job_postings = PostedJobs::where('job_id',$user->id)->orderBy('updated_at','DESC')->paginate(8);
 
    
 
@@ -152,6 +152,9 @@ Route::group(['middleware' => ['role:Employer']], function () {
     Route::get('/add-new-job',[EmployerController::class,'addNewJob'])->middleware(['auth', 'verified'])->name('add_new_job');
 
     Route::post('/save-new-job',[EmployerController::class,'saveNewJob'])->middleware(['auth', 'verified'])->name('save_new_job');
+
+    Route::post('/update-job',[EmployerController::class,'updateJob'])->middleware(['auth', 'verified'])->name('update_job');
+
 
     Route::post('/delete-posted-job',[EmployerController::class,'deletePostedJob'])->middleware(['auth', 'verified'])->name('delete_posted_job');
 

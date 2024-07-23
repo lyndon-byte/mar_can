@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
-import {today,getLocalTimeZone} from "@internationalized/date";
+import { useForm,router } from '@inertiajs/react';
+import {today,getLocalTimeZone,parseDate} from "@internationalized/date";
 
 import { Button , Card, Chip, CardHeader, CardBody, CardFooter, DatePicker, Textarea, Tooltip, Select, SelectItem, Listbox, ListboxItem} from '@nextui-org/react';
 
 export default function JobPostForm({jobData}) {
 
     const [isEditMode,setIsEditMode] = useState(false)
-
 
     const [inputtedResponsibilty,setInputtedResponsibilty] = useState('')
 
@@ -26,6 +25,7 @@ export default function JobPostForm({jobData}) {
     
     const { data, setData, post, errors, processing } = useForm({
 
+        job_id:'',
         job_title: '',
         job_description: '',
         location: '',
@@ -45,37 +45,37 @@ export default function JobPostForm({jobData}) {
 
     function handleSetResponsibility(){
 
-        setData('resposnsibility',[...data.resposnsibility,inputtedResponsibilty])
+        setData('resposnsibility',[...data.resposnsibility,{responsibility: inputtedResponsibilty}])
         setInputtedResponsibilty('')
     }
 
     function handleSetEducation(){
 
-        setData('education',[...data.education,inputtedEducation])
+        setData('education',[...data.education,{education:inputtedEducation}])
         setInputtedEducation('')
     }
 
     function handleSetExperience(){
 
-        setData('experiences',[...data.experiences,inputtedExperience])
+        setData('experiences',[...data.experiences,{experience:inputtedExperience}])
         setInputtedExperience('')
     }
 
     function handleSetSkill(){
 
-        setData('skills',[...data.skills,inputtedSkill])
+        setData('skills',[...data.skills,{skill:inputtedSkill}])
         setInputtedSkill('')
     }
 
     function handleSetCertification(){
 
-        setData('certifications',[...data.certifications,inputtedCertification])
+        setData('certifications',[...data.certifications,{certification:inputtedCertification}])
         setInputtedCertification('')
     }
 
     function handleSetBenefit(){
 
-        setData('benefits',[...data.benefits,inputtedBenefits])
+        setData('benefits',[...data.benefits,{benefit:inputtedBenefits}])
         setInputtedBenefits('')
     }
 
@@ -134,23 +134,46 @@ export default function JobPostForm({jobData}) {
 
     function handleEditMode(){
 
-        setIsEditMode(true)
-        setData({
 
-            full_name : info.full_name,
-            email: info.email_address,
-            phone_number: info.phone_number,
-            street_address: info.street_address,
-            city: info.city,
-            state: info.state,
-            postal_code: info.postal_code,
-            country: info.country
-        })
+        router.get('/view-posted-job',{id:jobData.id},{preserveScroll: true, preserveState: true, onSuccess: () => {
+
+            const dateObject = new Date(jobData.start_date);
+
+            setIsEditMode(true)
+            setData({
+
+                job_id: jobData.id,
+                job_title: jobData.job_title,
+                job_description: jobData.job_description,
+                location: jobData.location,
+                salary: jobData.salary,
+                employment_type: jobData.employment_type,
+                work_schedule: jobData.work_schedule,
+                start_date: jobData.start_date === '' ? '' :  parseDate(dateObject.toISOString().split('T')[0]),
+                status: jobData.status,
+                resposnsibility: jobData.responsibilities,
+                education: jobData.required_education,
+                experiences: jobData.required_experiences,
+                skills: jobData.required_skills,
+                certifications: jobData.required_certifications,
+                benefits: jobData.benefits
+            })
+
+        }})
+
+       
     }
 
     const submit = () => {
 
-        post(route('save_new_job'));
+       if(isEditMode){
+
+            post(route('update_job'),{onSuccess:() => {setIsEditMode(false)}});
+
+       }else{
+
+            post(route('save_new_job'));
+       }
 
     };
 
@@ -243,6 +266,7 @@ export default function JobPostForm({jobData}) {
                                                             color='success' 
                                                             variant="bordered" 
                                                             showMonthAndYearPickers
+                                                            defaultValue={data.start_date}
                                                             minValue={today(getLocalTimeZone())}
                                                             onChange={(value) => setData('start_date',value)}
                                                         />
@@ -281,7 +305,7 @@ export default function JobPostForm({jobData}) {
                                                         variant='bordered'
                                                         color='success'
                                                         radius='sm'
-                                                    
+                                                        defaultSelectedKeys={[data.employment_type]}
                                                         onChange={(e) => setData('employment_type',e.target.value)}
 
                                                     >
@@ -344,7 +368,6 @@ export default function JobPostForm({jobData}) {
 
                                                 <Listbox
                                                     aria-label="Actions"
-                                                    
                                                     emptyContent={
 
                                                         <p>List of responsibilities will show here</p>
@@ -354,36 +377,39 @@ export default function JobPostForm({jobData}) {
                                                     {
 
                                                         
-                                                            
-                                                        data.resposnsibility.map((element, index) => (
+
+                                                            data.resposnsibility.map((element, index) => (
                                                                                                         
                                                                                                         
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
+                                                                <ListboxItem key={index}
+                                                                    className="border rounded-md p-4"
+                                                                
+                                                                    startContent={
+    
+                                                                        <i class="fa-solid fa-star-of-life text-sm"></i>
+    
+                                                                    }
+                                                                    endContent={
+    
+                                                                        <Button
+                                                                            isIconOnly
+                                                                            variant='ghost'
+                                                                            color='danger'
+                                                                            className='border-none'
+                                                                            onPress={() => handleRemoveResponsibility(element)}
+                                                                        >
+                                                                            <i class="fa-solid fa-circle-xmark "></i>
+                                                                        </Button>
+    
+                                                                    }
+                                                                >
+                                                                    {element.responsibility}
+                                                                </ListboxItem>
+    
+                                                            ))
+                                                       
                                                             
-                                                                startContent={
-
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
-
-                                                                }
-                                                                endContent={
-
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveResponsibility(element)}
-                                                                    >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
-
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
-
-                                                        ))
+                                                        
                                                             
 
                                                         
@@ -391,7 +417,7 @@ export default function JobPostForm({jobData}) {
                                                     }
                                                     
                                                     
-                                                    </Listbox>
+                                                </Listbox>
 
 
                                                 </CardBody>
@@ -425,7 +451,7 @@ export default function JobPostForm({jobData}) {
                                     
                                     <p className="mt-1 mb-4 text-sm text-gray-600">
 
-                                        Outlining responsibilities sets clear expectations for what the job will involve. This helps to prevent misunderstandings or surprises later in the hiring process or after hiring.
+                                        Educational requirements ensure that candidates have a fundamental level of knowledge and understanding in a specific field. This baseline is crucial for roles that require specialized knowledge or technical expertise.                                    
                                     
                                     </p>
 
@@ -455,39 +481,36 @@ export default function JobPostForm({jobData}) {
 
                                                         
                                                             
-                                                        data.education.map((element, index) => (
+                                                       
+                                                            data.education.map((element, index) => (
                                                                                                         
                                                                                                         
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
-                                                            
-                                                                startContent={
+                                                                <ListboxItem key={index}
+                                                                    className="border rounded-md p-4"
+                                                                
+                                                                    startContent={
 
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
+                                                                        <i class="fa-solid fa-star-of-life text-sm"></i>
 
-                                                                }
-                                                                endContent={
+                                                                    }
+                                                                    endContent={
 
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveEducation(element)}
-                                                                    >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
+                                                                        <Button
+                                                                            isIconOnly
+                                                                            variant='ghost'
+                                                                            color='danger'
+                                                                            className='border-none'
+                                                                            onPress={() => handleRemoveEducation(element)}
+                                                                        >
+                                                                            <i class="fa-solid fa-circle-xmark "></i>
+                                                                        </Button>
 
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
+                                                                    }
+                                                                >
+                                                                    {element.education}
+                                                                </ListboxItem>
 
-                                                        ))
-                                                            
-
-                                                        
-
+                                                            ))
                                                     }
                                                     
                                                     
@@ -525,7 +548,8 @@ export default function JobPostForm({jobData}) {
                                     
                                     <p className="mt-1 mb-4 text-sm text-gray-600">
 
-                                        Outlining responsibilities sets clear expectations for what the job will involve. This helps to prevent misunderstandings or surprises later in the hiring process or after hiring.
+                                    Specifying required experiences helps ensure that candidates possess the necessary skills and knowledge to perform the job effectively. This reduces the risk of hiring underqualified individuals who may struggle to meet job expectations.
+
                                     
                                     </p>
 
@@ -555,36 +579,38 @@ export default function JobPostForm({jobData}) {
 
                                                         
                                                             
-                                                        data.experiences.map((element, index) => (
-                                                                                                        
-                                                                                                        
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
-                                                            
-                                                                startContent={
+                                                          
+                                                                data.experiences.map((element, index) => (
+                                                                                                            
+                                                                                                            
+                                                                    <ListboxItem key={index}
+                                                                        className="border rounded-md p-4"
+                                                                    
+                                                                        startContent={
 
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
+                                                                            <i class="fa-solid fa-star-of-life text-sm"></i>
 
-                                                                }
-                                                                endContent={
+                                                                        }
+                                                                        endContent={
 
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveExperience(element)}
+                                                                            <Button
+                                                                                isIconOnly
+                                                                                variant='ghost'
+                                                                                color='danger'
+                                                                                className='border-none'
+                                                                                onPress={() => handleRemoveExperience(element)}
+                                                                            >
+                                                                                <i class="fa-solid fa-circle-xmark "></i>
+                                                                            </Button>
+
+                                                                        }
                                                                     >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
+                                                                        {element.experience}
+                                                                    </ListboxItem>
 
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
-
-                                                        ))
+                                                                ))
                                                             
+                                                                                                                        
 
                                                         
 
@@ -625,7 +651,7 @@ export default function JobPostForm({jobData}) {
                                     
                                     <p className="mt-1 mb-4 text-sm text-gray-600">
 
-                                        Outlining responsibilities sets clear expectations for what the job will involve. This helps to prevent misunderstandings or surprises later in the hiring process or after hiring.
+                                         Specifying required skills helps ensure that candidates possess the necessary abilities to perform the job effectively. This reduces the risk of hiring individuals who may struggle to meet job expectations and responsibilities.                                    
                                     
                                     </p>
 
@@ -655,35 +681,38 @@ export default function JobPostForm({jobData}) {
 
                                                         
                                                             
-                                                        data.skills.map((element, index) => (
+                                                        
+
+                                                            data.skills.map((element, index) => (
                                                                                                         
                                                                                                         
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
-                                                            
-                                                                startContent={
+                                                                <ListboxItem key={index}
+                                                                    className="border rounded-md p-4"
+                                                                
+                                                                    startContent={
 
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
+                                                                        <i class="fa-solid fa-star-of-life text-sm"></i>
 
-                                                                }
-                                                                endContent={
+                                                                    }
+                                                                    endContent={
 
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveSkill(element)}
-                                                                    >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
+                                                                        <Button
+                                                                            isIconOnly
+                                                                            variant='ghost'
+                                                                            color='danger'
+                                                                            className='border-none'
+                                                                            onPress={() => handleRemoveSkill(element)}
+                                                                        >
+                                                                            <i class="fa-solid fa-circle-xmark "></i>
+                                                                        </Button>
 
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
+                                                                    }
+                                                                >
+                                                                    {element.skill}
+                                                                </ListboxItem>
 
-                                                        ))
+                                                            ))
+                                                      
                                                             
 
                                                         
@@ -725,7 +754,7 @@ export default function JobPostForm({jobData}) {
                                     
                                     <p className="mt-1 mb-4 text-sm text-gray-600">
 
-                                        Outlining responsibilities sets clear expectations for what the job will involve. This helps to prevent misunderstandings or surprises later in the hiring process or after hiring.
+                                        Certifications serve as a formal validation of a candidate's expertise and knowledge in a specific field. They indicate that the candidate has met industry standards and has a certain level of proficiency.                                    
                                     
                                     </p>
 
@@ -754,37 +783,39 @@ export default function JobPostForm({jobData}) {
                                                     {
 
                                                         
-                                                            
-                                                        data.certifications.map((element, index) => (
-                                                                                                        
-                                                                                                        
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
-                                                            
-                                                                startContent={
+                                                         
 
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
+                                                                data.certifications.map((element, index) => (
+                                                                                                            
+                                                                                                            
+                                                                    <ListboxItem key={index}
+                                                                        className="border rounded-md p-4"
+                                                                    
+                                                                        startContent={
 
-                                                                }
-                                                                endContent={
+                                                                            <i class="fa-solid fa-star-of-life text-sm"></i>
 
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveCertification(element)}
+                                                                        }
+                                                                        endContent={
+
+                                                                            <Button
+                                                                                isIconOnly
+                                                                                variant='ghost'
+                                                                                color='danger'
+                                                                                className='border-none'
+                                                                                onPress={() => handleRemoveCertification(element)}
+                                                                            >
+                                                                                <i class="fa-solid fa-circle-xmark "></i>
+                                                                            </Button>
+
+                                                                        }
                                                                     >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
+                                                                        {element.certification}
+                                                                    </ListboxItem>
 
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
-
-                                                        ))
+                                                                ))
                                                             
+                                                                                                                    
 
                                                         
 
@@ -826,8 +857,8 @@ export default function JobPostForm({jobData}) {
                                     
                                     <p className="mt-1 mb-4 text-sm text-gray-600">
 
-                                        Outlining responsibilities sets clear expectations for what the job will involve. This helps to prevent misunderstandings or surprises later in the hiring process or after hiring.
-                                    
+                                        Offering attractive benefits helps to draw in top talent. Candidates often look for more than just a competitive salary; comprehensive benefits packages can be a deciding factor in their job choice.                                    
+                                   
                                     </p>
 
                                 </header>
@@ -856,37 +887,38 @@ export default function JobPostForm({jobData}) {
 
                                                         
                                                             
-                                                        data.benefits.map((element, index) => (
+                                                        
+                                                     
+                                                            data.benefits.map((element, index) => (
                                                                                                         
                                                                                                         
-                                                            <ListboxItem key={index}
-                                                                className="border rounded-md p-4"
-                                                            
-                                                                startContent={
+                                                                <ListboxItem key={index}
+                                                                    className="border rounded-md p-4"
+                                                                
+                                                                    startContent={
 
-                                                                    <i class="fa-solid fa-star-of-life text-sm"></i>
+                                                                        <i class="fa-solid fa-star-of-life text-sm"></i>
 
-                                                                }
-                                                                endContent={
+                                                                    }
+                                                                    endContent={
 
-                                                                    <Button
-                                                                        isIconOnly
-                                                                        variant='ghost'
-                                                                        color='danger'
-                                                                        className='border-none'
-                                                                        onPress={() => handleRemoveBenefit(element)}
-                                                                    >
-                                                                        <i class="fa-solid fa-circle-xmark "></i>
-                                                                    </Button>
+                                                                        <Button
+                                                                            isIconOnly
+                                                                            variant='ghost'
+                                                                            color='danger'
+                                                                            className='border-none'
+                                                                            onPress={() => handleRemoveBenefit(element)}
+                                                                        >
+                                                                            <i class="fa-solid fa-circle-xmark "></i>
+                                                                        </Button>
 
-                                                                }
-                                                            >
-                                                                {element}
-                                                            </ListboxItem>
+                                                                    }
+                                                                >
+                                                                    {element.benefit}
+                                                                </ListboxItem>
 
-                                                        ))
-                                                            
-
+                                                            ))
+                                                       
                                                         
 
                                                     }
