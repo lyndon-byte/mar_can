@@ -46,9 +46,13 @@ Route::get('/dashboard', function (Request $request) {
 
     $user = Auth::user();
 
+    // job posting per employer
+
     $job_postings = PostedJobs::where('job_id',$user->id)->orderBy('updated_at','DESC')->paginate(8);
 
-   
+   // show all job posting for all applicant
+
+    $job_data = PostedJobs::with(['user.orgInformation','requiredExperiences','requiredSkills'])->orderBy('created_at','DESC')->paginate(8);
 
     switch($user->role){
 
@@ -58,7 +62,7 @@ Route::get('/dashboard', function (Request $request) {
 
                     'isResumeExists' => $user->resume()->exists(),
                     'isProfileInformationExists' => $user->contactInformation()->exists(),
-                    
+                    'jobData' => $job_data
 
                 ]);
 
@@ -129,7 +133,7 @@ Route::group(['middleware' => ['role:Applicant']], function () {
     
     Route::post('/delete-language',[ApplicantController::class,'deleteLanguage'])->middleware(['auth', 'verified'])->name('delete_language');
 
-
+    Route::get('/view-posted-job-full-details',[ApplicantController::class,'viewPostedJobFullDetails'])->middleware(['auth', 'verified'])->name('view_posted_job_full_details');
 
 
 });

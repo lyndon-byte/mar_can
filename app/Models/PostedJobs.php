@@ -67,4 +67,11 @@ class PostedJobs extends Model
 
         return $this->hasMany(AppliedApplicants::class,'applicant_id');
     }
+
+    public function user(){
+
+        return $this->belongsTo(User::class,'job_id');
+    }
+
+   
 }

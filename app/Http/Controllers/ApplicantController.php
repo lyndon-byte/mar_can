@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\PostedJobs;
 use Illuminate\Http\Request;
 use App\Models\ApplicantAwards;
 use App\Models\ApplicantResume;
@@ -483,5 +484,15 @@ class ApplicantController extends Controller
 
     }
 
+    public function viewPostedJobFullDetails(Request $request){
 
+        $job_data = PostedJobs::with(['user.orgInformation','responsibilities','requiredEducation','requiredExperiences','requiredSkills','requiredCertifications','benefits'])->findOrFail($request->id);
+
+        return Inertia::render('JobApplicationForm',[
+            
+            'jobData' => $job_data
+
+        ]);
+
+    }
 }

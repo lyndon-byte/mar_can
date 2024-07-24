@@ -246,7 +246,8 @@ export default function JobPostForm({jobData}) {
                                                             className="mt-1 block w-full"
                                                             value={data.location}
                                                             onChange={(e) => setData('location', e.target.value)}
-                                                        
+                                                            placeholder="Just type Remote, Work from home , Hybrid , Or On-site"
+
                                                         />
 
                                                     
