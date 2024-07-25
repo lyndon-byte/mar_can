@@ -192,9 +192,17 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Country</dt>
                                                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{applicants_data.contact_information.country}</dd>
                                                     </div>
+                                                    
                                                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Professional Summary</dt>
-                                                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{applicants_data.professional_summary.summary}</dd>
+                                                        {
+
+                                                            applicants_data.work_experiences.length !== 0 &&  (
+
+                                                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{applicants_data.professional_summary.summary}</dd>
+                                                            )
+                                                         }
+                                                       
                                                     </div>
                                                    
 
