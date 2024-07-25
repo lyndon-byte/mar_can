@@ -197,7 +197,7 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Professional Summary</dt>
                                                         {
 
-                                                            applicants_data.work_experiences.length !== 0 &&  (
+                                                            applicants_data.professional_summary.length !== 0 &&  (
 
                                                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{applicants_data.professional_summary.summary}</dd>
                                                             )
