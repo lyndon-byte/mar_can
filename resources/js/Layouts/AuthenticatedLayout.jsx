@@ -17,7 +17,7 @@ export default function Authenticated({ user, header, children }) {
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
                                     {/* <ApplicationLogo className="block h-9 w-auto fill-current text-red-500" /> */}
-                                    {/* <h3 className='text-2xl text-green-600'> Marcan.</h3> */}
+                                    <h3 className='text-2xl text-green-600'> Marcan.</h3>
                                 </Link>
                             </div>
 
@@ -25,6 +25,27 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     { user.role === 'Applicant' ? 'Home' : 'Dashboard' }
                                 </NavLink>
+
+                                { user.role === 'Applicant' ? (
+
+                                        <NavLink href={route('applied_jobs')} active={route().current('applied_jobs')}>
+                                               Applied Jobs                             
+                                        </NavLink>
+
+
+                                     ): (
+
+
+                                        <>
+
+                                        </>
+                                )}
+                                
+                            
+                            
+                            
+                               
+                               
                             </div>
                         </div>
 
@@ -107,6 +128,20 @@ export default function Authenticated({ user, header, children }) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             { user.role === 'Applicant' ? 'Home' : 'Dashboard' }
                         </ResponsiveNavLink>
+                        { user.role === 'Applicant' ? (
+
+                            <ResponsiveNavLink href={route('applied_jobs')} active={route().current('applied_jobs')}>
+                                Applied Jobs                             
+                            </ResponsiveNavLink>
+
+
+                            ): (
+
+
+                            <>
+                                
+                            </>
+                        )}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">

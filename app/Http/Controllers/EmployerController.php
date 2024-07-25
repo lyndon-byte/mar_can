@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\PostedJobs;
 use App\Models\OrgIndustry;
 use Illuminate\Http\Request;
+use App\Models\AppliedApplicants;
 use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
@@ -416,6 +418,8 @@ class EmployerController extends Controller
 
        $posted_job->benefits()->delete();
 
+       $posted_job->applicants()->delete();
+
        $posted_job->delete();
     }
 
@@ -439,4 +443,44 @@ class EmployerController extends Controller
            
         ]);
     }
-}
+
+    public function applicants(Request $request){
+
+        $applicants = PostedJobs::where('id',$request->id)->with(['applicants'])->orderBy('created_at','DESC')->paginate(5);
+
+        return Inertia::render('Applicants',[
+
+         
+            'applicants_data' =>  $applicants
+           
+        ]);
+
+
+    }
+
+    public function viewEmploymentProfile(Request $request){
+
+        $application = AppliedApplicants::where('user_id',$request->id)->get()->first(); 
+
+        $applicant = User::with(['contactInformation','professionalSummary','workExperiences','educationalBackground','certifications','awards','characterReferences','skills','languages'])->findOrFail($request->id);
+
+        return Inertia::render('ApplicantProfile',[
+
+         
+            'applicants_data' =>  $applicant,
+            'current_status' => $application->status,
+           
+        ]);
+
+    }
+
+    public function setApplicationStatus(Request $request){
+
+        AppliedApplicants::where('user_id',$request->id)->update([
+
+            'status' => $request->status
+
+        ]);
+
+    }
+}   

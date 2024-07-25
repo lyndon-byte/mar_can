@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 use App\Models\ApplicantAwards;
 use App\Models\ApplicantResume;
 use App\Models\ApplicantSkills;
+use App\Models\AppliedApplicants;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ApplicantCertifications;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ApplicantSpokenLanguages;
 use App\Models\ApplicantWorkExperiences;
+use Illuminate\Support\Facades\Validator;
 use App\Models\ApplicantCharacterReferences;
 use App\Models\ApplicantEducationalBackGround;
+use Illuminate\Validation\ValidationException;
 
 
 class ApplicantController extends Controller
@@ -491,6 +494,83 @@ class ApplicantController extends Controller
         return Inertia::render('JobApplicationForm',[
             
             'jobData' => $job_data
+
+        ]);
+
+    }
+
+    public function appliedJobs(){
+
+
+        $user_id = Auth::user()->id;
+
+        $applied_data = AppliedApplicants::where('user_id',$user_id)->with(['postedjob.user.orgInformation'])->orderBy('created_at','DESC')->paginate(5);
+
+        return Inertia::render('AppliedJobs',[
+
+            'applied_jobs_data' => $applied_data
+
+        ]);
+    }
+
+    public function applyToJob(Request $request){
+
+        $id = $request->id;
+
+        $user = Auth::user();
+
+        if(!$user->contactInformation()->exists()){
+
+            $validator = Validator::make([], []); // Create an empty validator
+            $validator->errors()->add('contact', 'Please fill out at least your personal information in your employment profile to proceed with the application.');
+            throw new ValidationException($validator);
+
+        }
+
+
+        $posted_job = PostedJobs::find($id);
+
+        $posted_job->applicants()->create([
+
+            'user_id' => $user->id,
+            'applicant_name' => $user->name. " " . $user->last_name,
+            'referrers_name' => $request->referrers_name,
+            'status' => 'pending'
+        ]);
+
+        $posted_job->new_applied_applicant_count += 1;
+
+        $posted_job->save();
+
+        return redirect()->route('applied_jobs');
+
+    }
+
+    public function deleteAppliedjob(Request $request){
+
+        $posted_job = PostedJobs::find($request->id);
+
+        $currentValue = intval($posted_job->new_applied_applicant_count);
+
+        $newValue = strval($currentValue - 1);
+
+        $posted_job->new_applied_applicant_count = $newValue;
+
+        $posted_job->save();
+
+        AppliedApplicants::where('id',$request->applied_job_id)->delete();
+    }
+
+    public function filterAppliedJobs(Request $request){
+
+        
+        $user_id = Auth::user()->id;
+
+        $applied_data = AppliedApplicants::where('user_id',$user_id)->where('status',$request->filter)->with(['postedjob.user.orgInformation'])->orderBy('created_at','DESC')->paginate(5);
+
+        return Inertia::render('AppliedJobs',[
+
+            'applied_jobs_data' => $applied_data
 
         ]);
 

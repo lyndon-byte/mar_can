@@ -125,7 +125,7 @@ export default function JobListings({postedJobs}){
                                                                         <ListboxItem 
 
                                                                             key={item.id}
-                                                                            className="bg-white mb-3 p-5 "
+                                                                            className="bg-white mb-3 p-5"
                                                                             shouldHighlightOnFocus={false}
                                                                         >
                                                                         
@@ -139,7 +139,7 @@ export default function JobListings({postedJobs}){
                                                                                                 </div>
                                                                                         </CardHeader>
                                                                                         <Divider/>      
-                                                                                        <CardBody className="">
+                                                                                        <CardBody className="p-5">
                                                                                                 <div class="flex-1  mt-3">
                                                                                                         
                                                                                                         <h2 class="text-2xl font-semibold mb-3"><i class="fa-solid fa-briefcase"></i>&nbsp; {item.job_title}</h2>

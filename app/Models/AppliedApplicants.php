@@ -13,5 +13,19 @@ class AppliedApplicants extends Model
 
         'applicant_id',
         'user_id',
+        'applicant_name',
+        'status',
+        'referrers_name'
     ];
+
+    public function postedjob(){
+
+        return $this->belongsTo(PostedJobs::class,'applicant_id');
+    }
+
+    public function applicantsAccount(){
+
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
+

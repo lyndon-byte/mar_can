@@ -75,6 +75,11 @@ export default function EmployerDashboardInterface({jobs}){
 
    }
 
+   function handleViewApplicants(id){
+
+        router.get('/applicants',{id:id},{preserveScroll: true, preserveState: true})
+   }
+
 
    function setStatusFilter(e){
 
@@ -250,12 +255,12 @@ export default function EmployerDashboardInterface({jobs}){
                                         <div className="relative flex justify-end  items-center gap-2">
 
                                             
-                                            <Badge content="1" color="danger" isInvisible={true}>
+                                            <Badge content={job.new_applied_applicant_count} color="danger" >
                                                 <Tooltip content="View applicants who applied" className="bg-slate-900 text-white">
                                                     <Button
                                                         variant="ghost"
                                                         className="border-0"
-                                                    
+                                                        onPress={() => handleViewApplicants(job.id)}
                                                         isIconOnly
                                                     >
                                                     <i class="fa-solid fa-user"></i>

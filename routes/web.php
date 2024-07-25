@@ -135,6 +135,15 @@ Route::group(['middleware' => ['role:Applicant']], function () {
 
     Route::get('/view-posted-job-full-details',[ApplicantController::class,'viewPostedJobFullDetails'])->middleware(['auth', 'verified'])->name('view_posted_job_full_details');
 
+    Route::post('/apply-to-job',[ApplicantController::class,'applyToJob'])->middleware(['auth', 'verified'])->name('apply_to_job');
+
+    Route::get('/applied-jobs',[ApplicantController::class,'appliedJobs'])->middleware(['auth', 'verified'])->name('applied_jobs');
+
+    Route::post('/delete-applied-job',[ApplicantController::class,'deleteAppliedjob'])->middleware(['auth', 'verified'])->name('delete_applied_job');
+
+    Route::get('/filter-applied-jobs',[ApplicantController::class,'filterAppliedJobs'])->middleware(['auth', 'verified'])->name('filter_applied_jobs');
+
+    
 
 });
 
@@ -166,6 +175,13 @@ Route::group(['middleware' => ['role:Employer']], function () {
 
     Route::get('/filter-jobs',[EmployerController::class,'filterJobs'])->middleware(['auth', 'verified'])->name('filter_jobs');
   
+    Route::get('/applicants',[EmployerController::class,'applicants'])->middleware(['auth', 'verified'])->name('applicants');
+
+    Route::get('/view-employment-profile',[EmployerController::class,'viewEmploymentProfile'])->middleware(['auth', 'verified'])->name('view_employment_profile');
+
+    
+    Route::post('/set-application-status',[EmployerController::class,'setApplicationStatus'])->middleware(['auth', 'verified'])->name('set_application_status');
+
 });
 
 

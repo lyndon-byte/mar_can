@@ -1,10 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Button } from "@nextui-org/react";
-import {Head,router} from '@inertiajs/react'
+import {Head,router,useForm} from '@inertiajs/react'
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,Link,useDisclosure} from "@nextui-org/react";
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+
 
 export default function JobApplicationForm({auth,jobData}){
 
+    const [isOpenModal,setIsOpenModal] = useState(false)
+
+    const [isOpenErrorModal,setIsOpenErrorModal] = useState(false)
+
+    const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+
+    const { data,setData,post,errors, processing } = useForm({
+
+        id: jobData.id,
+        referrers_name: '',
+        contact: ''
+    });
+
+    function handleApplyToJob(){
+
+        post(route('apply_to_job'))
+
+    }
 
     useEffect(() => {
 
@@ -13,40 +35,108 @@ export default function JobApplicationForm({auth,jobData}){
     },[])
 
 
-    
-
     return (
 
         <>  
+
+            <Modal isDismissable={false} isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} >
+                <ModalContent>
+            
+                    <>
+                    <ModalHeader className="flex flex-col gap-1">Question</ModalHeader>
+                    <ModalBody>
+
+                        <p className="mb-2"> 
+
+                            Did someone refer you? If so, please provide your referrer's name. If not, you can leave it blank.
+
+
+                        </p>
+
+                        <InputLabel className='mt-2' htmlFor="referrers_name" value="Referrer's name" />
+
+                        <TextInput
+
+                                className="mt-1 block w-full"
+                                value={data.referrers_name}
+                                onChange={(e) => setData('referrers_name', e.target.value)}
+                              
+                        />
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="default" className="bg-slate-800 text-white" radius="sm" isLoading={processing} onPress={() => handleApplyToJob()}>
+                            proceed to application
+                        </Button>
+                    
+                    </ModalFooter>
+                    </>
+                
+                </ModalContent>
+            </Modal>
+
+
+            <Modal isDismissable={false} isOpen={errors.contact ? true : false} >
+                <ModalContent>
+            
+                    <>
+                    <ModalHeader className="flex flex-col gap-1">Info</ModalHeader>
+                    <ModalBody>
+
+                        <p className="mb-2"> 
+
+                            {errors.contact}
+
+
+                        </p>
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button
+                                
+                                href="/employment-profile"
+                                as={Link}
+                                showAnchorIcon
+                                variant="solid"
+                                className='mt-4 text-white bg-slate-700'
+                                radius='sm'
+
+                                >
+                                Fill Out Your Profile
+
+                        </Button>
+                    
+                    </ModalFooter>
+                    </>
+                
+                </ModalContent>
+            </Modal>
+
 
             <AuthenticatedLayout
                 user={auth.user}
                 header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Home</h2>}
             >
                 <Head title="Job Application" />
-
+                
                 <div className="py-12">
-
-                    <div className="mx-auto sm:px-6 lg:px-8">
                     
+                    <div className="mx-auto sm:px-6 lg:px-8">
+                        
 
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <div className="flex justify-end">
+                                 <Button 
+                                   className="mt-5 mb-5 bg-slate-800 text-white" 
+                                   radius="sm" 
+                                   onPress={() => setIsOpenModal(true)}
+                                 >
+                                    Apply now<i class="fa-solid fa-paper-plane"></i>
+                                </Button> 
+                            </div>  
 
-                            <header>
-                                <div className="text-lg font-medium text-gray-900">
-
-                                    Job details
-
-                                    <Button
-
-                                         className="mt-5 float-end mb-5"
-                                    >
-
-                                      Apply
-                                    </Button>  
-                                
-                                </div>
-                            </header>
+                           
+                       
 
                     <div className='p-4'>
 
