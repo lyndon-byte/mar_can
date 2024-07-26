@@ -17,12 +17,26 @@ class CheckUserRole
     public function handle(Request $request, Closure $next, $role): Response
     {
 
-        if (!Auth::check() || Auth::user()->role !== $role) {
+        // if (!Auth::check() || Auth::user()->role !== $role) {
            
-            abort(403);
+        //     abort(403);
+           
+        // }
+
+        // return $next($request);
+
+
+        $user = Auth::user();
+
+        if ($user && $user->role == 'SuperAdmin') {
+            return $next($request);
         }
-        
-        
-        return $next($request);
+
+        if ($role && $user && $user->role == $role) {
+            
+            return $next($request);
+        }
+
+        abort(403);
     }
 }

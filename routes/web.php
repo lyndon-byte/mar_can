@@ -182,7 +182,6 @@ Route::group(['middleware' => ['role:Employer']], function () {
 
     Route::post('/update-job',[EmployerController::class,'updateJob'])->middleware(['auth', 'verified'])->name('update_job');
 
-
     Route::post('/delete-posted-job',[EmployerController::class,'deletePostedJob'])->middleware(['auth', 'verified'])->name('delete_posted_job');
 
     Route::get('/view-posted-job',[EmployerController::class,'viewPostedJob'])->middleware(['auth', 'verified'])->name('view_posted_job');
@@ -205,12 +204,23 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 
     Route::get('/filter-all-applicants',[SuperAdminController::class,'filterAllApplicants'])->middleware(['auth', 'verified'])->name('filter_all_applicants');
     
+    Route::get('/view-specific-applicant',[SuperAdminController::class,'viewSpecificApplcant'])->middleware(['auth', 'verified']);
+    
     Route::post('/delete-applicant',[SuperAdminController::class,'deleteApplicant'])->middleware(['auth', 'verified']);
 
     Route::get('/all-employers',[SuperAdminController::class,'showAllEmployers'])->middleware(['auth', 'verified'])->name('all_employers');
 
+    Route::post('/delete-employer',[SuperAdminController::class,'deleteEmployer'])->middleware(['auth', 'verified']);
+
+    Route::get('/filter-all-employers',[SuperAdminController::class,'filterAllEmployers'])->middleware(['auth', 'verified'])->name('filter_all_employers');
+
+    Route::get('/view-specific-employer',[SuperAdminController::class,'viewSpecificEmployer'])->middleware(['auth', 'verified']);
+
+
     Route::get('/all-job-listings',[SuperAdminController::class,'showAllJobListings'])->middleware(['auth', 'verified'])->name('all_jobs');
 
+
+    
 
 
 });

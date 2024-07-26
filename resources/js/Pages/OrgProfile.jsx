@@ -19,23 +19,23 @@ export default function OrgProfile({auth,org_info_data,org_industry_data,status}
         
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(status === 'company-info-saved'){
+    //     if(status === 'company-info-saved'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('Company information was saved')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('Company information was saved')
+    //     }
 
         
-        else if(status === 'company-info-deleted'){
+    //     else if(status === 'company-info-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('Deleted!')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('Deleted!')
+    //     }
 
 
-    },[status])
+    // },[status])
 
     return (
 

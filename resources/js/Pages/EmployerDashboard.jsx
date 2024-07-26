@@ -72,7 +72,7 @@ export default function EmployerDashboard({ auth,isOrgProfileExists,jobPostings}
                             isOrgProfileExists ? (
                                 
                                 <>
-                                        <EmployerDashboardInterface  jobs={jobPostings} />
+                                        <EmployerDashboardInterface userInfo={auth.user} jobs={jobPostings} />
                                 </>
                                 
 

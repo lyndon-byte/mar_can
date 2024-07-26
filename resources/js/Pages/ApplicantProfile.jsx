@@ -152,10 +152,25 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Phone number</dt>
                                                         <dd class="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                                             
-                                                            Hidden &nbsp;
-                                                            <Tooltip content="show" className="bg-slate-800 text-white">
-                                                                <Button onPress={() => setIsOpenModal(true)} isIconOnly variant="ghost" className="border-0"><i class="fa-solid fa-eye"></i></Button>
-                                                            </Tooltip>
+                                                           {
+
+                                                            auth.user.role !== 'SuperAdmin' ? (
+                                                                <>
+                                                                     Hidden &nbsp;
+                                                                    <Tooltip content="show" className="bg-slate-800 text-white">
+                                                                        <Button onPress={() => setIsOpenModal(true)} isIconOnly variant="ghost" className="border-0"><i class="fa-solid fa-eye"></i></Button>
+                                                                    </Tooltip>
+                                                                </>
+                                                               
+                                                            ): (
+
+                                                                <span className="text-gray-800">
+                                                                      {applicants_data.contact_information.phone_number}
+                                                                </span>
+                                                              
+                                                            )
+
+                                                           }
                                                             
                                                         
                                                         </dd>
@@ -163,11 +178,29 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
                                                         <dd class="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+
+                                                        {
+
+                                                            auth.user.role !== 'SuperAdmin' ? (
+                                                                <>
+                                                                      Hidden &nbsp;
+                                                                     <Tooltip content="show" className="bg-slate-800 text-white">
+                                                                        <Button onPress={() => setIsOpenModal(true)} isIconOnly variant="ghost" className="border-0"><i class="fa-solid fa-eye"></i></Button>
+                                                                     </Tooltip>
+                                                                </>
                                                             
-                                                            Hidden &nbsp;
-                                                            <Tooltip content="show" className="bg-slate-800 text-white">
-                                                                <Button onPress={() => setIsOpenModal(true)} isIconOnly variant="ghost" className="border-0"><i class="fa-solid fa-eye"></i></Button>
-                                                            </Tooltip>
+                                                            ): (
+
+                                                                <span className="text-gray-800">
+                                                                    {applicants_data.contact_information.email_address}
+                                                                </span>
+                                                            
+                                                            )
+
+                                                        }
+
+                                                            
+                                                          
                                                             
                                                         
                                                         </dd>

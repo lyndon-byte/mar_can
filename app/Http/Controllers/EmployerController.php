@@ -118,7 +118,7 @@ class EmployerController extends Controller
 
         }
 
-        return redirect()->route('org.profile',['status' => 'company-info-saved']);
+        return redirect()->route('org.profile');
 
         
 
@@ -128,7 +128,7 @@ class EmployerController extends Controller
 
         OrgIndustry::where('id',$request->id)->delete();
 
-        return redirect()->route('org.profile',['status' => 'company-info-deleted']);
+        return redirect()->route('org.profile');
     }
 
     public function addNewJob(){

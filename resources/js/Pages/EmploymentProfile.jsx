@@ -44,124 +44,124 @@ export default function EmploymentProfile({
         
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
        
 
-        if(status === 'resume-saved'){
+    //     if(status === 'resume-saved'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('resume was saved')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('resume was saved')
            
 
-        }
+    //     }
         
-        else if(status === 'personal-info-saved'){
+    //     else if(status === 'personal-info-saved'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('personal information was saved')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('personal information was saved')
             
 
-        }
+    //     }
 
-        else if (status === 'pro-summary-info-saved'){
+    //     else if (status === 'pro-summary-info-saved'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('professional summary was saved')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('professional summary was saved')
+    //     }
 
-        else if (status === 'work-experience-saved'){
+    //     else if (status === 'work-experience-saved'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('work experience was saved')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('work experience was saved')
+    //     }
 
-        else if (status === 'work-experience-deleted'){
+    //     else if (status === 'work-experience-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('work experience was deleted')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('work experience was deleted')
+    //     }
 
-        else if (status === 'educational-background-deleted'){
+    //     else if (status === 'educational-background-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('educational background was deleted')
-        }
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('educational background was deleted')
+    //     }
 
-        else if (status === 'certificate-added'){
+    //     else if (status === 'certificate-added'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('certificate was added')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('certificate was added')
 
-        }
+    //     }
 
-        else if (status === 'certificate-deleted'){
+    //     else if (status === 'certificate-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('certificate was deleted')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('certificate was deleted')
 
-        }
+    //     }
 
-        else if (status === 'award-added'){
+    //     else if (status === 'award-added'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('award was added')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('award was added')
 
-        }
+    //     }
 
-        else if (status === 'award-deleted'){
+    //     else if (status === 'award-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('award was deleted')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('award was deleted')
 
-        }
+    //     }
         
-        else if (status === 'character-reference-added'){
+    //     else if (status === 'character-reference-added'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('character reference was added')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('character reference was added')
 
-        }
+    //     }
         
-        else if (status === 'character-reference-deleted'){
+    //     else if (status === 'character-reference-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('character reference was deleted')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('character reference was deleted')
 
-        }
+    //     }
 
-        else if (status === 'skill-added'){
+    //     else if (status === 'skill-added'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('Skills was added')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('Skills was added')
 
-        }
+    //     }
 
-        else if (status === 'skill-deleted'){
+    //     else if (status === 'skill-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('skill was deleted')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('skill was deleted')
 
-        }
+    //     }
 
-        else if (status === 'language-added'){
+    //     else if (status === 'language-added'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('languages was added')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('languages was added')
 
-        }
+    //     }
 
-        else if (status === 'language-deleted'){
+    //     else if (status === 'language-deleted'){
 
-            setIsOpenModal(true) 
-            setInfoModalText('language was deleted')
+    //         setIsOpenModal(true) 
+    //         setInfoModalText('language was deleted')
 
-        }
-        
-
+    //     }
         
 
-    },[status])
+        
+
+    // },[status])
 
     return (
         <>

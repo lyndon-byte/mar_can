@@ -86,7 +86,7 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
 
    function handleViewApplicant(id){
 
-        router.get('/applicants',{id:id},{preserveScroll: true, preserveState: true})
+        router.get('/view-specific-applicant',{id:id},{preserveScroll: true, preserveState: true})
    }
 
 
@@ -259,23 +259,23 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
                                                                 <div className="relative flex justify-end pr-5 items-center gap-2">
                                                                 
                                                                 
-                                                                    <Tooltip content="View All Details" className="bg-slate-900 text-white">
+                                                                    <Tooltip content="View employment profile" className="bg-slate-900 text-white">
                                                                         <Button
                                                                             variant="ghost"
                                                                             className="border-0"
                                                                             isIconOnly
-                                                                            // onPress={() => handleViewPostedJob(job.id)}
+                                                                            onPress={() => handleViewApplicant(item.id)}
                                                                         >
                                                                             <i class="fa-solid fa-eye"></i>
                                                                         </Button>
                                                                     </Tooltip>
 
-                                                                    <Tooltip content="Edit Details" className="bg-slate-900 text-white">
+                                                                    <Tooltip content="Edit employment profile" className="bg-slate-900 text-white">
                                                                         <Button
                                                                             variant="ghost"
                                                                             className="border-0"
                                                                             isIconOnly
-                                                                            // onPress={() => handleViewPostedJob(job.id)}
+                                                                            onPress={() => handleViewApplicant(item.id)}
                                                                         >
                                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                                         </Button>

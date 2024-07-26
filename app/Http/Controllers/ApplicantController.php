@@ -133,7 +133,7 @@ class ApplicantController extends Controller
 
       
 
-        return redirect()->route('employment.profile',['status' => 'resume-saved']);
+        return redirect()->route('employment.profile');
         
     }
 
@@ -197,7 +197,7 @@ class ApplicantController extends Controller
 
         }
 
-        return redirect()->route('employment.profile',['status' => 'personal-info-saved']);
+        return redirect()->route('employment.profile');
     }
 
     public function updateProfessionalSummary(Request $request){
@@ -229,7 +229,7 @@ class ApplicantController extends Controller
 
         }
 
-        return redirect()->route('employment.profile',['status' => 'pro-summary-info-saved']);
+        return redirect()->route('employment.profile');
     }
 
     public function addWorkExperience(Request $request){
@@ -270,7 +270,7 @@ class ApplicantController extends Controller
  
         ]);
 
-        return redirect()->route('employment.profile',['status' => 'work-experience-saved']);
+        return redirect()->route('employment.profile');
 
     }
 
@@ -279,7 +279,7 @@ class ApplicantController extends Controller
 
         ApplicantWorkExperiences::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'work-experience-deleted']);
+        return redirect()->route('employment.profile');
     }
 
     public function addEducationalBackground(Request $request){
@@ -312,7 +312,7 @@ class ApplicantController extends Controller
 
         ]);
 
-        return redirect()->route('employment.profile',['status' => 'educational-background-added']);
+        return redirect()->route('employment.profile');
 
     }
 
@@ -320,7 +320,7 @@ class ApplicantController extends Controller
 
         ApplicantEducationalBackGround::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'educational-background-deleted']);
+        return redirect()->route('employment.profile');
 
     }
 
@@ -343,7 +343,7 @@ class ApplicantController extends Controller
 
         ]);
 
-        return redirect()->route('employment.profile',['status' => 'certificate-added']);
+        return redirect()->route('employment.profile');
 
 
     }
@@ -352,7 +352,7 @@ class ApplicantController extends Controller
 
         ApplicantCertifications::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'certificate-deleted']);
+        return redirect()->route('employment.profile');
     }
 
     public function addAward(Request $request){
@@ -375,7 +375,7 @@ class ApplicantController extends Controller
 
         ]);
 
-        return redirect()->route('employment.profile',['status' => 'award-added']);
+        return redirect()->route('employment.profile');
 
 
     }
@@ -384,7 +384,7 @@ class ApplicantController extends Controller
 
         ApplicantAwards::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'award-deleted']);
+        return redirect()->route('employment.profile');
     }
 
     public function addCharacterReference(Request $request){
@@ -410,7 +410,7 @@ class ApplicantController extends Controller
 
         ]);
 
-        return redirect()->route('employment.profile',['status' => 'character-reference-added']);
+        return redirect()->route('employment.profile');
 
 
     }
@@ -419,7 +419,7 @@ class ApplicantController extends Controller
 
         ApplicantCharacterReferences::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'character-reference-deleted']);
+        return redirect()->route('employment.profile');
     }
 
     public function addSkill(Request $request){
@@ -442,14 +442,14 @@ class ApplicantController extends Controller
             ]);
         }
 
-        return redirect()->route('employment.profile',['status' => 'skill-added']);
+        return redirect()->route('employment.profile');
     }
 
     public function deleteSkill(Request $request){
 
         ApplicantSkills::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'skill-deleted']);
+        return redirect()->route('employment.profile');
     }
 
 
@@ -474,7 +474,7 @@ class ApplicantController extends Controller
             ]);
         }
 
-        return redirect()->route('employment.profile',['status' => 'language-added']);
+        return redirect()->route('employment.profile');
 
 
     }
@@ -483,7 +483,7 @@ class ApplicantController extends Controller
 
         ApplicantSpokenLanguages::where('id',$request->id)->delete();
 
-        return redirect()->route('employment.profile',['status' => 'language-deleted']);
+        return redirect()->route('employment.profile');
 
     }
 

@@ -8,7 +8,7 @@ import { debounce } from 'lodash';
 
 
 
-export default function EmployerDashboardInterface({jobs}){
+export default function EmployerDashboardInterface({jobs,userInfo}){
 
    const [isLoading,setIsLoading] = useState(false)
 
@@ -34,7 +34,15 @@ export default function EmployerDashboardInterface({jobs}){
     
    function handleInfoModalClose(){
 
-        router.get('/dashboard',{},{preserveState: true, preserveScroll:true, onSuccess: () => {setIsOpenModal(false)}})
+       if(userInfo.role !== 'SuperAdmin'){
+
+            router.get('/dashboard',{},{preserveState: true, preserveScroll:true, onSuccess: () => {setIsOpenModal(false)}})
+
+       }else{
+
+         setIsOpenModal(false)
+
+       }
     
    }
    
@@ -124,13 +132,22 @@ export default function EmployerDashboardInterface({jobs}){
                 <>
                    <div className='flex gap-2 text-gray-500'>
                             
-                                <Chip variant="bordered" className='p-4'>
-                                    Posted jobs: <span className="text-gray-700 font-bold text-md">{jobs.total}</span>
-                                </Chip>
-                            
-                                <Chip variant="bordered" className='p-4'>
-                                    Applicants who applied to the posted jobs: <span className="text-gray-700 font-bold text-md">0</span>
-                                </Chip>
+                               {
+                                    userInfo.role !== 'SuperAdmin' && (
+                                        
+                                        <>
+                                             <Chip variant="bordered" className='p-4'>
+                                                Posted jobs: <span className="text-gray-700 font-bold text-md">{jobs.total}</span>
+                                            </Chip>
+                                        
+                                            <Chip variant="bordered" className='p-4'>
+                                                Applicants who applied to the posted jobs: <span className="text-gray-700 font-bold text-md">0</span>
+                                            </Chip>
+                                        
+                                        </>
+                                    )
+
+                               }
                             
                     </div>
                     <div className="flex flex-col gap-4 mb-2">
@@ -174,20 +191,29 @@ export default function EmployerDashboardInterface({jobs}){
                                 </DropdownMenu>
                             </Dropdown>
             
-                        
-                            <Tooltip content="Add new job post" className="bg-slate-900 text-white">
-                                <Button 
+                            {
+                                    userInfo.role !== 'SuperAdmin' && (
+                                        
+                                        <>
+                                            <Tooltip content="Add new job post" className="bg-slate-900 text-white">
+                                                <Button 
 
-                                    className="bg-slate-800 text-white"
-                                    radius="sm" 
-                                    endContent={<i class="fa-solid fa-plus"></i>}
-                                    isLoading={isLoading}
-                                    onPress={() => handleRedirecToAddNewJobForm()}
+                                                    className="bg-slate-800 text-white"
+                                                    radius="sm" 
+                                                    endContent={<i class="fa-solid fa-plus"></i>}
+                                                    isLoading={isLoading}
+                                                    onPress={() => handleRedirecToAddNewJobForm()}
 
-                                >
-                                    Add New
-                                </Button>
-                            </Tooltip>
+                                                >
+                                                    Add New
+                                                </Button>
+                                            </Tooltip>
+                                        
+                                        </>
+                                    )
+
+                            }
+                           
                         </div>
                         </div>
                         
