@@ -17,7 +17,7 @@ export default function Authenticated({ user, header, children }) {
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
                                     {/* <ApplicationLogo className="block h-9 w-auto fill-current text-red-500" /> */}
-                                    <h3 className='text-2xl text-green-600'> Marcan.</h3>
+                                    {/* <h3 className='text-2xl text-green-600'> Marcan.</h3> */}
                                 </Link>
                             </div>
 
@@ -41,8 +41,27 @@ export default function Authenticated({ user, header, children }) {
                                         </>
                                 )}
                                 
+
+                                { user.role === 'SuperAdmin' && (
+
+                                    <>
+
+                                        <NavLink href={route('all_applicants')} active={route().current('all_applicants')}>
+                                            Applicants                           
+                                        </NavLink>
+                                        <NavLink href={route('all_employers')} active={route().current('all_employers')}>
+                                            Employers                           
+                                        </NavLink>
+                                        <NavLink href={route('all_jobs')} active={route().current('all_jobs')}>
+                                            Job Listings                           
+                                        </NavLink>
+                                        
+                                    </>
+
+
+                                )}
                             
-                            
+                                    
                             
                                
                                
@@ -83,9 +102,15 @@ export default function Authenticated({ user, header, children }) {
 
                                                 <Dropdown.Link href={route('employment.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Employment Profile</Dropdown.Link>
 
+                                            ) : user.role === 'Employer' ? (
+
+                                               
+                                                <Dropdown.Link href={route('org.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Organization Profile</Dropdown.Link>
                                             ) : (
 
-                                                <Dropdown.Link href={route('org.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Organization Profile</Dropdown.Link>
+                                                <>
+                                                
+                                                </>
                                             )
 
                                         }
@@ -141,6 +166,26 @@ export default function Authenticated({ user, header, children }) {
                             <>
                                 
                             </>
+                        )}
+
+                        
+                        { user.role === 'SuperAdmin' && (
+
+                        <>
+
+                            <ResponsiveNavLink href={route('all_applicants')} active={route().current('all_applicants')}>
+                                Applicants                           
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('all_employers')} active={route().current('all_employers')}>
+                                Employers                           
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('all_jobs')} active={route().current('all_jobs')}>
+                                Job Listings                           
+                            </ResponsiveNavLink>
+                            
+                        </>
+
+
                         )}
                     </div>
 

@@ -434,6 +434,7 @@ class EmployerController extends Controller
         })
         ->orderBy('updated_at', 'DESC')
         ->paginate(8);
+        
         // $job_postings = PostedJobs::where('job_id',$user->id)->where('status',$request->filter)->orWhere('job_title','LIKE','%'.$request->filter.'%')->orderBy('created_at','DESC')->paginate(8);
 
         return Inertia::render('EmployerDashboard',[

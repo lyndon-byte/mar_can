@@ -6,7 +6,7 @@ export default function ProfileCompletionBanner({role,profile_name}){
 
     return (
 
-            <div className='grid grid-cols-1 sm:grid-cols-2'>
+            <div className='grid grid-cols-1 bg-white rounded-lg sm:grid-cols-2'>
 
                         <div className="p-24 m-auto text-3xl  text-gray-900">Welcome <span className='font-bold'>{profile_name}! </span> 
                             {

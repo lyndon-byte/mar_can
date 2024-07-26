@@ -19,11 +19,9 @@ export default function EmployerDashboardInterface({jobs}){
    const [filter,setFilter] = useState('Status');
 
    const [searchQuery, setSearchQuery] = useState('');
-
-
+    
    const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
 
-   
    const handleSearch = useCallback(debounce((query) => {
 
         setSearchQuery(query);

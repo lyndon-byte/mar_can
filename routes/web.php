@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\PostedJobs;
 use Illuminate\Http\Request;
@@ -8,6 +9,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\SuperAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,10 @@ Route::get('/dashboard', function (Request $request) {
 
     $job_data = PostedJobs::with(['user.orgInformation','requiredExperiences','requiredSkills'])->orderBy('created_at','DESC')->paginate(8);
 
+    // show counts for all data for super admin dashboard
+
+
+
     switch($user->role){
 
         case 'Applicant':
@@ -79,7 +85,15 @@ Route::get('/dashboard', function (Request $request) {
 
             break;
         
-        case 'Admin':
+        case 'SuperAdmin':
+
+              return Inertia::render('SuperAdminDashboard',[
+
+                  'applicants_data_count' =>  User::where('role','Applicant')->count(),
+                  'employers_data_count' => User::where('role','Employer')->count(),
+                  'joblistings_data_count' => PostedJobs::count(),
+                   
+              ]);
             
             break;
     }
@@ -179,10 +193,28 @@ Route::group(['middleware' => ['role:Employer']], function () {
 
     Route::get('/view-employment-profile',[EmployerController::class,'viewEmploymentProfile'])->middleware(['auth', 'verified'])->name('view_employment_profile');
 
-    
     Route::post('/set-application-status',[EmployerController::class,'setApplicationStatus'])->middleware(['auth', 'verified'])->name('set_application_status');
 
 });
+
+
+Route::group(['middleware' => ['role:SuperAdmin']], function () {
+
+
+    Route::get('/all-applicants',[SuperAdminController::class,'showAllApplicants'])->middleware(['auth', 'verified'])->name('all_applicants');
+
+    Route::get('/filter-all-applicants',[SuperAdminController::class,'filterAllApplicants'])->middleware(['auth', 'verified'])->name('filter_all_applicants');
+    
+    Route::post('/delete-applicant',[SuperAdminController::class,'deleteApplicant'])->middleware(['auth', 'verified']);
+
+    Route::get('/all-employers',[SuperAdminController::class,'showAllEmployers'])->middleware(['auth', 'verified'])->name('all_employers');
+
+    Route::get('/all-job-listings',[SuperAdminController::class,'showAllJobListings'])->middleware(['auth', 'verified'])->name('all_jobs');
+
+
+
+});
+
 
 
 // End of Employer Routes
