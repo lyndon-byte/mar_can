@@ -106,7 +106,7 @@ export default function Applicants({auth,applicants_data}){
                                 <div className='flex gap-2 text-gray-500'>
                                             
                                                 <Chip variant="bordered" className='p-4'>
-                                                 { applicants_data.data.job_title }  Applicants: <span className="text-gray-700 font-bold text-md">{applicants_data.total}</span>
+                                                 { applicants_data.data[0].job_title }  Applicants: <span className="text-gray-700 font-bold text-md">{applicants_data.data[0].applicants.length}</span>
                                                 </Chip>
                                             
                                             
@@ -220,49 +220,56 @@ export default function Applicants({auth,applicants_data}){
                                     }
                                 >
 
-                                        {applicants_data.data.map((item,index) => (
+                                        {
+                                        
+                                        
+                                            applicants_data.data[0].applicants.length !== 0 && (
+
+                                                applicants_data.data.map((item,index) => (
 
                                             
-                                            <TableRow >
-
-                                                <TableCell>{item.applicants[index].applicant_name}</TableCell>
-                                                <TableCell>{item.job_title}</TableCell>
-                                               
-                                                <TableCell>
-                                                    
-                                                    
-                                                    {item.applicants[index].status}
-                                                            
-                                                
-                                                    
-                                                </TableCell>
-                                                <TableCell >
-
-                                                        <div className="relative flex justify-end  items-center ">
-
+                                                    <TableRow >
+        
+                                                        <TableCell>{item.applicants[index].applicant_name}</TableCell>
+                                                        <TableCell>{item.job_title}</TableCell>
+                                                       
+                                                        <TableCell>
                                                             
                                                             
-
-                                                            <Tooltip content="View Details" className="bg-slate-900 text-white">
-                                                                <Button
-                                                                    variant="ghost"
-                                                                    className="border-0"
-                                                                   
-                                                                    isIconOnly
-                                                                    onPress={() => handleViewApplicant(item.applicants[index].user_id)}
-                                                                >
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </Button>
-                                                            </Tooltip>
+                                                            {item.applicants[index].status}
+                                                                    
+                                                        
                                                             
-                                                        </div>
+                                                        </TableCell>
+                                                        <TableCell >
+        
+                                                                <div className="relative flex justify-end  items-center ">
+        
+                                                                    
+                                                                    
+        
+                                                                    <Tooltip content="View Details" className="bg-slate-900 text-white">
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            className="border-0"
+                                                                           
+                                                                            isIconOnly
+                                                                            onPress={() => handleViewApplicant(item.applicants[index].user_id)}
+                                                                        >
+                                                                            <i class="fa-solid fa-eye"></i>
+                                                                        </Button>
+                                                                    </Tooltip>
+                                                                    
+                                                                </div>
+                                                            
+        
+                                                            </TableCell>
+                                                        </TableRow>
                                                     
+        
+                                                    ))
 
-                                                    </TableCell>
-                                                </TableRow>
-                                            
-
-                                            ))
+                                            )
 
 
                                         }
