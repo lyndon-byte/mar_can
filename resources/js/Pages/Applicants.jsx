@@ -216,7 +216,7 @@ export default function Applicants({auth,applicants_data}){
                                     // items={applicants_data.data}
                                     emptyContent={
 
-                                        <p className='mt-5 text-center'>No applied job yet</p>
+                                        <p className='mt-5 text-center'>No applicant for this job posting yet</p>
                                     }
                                 >
 
