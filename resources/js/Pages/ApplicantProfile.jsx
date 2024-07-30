@@ -183,7 +183,7 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
 
                                                             auth.user.role !== 'SuperAdmin' ? (
                                                                 <>
-                                                                      Hidden &nbsp;
+                                                                     Hidden &nbsp;
                                                                      <Tooltip content="show" className="bg-slate-800 text-white">
                                                                         <Button onPress={() => setIsOpenModal(true)} isIconOnly variant="ghost" className="border-0"><i class="fa-solid fa-eye"></i></Button>
                                                                      </Tooltip>
@@ -192,7 +192,9 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                             ): (
 
                                                                 <span className="text-gray-800">
+
                                                                     {applicants_data.contact_information.email_address}
+
                                                                 </span>
                                                             
                                                             )
@@ -230,9 +232,14 @@ export default function ApplicantProfile({auth,applicants_data,current_status}){
                                                         <dt class="text-sm font-medium leading-6 text-gray-900">Professional Summary</dt>
                                                         {
 
-                                                            applicants_data.professional_summary.length !== 0 &&  (
+                                                            applicants_data.professional_summary !== null ?  (
 
                                                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{applicants_data.professional_summary.summary}</dd>
+                                                            
+                                                            ): (
+
+                                                                <p className='text-gray-400'>No data provided</p>
+
                                                             )
                                                          }
                                                        

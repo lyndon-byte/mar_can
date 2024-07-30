@@ -5,7 +5,7 @@ import { Badge, Input,Dropdown,DropdownItem,DropdownTrigger,DropdownMenu} from "
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head,router } from '@inertiajs/react'
 
-export default function Applicants({auth,applicants_data}){
+export default function Applicants({auth,applicants_data,job_title}){
 
     const [isOpenModal,setIsOpenModal] = useState(false)
 
@@ -16,7 +16,7 @@ export default function Applicants({auth,applicants_data}){
 
     useEffect(() => {
 
-        console.log(applicants_data.data[0].applicants)
+        console.log(applicants_data)
 
     },[])
 
@@ -106,7 +106,7 @@ export default function Applicants({auth,applicants_data}){
                                 <div className='flex gap-2 text-gray-500'>
                                             
                                                 <Chip variant="bordered" className='p-4'>
-                                                 { applicants_data.data[0].job_title }  Applicants: <span className="text-gray-700 font-bold text-md">{applicants_data.data[0].applicants.length}</span>
+                                                 { job_title }  applicants: <span className="text-gray-700 font-bold text-md">{applicants_data.total}</span>
                                                 </Chip>
                                             
                                             
@@ -213,7 +213,7 @@ export default function Applicants({auth,applicants_data}){
                             </TableHeader>
                                 <TableBody
                                 
-                                    // items={applicants_data.data}
+                                    items={applicants_data.data}
                                     emptyContent={
 
                                         <p className='mt-5 text-center'>No applicant for this job posting yet</p>
@@ -223,20 +223,20 @@ export default function Applicants({auth,applicants_data}){
                                         {
                                         
                                         
-                                            applicants_data.data[0].applicants.length !== 0 && (
+                                            
 
-                                                applicants_data.data.map((item,index) => (
+                                                 ((item) => (
 
                                             
                                                     <TableRow >
         
-                                                        <TableCell>{item.applicants[index].applicant_name}</TableCell>
-                                                        <TableCell>{item.job_title}</TableCell>
+                                                        <TableCell>{item.applicant_name}</TableCell>
+                                                        <TableCell>{job_title}</TableCell>
                                                        
                                                         <TableCell>
                                                             
                                                             
-                                                            {item.applicants[index].status}
+                                                            {item.status}
                                                                     
                                                         
                                                             
@@ -254,7 +254,7 @@ export default function Applicants({auth,applicants_data}){
                                                                             className="border-0"
                                                                            
                                                                             isIconOnly
-                                                                            onPress={() => handleViewApplicant(item.applicants[index].user_id)}
+                                                                            onPress={() => handleViewApplicant(item.user_id)}
                                                                         >
                                                                             <i class="fa-solid fa-eye"></i>
                                                                         </Button>
@@ -267,9 +267,9 @@ export default function Applicants({auth,applicants_data}){
                                                         </TableRow>
                                                     
         
-                                                    ))
+                                                ))
 
-                                            )
+                                            
 
 
                                         }

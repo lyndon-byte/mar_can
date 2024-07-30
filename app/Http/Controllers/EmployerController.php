@@ -447,11 +447,19 @@ class EmployerController extends Controller
 
     public function applicants(Request $request){
 
-        $applicants = PostedJobs::where('id',$request->id)->with(['applicants'])->orderBy('created_at','DESC')->paginate(5);
+        $posted_job = PostedJobs::find($request->id);
+
+        $posted_job->new_applied_applicant_count = 0;
+
+        $posted_job->save();
+
+        // $applicants = PostedJobs::where('id',$request->id)->with(['applicants'])->orderBy('created_at','DESC')->paginate(5);
+
+        $applicants = $posted_job->applicants()->orderBy('created_at','DESC')->paginate(8);
 
         return Inertia::render('Applicants',[
 
-         
+            'job_title' => $posted_job->job_title,
             'applicants_data' =>  $applicants
            
         ]);

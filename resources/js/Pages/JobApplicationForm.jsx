@@ -53,18 +53,11 @@ export default function JobApplicationForm({auth,jobData}){
 
                         </p>
 
-                        <InputLabel className='mt-2' htmlFor="referrers_name" value="Referrer's name" />
-
-                        <TextInput
-
-                                className="mt-1 block w-full"
-                                value={data.referrers_name}
-                                onChange={(e) => setData('referrers_name', e.target.value)}
-                              
-                        />
+                       
                         
                     </ModalBody>
                     <ModalFooter>
+
                         <Button color="default" className="bg-slate-800 text-white" radius="sm" isLoading={processing} onPress={() => handleApplyToJob()}>
                             proceed to application
                         </Button>
@@ -125,18 +118,10 @@ export default function JobApplicationForm({auth,jobData}){
                         
 
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                            <div className="flex justify-end">
-                                 <Button 
-                                   className="mt-5 mb-5 bg-slate-800 text-white" 
-                                   radius="sm" 
-                                   onPress={() => setIsOpenModal(true)}
-                                 >
-                                    Apply now<i class="fa-solid fa-paper-plane"></i>
-                                </Button> 
-                            </div>  
+                           
 
                            
-                       
+                        
 
                     <div className='p-4'>
 
@@ -434,7 +419,31 @@ export default function JobApplicationForm({auth,jobData}){
 
                                             }
                                         </div>
-                                        
+                                        <div className="flex justify-end gap-2">
+                                             
+                                           
+
+                                                <TextInput
+
+                                                        className="block max-w-sm mt-10"
+                                                        value={data.referrers_name}
+                                                        onChange={(e) => setData('referrers_name', e.target.value)}
+                                                        placeholder="Referrer's name (optional)"
+                                                    
+                                                />
+
+                                                <Button 
+                                                    className="mb-5 bg-slate-800 text-white mt-10" 
+                                                    radius="sm" 
+                                                    onPress={() => handleApplyToJob()}
+                                                    isLoading={processing}
+                                                >
+                                                    Apply now<i class="fa-solid fa-paper-plane"></i>
+                                                    
+                                                </Button> 
+
+
+                                        </div>  
                                     </dl>
 
                                     

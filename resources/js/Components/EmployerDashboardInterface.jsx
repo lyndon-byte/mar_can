@@ -279,7 +279,7 @@ export default function EmployerDashboardInterface({jobs,userInfo}){
                                         <div className="relative flex justify-end  items-center gap-2">
 
                                             
-                                            <Badge content={job.new_applied_applicant_count} color="danger" >
+                                            <Badge content={job.new_applied_applicant_count} isInvisible={job.new_applied_applicant_count != 0 ? false : true} color="danger" >
                                                 <Tooltip content="View applicants who applied" className="bg-slate-900 text-white">
                                                     <Button
                                                         variant="ghost"
