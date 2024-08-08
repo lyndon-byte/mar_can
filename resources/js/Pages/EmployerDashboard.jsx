@@ -4,6 +4,7 @@ import EmployerDashboardInterface from '@/Components/EmployerDashboardInterface'
 import { useState, useEffect } from 'react';
 import {Button,Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 import { Head, router } from '@inertiajs/react';
+import AdminContainer from '@/Components/AdminContainer';
 
 export default function EmployerDashboard({ auth,isOrgProfileExists,jobPostings}) {
 
@@ -63,30 +64,49 @@ export default function EmployerDashboard({ auth,isOrgProfileExists,jobPostings}
             >
                 <Head title="Dashboard" />
 
-                <div className="py-12">
-                    <div className="mx-auto sm:px-6 lg:px-8">
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            
+                <AdminContainer
+                    
+                    head='All Jobs'
+                    content={
 
-                            { 
-                            isOrgProfileExists ? (
+                        isOrgProfileExists ? (
                                 
-                                <>
-                                        <EmployerDashboardInterface userInfo={auth.user} jobs={jobPostings} />
-                                </>
-                                
+                            <>
+                                 <div className="py-12">
+                                    <div className="mx-auto sm:px-6 lg:px-8">
+                                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                            
+                                            <EmployerDashboardInterface userInfo={auth.user} jobs={jobPostings} />
 
-                            ) : (
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <ProfileCompletionBanner role={auth.user.role} profile_name={auth.user.name}/>
-
-                            )
+                                   
+                            </>
                             
-                            
-                            }
-                        </div>
-                    </div>
-                </div>
+
+                        ) : (
+
+                                <div className="py-12">
+                                    <div className="mx-auto sm:px-6 lg:px-8">
+                                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                            
+                                            <ProfileCompletionBanner role={auth.user.role} profile_name={auth.user.name}/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                 
+
+                        )
+
+
+                    }
+                
+                />
+
+               
             </AuthenticatedLayout>
         </>
     );

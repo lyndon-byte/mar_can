@@ -122,7 +122,7 @@ export default function EmployerDashboardInterface({jobs,userInfo}){
             </ModalContent>
           </Modal>
 
-        
+          
         
           <Table 
             aria-label="Example table with client side pagination"

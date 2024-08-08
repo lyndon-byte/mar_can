@@ -22,11 +22,13 @@
         "@nextui-org/react": "^2.4.2",
         "@react-pdf-viewer/core": "^3.12.0",
         "@react-pdf-viewer/default-layout": "^3.12.0",
+        "chart.js": "^4.4.3",
         "compromise": "^14.13.0",
         "framer-motion": "^11.2.14",
         "lodash": "^4.17.21",
         "natural": "^7.1.0",
         "pdf-lib": "^1.17.1",
+        "react-chartjs-2": "^5.2.0",
         "react-dropzone": "^14.2.3",
         "react-pdf": "^9.1.0"
     }

@@ -5,6 +5,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, 
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter ,useDisclosure} from "@nextui-org/react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { debounce } from 'lodash';
+import AdminContainer from '@/Components/AdminContainer';
 
 
 
@@ -153,12 +154,19 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
           </Modal>
 
          <AuthenticatedLayout
-                user={auth.user}
-                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
-            >
-                <Head title="All Applicants" />
 
-                <div className="py-12">
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+
+        >
+            <Head title="All Applicants" />
+
+            <AdminContainer 
+
+                head='Applicants'
+                content={
+
+                    <div className="py-12">
 
                     <div className="mx-auto sm:px-6 lg:px-8">
 
@@ -317,9 +325,14 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
                                     
                                 </div>
                             </div>
-                        </div>
+                    </div>
+
+                }
+            
+            />
+                
                         
-                </AuthenticatedLayout>
+        </AuthenticatedLayout>
                 
         </>
     )

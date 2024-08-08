@@ -29,3 +29,12 @@ img {
   width: auto;
   height: 100%;
 }
+
+
+*::-webkit-scrollbar {
+  width: 5px /* for Chrome, Safari, and Opera */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
+}

@@ -4,6 +4,8 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link ,usePage } from '@inertiajs/react';
+import { Avatar,Badge, Button, Input,Tooltip } from '@nextui-org/react';
+import TextInput from '@/Components/TextInput';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -17,14 +19,22 @@ export default function Authenticated({ user, header, children }) {
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
                                     {/* <ApplicationLogo className="block h-9 w-auto fill-current text-red-500" /> */}
-                                    {/* <h3 className='text-2xl text-green-600'> Marcan.</h3> */}
+                                    <h3 className='text-2xl text-green-600'> Marcan.</h3>
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    { user.role === 'Applicant' ? 'Home' : 'Dashboard' }
-                                </NavLink>
+                               
+                                {
+                                    user.role !== 'SuperAdmin' && (
+
+                                        <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                            { user.role === 'Applicant' ? 'Home' : 'Dashboard' }
+                                        </NavLink>
+
+                                    ) 
+
+                                }
 
                                 { user.role === 'Applicant' ? (
 
@@ -39,14 +49,18 @@ export default function Authenticated({ user, header, children }) {
                                         <>
 
                                         </>
-                                )}
+
+
+                                     )
+                                
+                                }
                                 
 
                                 { user.role === 'SuperAdmin' && (
 
                                     <>
 
-                                        <NavLink href={route('all_applicants')} active={route().current('all_applicants')}>
+                                        {/* <NavLink href={route('all_applicants')} active={route().current('all_applicants')}>
                                             Applicants                           
                                         </NavLink>
                                         <NavLink href={route('all_employers')} active={route().current('all_employers')}>
@@ -54,7 +68,7 @@ export default function Authenticated({ user, header, children }) {
                                         </NavLink>
                                         <NavLink href={route('all_jobs')} active={route().current('all_jobs')}>
                                             Job Listings                           
-                                        </NavLink>
+                                        </NavLink> */}
                                         
                                     </>
 
@@ -69,15 +83,39 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
+                            
+                            <TextInput
+                                
+                                endContent={
+                                  <i class="fa-solid fa-magnifying-glass"></i>
+                                }
+                                className=" m-3"
+                                placeholder="search..."
+
+                            />
+                                        
+                            <Badge content="5" size='md' color="danger">
+                                <Tooltip content="Messages" className='bg-slate-900 text-white' >
+                                    <Button isIconOnly color="success" className='border-0 text-lg'   variant='ghost' aria-label="Like">
+                                        <i class="fa-solid fa-message"></i>
+                                    </Button>  
+                                </Tooltip>
+                            </Badge>
+                            
+                              
+                            <div className=" relative">
+                                
                                 <Dropdown>
+                                        
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.name}
+                                                {user.name}       
+
+                                                <Avatar size='sm' className='ms-3' showFallback src='https://images.unsplash.com/broken' />
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
@@ -127,22 +165,59 @@ export default function Authenticated({ user, header, children }) {
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
+                                
+
+                                    {
+
+                                        user.role === 'SuperAdmin' ? (
+
+                                            <svg
+                                                className=" -me-0.5 h-6 w-6"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+
+                                                <path
+                                                    className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                                    fillRule="evenodd"
+                                                    d="M5.293 12.707a1 1 0 011.414 0L10 9.414l3.293 3.293a1 1 0 001.414-1.414l-4-4a1 1 0 00-1.414 0l-4 4a1 1 0 000 1.414z"
+                                                    clipRule="evenodd"
+                                                />
+
+                                            </svg>
+
+                                        ) : (
+
+                                             <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                                <path
+                                                    className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M4 6h16M4 12h16M4 18h16"
+                                                />
+                                                <path
+                                                    className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M6 18L18 6M6 6l12 12"
+                                                />
+                                            </svg> 
+
+                                        )
+
+
+                                    }
+
+                                    
                             </button>
                         </div>
                     </div>
