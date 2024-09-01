@@ -189,7 +189,7 @@ export default function JobPostForm({jobData}) {
         { jobData === null || isEditMode ? (
 
                 <>
-                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg ">
                             <section>
                                 <header>
                                     <div className="text-lg font-medium text-gray-900">
@@ -969,7 +969,7 @@ export default function JobPostForm({jobData}) {
                                 
                             
                             
-                                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg ">
                                         <header>
                                             <div className="text-lg font-medium text-gray-900">
                                                 Job details
@@ -997,7 +997,7 @@ export default function JobPostForm({jobData}) {
                                            
                                         </header>
 
-                                        <div className='p-4'>
+                                        <div className='p-4 '>
                                         
                                             <div class="mt-6 border-t border-gray-100">
                                                 <dl class="divide-y divide-gray-100">

@@ -122,5 +122,11 @@ class User extends Authenticatable
     
     }
 
+    public function messageThread(){
+
+        return $this->hasMany(MessageThread::class,'thread_id');
+
+    }
+    
 
 }

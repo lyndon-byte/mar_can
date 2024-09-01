@@ -1,18 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
+import { useRef } from 'react';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link ,usePage } from '@inertiajs/react';
+import { Link ,usePage, router } from '@inertiajs/react';
 import { Avatar,Badge, Button, Input,Tooltip } from '@nextui-org/react';
 import TextInput from '@/Components/TextInput';
+import AdminContainer from '@/Components/AdminContainer';
 
 export default function Authenticated({ user, header, children }) {
+    
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+    const ringtonePlayer = useRef(null)
+
+    function handleShowMessaging(){
+
+        router.get('/messaging');
+    }
+   
+
+    useEffect(() =>{
+
+        var pusher = new Pusher("abf3fa130d1cb3aff19d", {
+
+            cluster: "ap1",
+
+        });
+
+        var channel = pusher.subscribe("message-channel");
+
+        channel.bind("message-received", (data) => {
+
+            if(user.email === data.receiver){
+
+
+                var originalTitle = document.title;
+            
+                // Function to blink the title
+                var blinkTitle = function() {
+
+                    document.title = (document.title === originalTitle) ? 'New Message' : originalTitle;
+                };
+                
+                // Interval to blink the title (every 500 milliseconds)
+                var intervalId = setInterval(blinkTitle, 500);
+                
+                // Change the title back to the original after 3000 milliseconds (3 seconds)
+                setTimeout(function() {
+                    clearInterval(intervalId); // Stop the blinking
+                    document.title = originalTitle; // Restore the original title
+                }, 3000);
+            
+                ringtonePlayer.current.play()
+
+                router.reload({preserveState: true})
+            }
+            
+        });
+
+    },[])
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <audio ref={ringtonePlayer} src="/notification.mp3" ></audio>
+            <nav className="bg-white border-b border-gray-100 sticky top-0" style={{ zIndex: 10000 }}>
                 <div className="mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -94,9 +147,17 @@ export default function Authenticated({ user, header, children }) {
 
                             />
                                         
-                            <Badge content="5" size='md' color="danger">
+                            <Badge content="" size='md' color="danger">
                                 <Tooltip content="Messages" className='bg-slate-900 text-white' >
-                                    <Button isIconOnly color="success" className='border-0 text-lg'   variant='ghost' aria-label="Like">
+                                    <Button 
+                                      isIconOnly 
+                                      color="success" 
+                                      className='border-0 text-lg'   
+                                      variant='ghost' 
+                                      aria-label="Like"
+                                      onClick={handleShowMessaging}
+                                      
+                                    >
                                         <i class="fa-solid fa-message"></i>
                                     </Button>  
                                 </Tooltip>
@@ -144,6 +205,7 @@ export default function Authenticated({ user, header, children }) {
 
                                                
                                                 <Dropdown.Link href={route('org.profile')}><i class="fa-solid fa-briefcase"></i> &nbsp; Organization Profile</Dropdown.Link>
+                                            
                                             ) : (
 
                                                 <>
@@ -287,7 +349,26 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )} */}
 
-            <main>{children}</main>
+            
+
+            {
+
+                user.role === 'SuperAdmin' ? (
+
+                    <AdminContainer
+                    
+                        head={header}
+                        content={children}
+
+                    />
+
+                ) : (
+
+                    <main>{children}</main>
+                )
+
+            }
+
         </div>
     );
 }

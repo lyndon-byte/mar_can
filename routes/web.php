@@ -6,6 +6,7 @@ use App\Models\PostedJobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ApplicantController;
@@ -224,6 +225,18 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 
 
 });
+
+
+//messaging route
+
+Route::get('/messaging',[MessageController::class,'index'])->middleware(['auth', 'verified'])->name('messaging');
+Route::get('/get-specific-thread-messages',[MessageController::class,'getSpecificThreadMessages'])->middleware(['auth', 'verified'])->name('get_specific_thread_messages');
+Route::post('/send-message',[MessageController::class,'sendMessage'])->middleware(['auth', 'verified'])->name('send_message'); 
+Route::post('/delete-thread',[MessageController::class,'deleteThread'])->middleware(['auth', 'verified'])->name('delete_thread'); 
+Route::post('/archive-thread',[MessageController::class,'archiveThread'])->middleware(['auth', 'verified'])->name('archive_thread');
+Route::post('/unarchive-thread',[MessageController::class,'unArchiveThread'])->middleware(['auth', 'verified'])->name('unarchive_thread'); 
+Route::get('/get-archive-thread',[MessageController::class,'showArchivedThread'])->middleware(['auth', 'verified'])->name('get_archive_thread');
+Route::get('/search-thread',[MessageController::class,'searchThread'])->middleware(['auth', 'verified'])->name('search_thread');
 
 
 

@@ -156,17 +156,13 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
          <AuthenticatedLayout
 
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Applicants</h2>}
 
         >
             <Head title="All Applicants" />
 
-            <AdminContainer 
-
-                head='Applicants'
-                content={
-
-                    <div className="py-12">
+            
+                <div className="py-12">
 
                     <div className="mx-auto sm:px-6 lg:px-8">
 
@@ -327,9 +323,7 @@ export default function ApplicantsDataTableForAdmin({auth,applicants_data}){
                             </div>
                     </div>
 
-                }
             
-            />
                 
                         
         </AuthenticatedLayout>

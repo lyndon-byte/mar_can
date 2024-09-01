@@ -19,10 +19,7 @@ export default function SuperAdminDashboard({auth,applicants_data_count,employer
             >
                 <Head title="Dashboard" />
 
-                <AdminContainer 
-                    
-                    head='Dashboard'
-                    content={
+              
 
 
                         <div className="py-12">
@@ -37,7 +34,7 @@ export default function SuperAdminDashboard({auth,applicants_data_count,employer
                                             </div>
 
                                             
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-full px-6 mb-10">
+                                            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-full px-6 mb-10">
 
                                             
                                             
@@ -106,7 +103,7 @@ export default function SuperAdminDashboard({auth,applicants_data_count,employer
 
                                                 </div>
 
-                                                <div class="bg-white rounded-lg border p-6 col-span-2">
+                                                <div class="bg-white rounded-lg border p-6 md:col-span-2">
                                                
                                                     <i class="fa-solid fa-calendar-days text-3xl mt-1 float-end text-success-500"></i>
                                                     <h2 class="text-3xl font-semibold text-gray-700">88</h2>
@@ -141,11 +138,7 @@ export default function SuperAdminDashboard({auth,applicants_data_count,employer
                                  </div>        
 
 
-                    }
-                
-                
-                
-                />
+                 
                
                 
         </AuthenticatedLayout>
