@@ -13,7 +13,7 @@ export default function AdminContainer({head,content}){
     return (
             <div className="flex ">
                 {/* Sidebar */}
-                <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64 bg-slate-800 text-white transition-transform duration-300 ease-in-out md:relative md:translate-x-0`} style={{ zIndex: 1000 }}>
+                <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64 bg-slate-800 text-white transition-transform duration-300 ease-in-out md:relative md:translate-x-0 z-10`} >
                     <div className="flex flex-col h-screen sticky top-0">
                         <div className="p-6">
                             <div className="flex justify-between items-center">
@@ -34,6 +34,8 @@ export default function AdminContainer({head,content}){
                                 <li><Link href={route('all_applicants')} className={`block py-2 px-4 rounded hover:bg-gray-700 ${route().current('all_applicants') ? "bg-gray-500" : ""} `}>Applicants</Link></li>
                                 <li><Link href={route('all_employers')}  className={`block py-2 px-4 rounded hover:bg-gray-700 ${route().current('all_employers') ? "bg-gray-500" : ""} `}>Employers</Link></li>
                                 <li><Link href={route('all_jobs')} className={`block py-2 px-4 rounded hover:bg-gray-700 ${route().current('all_jobs') ? "bg-gray-500" : ""} `}>All Jobs</Link></li>
+                                <li><Link href={route('manage_content')} className={`block py-2 px-4 rounded hover:bg-gray-700 ${route().current('manage_content') ? "bg-gray-500" : ""} `}>CMS</Link></li>
+
                             </ul>
                         </div>
                     </div>

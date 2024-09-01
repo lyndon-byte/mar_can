@@ -13,6 +13,10 @@ export default function Authenticated({ user, header, children }) {
     
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+    const { auth } = usePage().props;
+
+    const { component } = usePage()
+
     const ringtonePlayer = useRef(null)
 
     function handleShowMessaging(){
@@ -20,8 +24,10 @@ export default function Authenticated({ user, header, children }) {
         router.get('/messaging');
     }
    
-
+  
     useEffect(() =>{
+
+      
 
         var pusher = new Pusher("abf3fa130d1cb3aff19d", {
 
@@ -65,7 +71,7 @@ export default function Authenticated({ user, header, children }) {
     return (
         <div className="min-h-screen bg-gray-100">
             <audio ref={ringtonePlayer} src="/notification.mp3" ></audio>
-            <nav className="bg-white border-b border-gray-100 sticky top-0" style={{ zIndex: 10000 }}>
+            <nav className="bg-white border-b border-gray-100 sticky top-0 z-20" >
                 <div className="mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -137,17 +143,8 @@ export default function Authenticated({ user, header, children }) {
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
                             
-                            <TextInput
-                                
-                                endContent={
-                                  <i class="fa-solid fa-magnifying-glass"></i>
-                                }
-                                className=" m-3"
-                                placeholder="search..."
-
-                            />
-                                        
-                            <Badge content="" size='md' color="danger">
+                                   
+                            <Badge content={auth.user.new_message_count}  size='md' color="danger">
                                 <Tooltip content="Messages" className='bg-slate-900 text-white' >
                                     <Button 
                                       isIconOnly 
@@ -355,12 +352,22 @@ export default function Authenticated({ user, header, children }) {
 
                 user.role === 'SuperAdmin' ? (
 
-                    <AdminContainer
-                    
-                        head={header}
-                        content={children}
+                   
 
-                    />
+                    component === 'Messenger' ? (
+
+                        <main>{children}</main>
+
+                    ) : (
+
+                        <AdminContainer
+                    
+                            head={header}
+                            content={children}
+
+                        />
+
+                    )
 
                 ) : (
 

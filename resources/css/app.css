@@ -4,14 +4,14 @@
 
 
 .hero-background {
-    background-image: url('https://www.pixel4k.com/wp-content/uploads/2018/09/montreal-canada-night-city-4k_1538068139.jpg.webp');
-    background-size: cover; /* Adjust this as needed */
-    background-position: center; /* Adjust this as needed */
-    background-repeat: no-repeat; /* Ensure it does not repeat */
+    /* background-image: url('https://www.pixel4k.com/wp-content/uploads/2018/09/montreal-canada-night-city-4k_1538068139.jpg.webp'); */
+    /* background-size: cover; 
+    background-position: center; */
+    background-repeat: no-repeat; 
     position: absolute;
     inset: 0;
     z-index: -10;
-  }
+}
 
   /* App.css */
 

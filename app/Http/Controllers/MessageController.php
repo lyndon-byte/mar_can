@@ -66,6 +66,10 @@ class MessageController extends Controller
 
         $user = Auth::user();
 
+        $user->new_message_count = null;
+
+        $user->save();
+
         $org_threads = MessageThread::where('thread_id',$user->id)
                     ->where('state', $thread_state)
                     ->orderBy('updated_at','desc')
@@ -75,11 +79,7 @@ class MessageController extends Controller
 
         $messages = Messages::where('message_id',$thread->id)->orderBy('created_at','asc')->get();
  
-
-
         $contact_name =  $thread->recipient_name;
-
-        
 
         $thread->timestamps = false;
         $thread->latest_message_count = 0;
@@ -292,6 +292,10 @@ class MessageController extends Controller
             ]);
 
         }
+
+        $receiver_account->new_message_count += 1;
+
+        $receiver_account->save();
 
         $pusher = new Pusher("abf3fa130d1cb3aff19d", "c38798a2440ed206ce35", "1858189", array('cluster' => 'ap1'));
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { router } from '@inertiajs/react'
+import { router, Link } from '@inertiajs/react'
 import { useState, useCallback } from "react";
 import { format } from 'date-fns';
 import { debounce } from 'lodash';
@@ -32,7 +32,7 @@ import {
 } from "@nextui-org/react";
 
 
-export default function MessageLists({threadItems=[],highLightedThread=null}){
+export default function MessageLists({threadItems=[],highLightedThread=null,role}){
 
     const [selectedThread, setSelectedThread] = useState(null);
 
@@ -168,7 +168,15 @@ export default function MessageLists({threadItems=[],highLightedThread=null}){
                     hideSelectedIcon="true"
                     topContent = {          
                         
-                        <>  
+                        <>      
+                               {
+
+                                  role === 'SuperAdmin' && (
+
+                                        <Link href='/dashboard' className="mt-4 mb-4 text-blue-600">&nbsp; &nbsp; <i class="fa-solid fa-arrow-left"></i> Back To Dashboard</Link>
+                                  )
+                                
+                               }
                                 <div className="flex flex-wrap justify-center mb-1">
                                     
                                     <ButtonGroup variant="flat" className="w-full" radius="sm">

@@ -1,4 +1,4 @@
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head, usePage } from '@inertiajs/react';
 import { useRef, useState, useEffect } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 
@@ -12,7 +12,21 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
    const contactRef = useRef(null)
    const milestonesRef = useRef(null)
 
+   const { component } = usePage()
+
    const [isVisible, setIsVisible] = useState(false);
+
+   const [isIframe, setIsIframe] = useState(false);
+
+    useEffect(() => {
+        if (window.self !== window.top) {
+            // The page is in an iframe
+            setIsIframe(true);
+        } else {
+            // The page is not in an iframe
+            setIsIframe(false);
+        }
+    }, []);
 
    useEffect(() => {
     const handleScroll = () => {
@@ -79,12 +93,21 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                                 {auth.user ? (
-                                        <Link
-                                            href={route('dashboard')}
-                                            className="font-semibold text-white hover:text-gray-400 dark:text-gray-200 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
-                                        >
-                                            {auth.user.role === 'Applicant' ? 'Home' : 'Dashboard'}
-                                        </Link>
+                                        
+                                        !isIframe && (
+
+                                            <Link
+                                                href={route('dashboard')}
+                                                className="font-semibold text-white hover:text-gray-400 dark:text-gray-200 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-slate-50"
+                                            >
+                                                {auth.user.role === 'Applicant' ? 'Home' : 'Dashboard'}
+                                            </Link>
+
+
+                                        )
+
+                                       
+
                                     ) : (
                                         <>
                                             <Link
@@ -172,7 +195,27 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 
                 <div class="relative isolate px-6 pt-14 lg:px-8">
                     
-                   <div className="hero-background" aria-hidden="true"></div>
+                   <div className="hero-background" aria-hidden="true">
+
+                       
+
+                            <img
+                              src="https://www.pixel4k.com/wp-content/uploads/2018/09/montreal-canada-night-city-4k_1538068139.jpg.webp"
+                              alt="Montreal at Night"
+                              style={{
+                    
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                
+                              }}
+                            />
+                     
+
+                   </div>
+
                     <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
 
 
@@ -186,7 +229,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <p class="mt-6 text-lg leading-8 text-slate-200">A visa consultancy that serves every filipino applicants for canadian dream</p>
                         <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a href="/select-account-type" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Get started</a>
-                        <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a>
+                        {/* <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a> */}
                         </div>
                     </div>
                     </div>
@@ -560,7 +603,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     </div>
 </section>
 
-        <div class="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
+        {/* <div class="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
                 <div class="max-w-xl lg:max-w-lg">
@@ -594,10 +637,11 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </dl>
                 </div>
                 </div>
-                    {/* <div class="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
-                        <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30" style={{clipPath: "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"}}></div>
-                    </div> */}
-            </div>
+                    
+            </div> */}
+
+
+            
             
             <footer class="bg-gray-900 text-white py-4">
                 <div class="container mx-auto text-center">

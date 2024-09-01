@@ -37,7 +37,7 @@ export default function Messenger({
                             <MessageLists 
                                 threadItems={threads} 
                                 highLightedThread={highlighted_thread} 
-                              
+                                role={auth.user.role}
                                 
                             />
                                 

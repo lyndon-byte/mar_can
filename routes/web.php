@@ -6,6 +6,7 @@ use App\Models\PostedJobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployerController;
@@ -217,10 +218,9 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 
     Route::get('/view-specific-employer',[SuperAdminController::class,'viewSpecificEmployer'])->middleware(['auth', 'verified']);
 
-
     Route::get('/all-job-listings',[SuperAdminController::class,'showAllJobListings'])->middleware(['auth', 'verified'])->name('all_jobs');
 
-
+    Route::get('/manage-content',[ContentController::class,'index'])->middleware(['auth', 'verified'])->name('manage_content');
     
 
 
