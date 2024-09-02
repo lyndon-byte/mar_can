@@ -1,10 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import AdminContainer from '@/Components/AdminContainer';
 import { Head, router } from '@inertiajs/react';
-import { Button, Divider,Tooltip } from '@nextui-org/react';
+import { Button,Tooltip } from '@nextui-org/react';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+import Editor from '@/Components/Editor';
 import { useEffect,useState } from 'react';
-import { Link } from '@inertiajs/react';
+
 
 
 
@@ -28,6 +28,8 @@ export default function ContentManager({auth}){
         setIsEditMode(!isEditMode)
 
     }
+
+   
 
     return (
 
@@ -103,19 +105,19 @@ export default function ContentManager({auth}){
                                                     isEditMode ? (
 
                                                         <>
-                                                            <Tooltip className='bg-slate-900 text-white' radius='sm' content="save">
+                                                            <Tooltip className='bg-slate-900 text-white' radius='sm' content="Done Editing">
                                                                 <Button 
 
                                                                     className='float-end mb-5 border-0'
                                                                     variant='ghost'
                                                                     isIconOnly
-                                                                    // onClick={handleOpen}
-                                                                
+                                                                    onClick={handleEditMode}
+                                                                    color="success"
                                                                 >
-                                                                    <i class="fa-solid fa-floppy-disk text-xl"></i>
+                                                                    <i class="fa-solid fa-check text-xl"></i>
                                                                 </Button>
                                                             </Tooltip>
-                                                            <p>edit mode</p>
+                                                            <Editor></Editor>
                                                         </>
                                                     ): (
                                                         
