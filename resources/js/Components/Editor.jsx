@@ -1,18 +1,321 @@
-import React from "react";
-import {Button,Tabs, Tab, Card, CardBody, Input,Textarea} from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import {Button, Tabs, Tab,Textarea} from "@nextui-org/react";
+import TextInput from '@/Components/TextInput';
 import ImagePicker from "./ImagePicker";
+import SavedImg from "./SavedImg";
+import { router } from "@inertiajs/react";
+import { useDropzone } from 'react-dropzone';
 
 
 
+export default function Editor({jumbotron,about,mission,vision,contact}) {
 
-export default function Editor() {
+    const [selectedTab,setSelectedTab] = useState('hero')
+
+    const [fileUrl,setFileUrl] = useState({
+
+        hero_image: '',
+        about_us_img: '',
+        mission:'',
+        vision:'',
+        milestone_img:'',
+        testimonials_img:'',
+
+    });
+
+    const [jumbotronFields,setJumbotronField] = useState({
+
+        image_file: jumbotron ? jumbotron.img_url : '',
+        brand_name: jumbotron ? jumbotron.brand : '',
+        slogan: jumbotron ? jumbotron.slogan : '',
+        tagline: jumbotron ? jumbotron.description : '',
+        isProcessing: false
+        
+    })
+
+    const [aboutFields,setAboutField] = useState({
+
+        image_file: about ? about.image_url : '',
+        title: about ? about.title : '',
+        description: about ? about.description : '',
+        isProcessing: false
+        
+        
+    })
+
+
+    const [missionFields,setMissionField] = useState({
+
+        image_file: mission ? mission.image_url : '',
+        description: mission ? mission.description : '',
+        isProcessing: false
+        
+        
+    })
+
+    const [visionFields,setVisionField] = useState({
+
+        image_file: vision ? vision.image_url : '',
+        description: vision ? vision.description : '',
+        isProcessing: false
+        
+        
+    })
+
+
+    const [contactFields,setContactField] = useState({
+
+        email: contact ? contact.email : '',
+        office_address: contact ? contact.office_address : '',
+        phone_number: contact ? contact.phone_number : '',
+        isProcessing: false
+        
+        
+    })
+
+
+    const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+
+        accept: {
+    
+            'image/jpeg': ['.jpeg', '.jpg'],
+            'image/png': ['.png'],
+            'image/gif': ['.gif'],
+            
+          },
+          onDrop: (acceptedFiles) => {
+            const file = acceptedFiles[0];
+            if (file) {
+
+                const fileUrl = URL.createObjectURL(file);
+
+                switch(selectedTab){
+
+                    case 'hero':
+
+                        setJumbotronField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+                     
+
+                    break;
+
+                    case 'about':
+
+                        setAboutField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+                    break;
+
+                    case 'mission':
+
+                        setMissionField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+                    break;
+
+                    case 'vision':
+
+                        setVisionField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+                    break;
+
+                    case 'milestone':
+
+                    break;
+
+                    case 'testimonial':
+
+                    break;
+                    
+                }
+             
+             
+            }
+          },
+    
+    });
+
+    function handleEditJumbotron(){
+
+        router.post('/edit-jumbotron',{
+
+            img: jumbotronFields.image_file,
+            brand_name: jumbotronFields.brand_name,
+            slogan: jumbotronFields.slogan,
+            tagline: jumbotronFields.tagline,
+
+
+        },
+        {   onStart: () => {
+
+            
+                setJumbotronField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setJumbotronField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+    }
+
+    function handleEditAbout(){
+
+
+        router.post('/edit-about',{
+
+            img: aboutFields.image_file,
+            title: aboutFields.title,
+            description: aboutFields.description,
+            
+
+        },
+        {   onStart: () => {
+
+            
+                setAboutField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setAboutField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+
+
+    }
+
+    function handleEditMission(){
+
+
+        router.post('/edit-mission',{
+
+            img: missionFields.image_file,
+            description: missionFields.description,
+            
+
+        },
+        {   onStart: () => {
+
+            
+                setMissionField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setMissionField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+
+
+    }
+
+    function handleEditVision(){
+
+
+        router.post('/edit-vision',{
+
+            img: visionFields.image_file,
+            description: visionFields.description,
+            
+
+        },
+        {   onStart: () => {
+
+            
+                setVisionField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setVisionField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+
+
+    }
+
+    function handleEditContact(){
+
+
+        router.post('/edit-contact',{
+
+            email: contactFields.email,
+            office_address: contactFields.office_address,
+            phone_number: contactFields.phone_number,
+            
+
+        },
+        {   onStart: () => {
+
+            
+                setContactField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setContactField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+
+
+    }
+
+
+
+    useEffect(() => {
+
+        console.log(jumbotron)
+
+    },[])
+
 
   return (
     <div className="flex w-full flex-col">
 
         <label className="mb-5">Landing Page Sections</label>
 
-        <Tabs aria-label="Options" radius="full">
+        <Tabs aria-label="Options" radius="full" onSelectionChange={setSelectedTab}>
             <Tab key="hero" title="Hero">
 
                  <header>
@@ -26,8 +329,53 @@ export default function Editor() {
                     </p>
 
                 </header>
+
+                <div>
+            
+                            <div
+                            {...getRootProps({ className: 'dropzone' })}
+                                style={{
+
+                                    border: '2px dashed #cccccc',
+                                    borderRadius: '4px',
+                                    padding: '20px',
+                                    textAlign: 'center',
+                                    cursor: 'pointer',
+                                                        
+                                }}
+                                className="mb-5"
+                            >
+                                <input {...getInputProps()} />
+                                <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                            </div>
+                            {jumbotronFields.image_file.path && <span >selected file: {jumbotronFields.image_file.path}</span>}
+                </div>
+
+                {
+
+                    jumbotron &&  (
+
+                       jumbotron.img_url !== '' && (
+
+                            <>
+                                <label htmlFor="">Current hero background image</label>
+                                <SavedImg usedBy={selectedTab} fileName={jumbotron.img_url}></SavedImg>
+                            </>
+
+                          
+
+                       )
+                        
+                        
+
+                        
+                    ) 
+
+                        
+
+               }
                 
-                <ImagePicker></ImagePicker>
+                
 
                 <header>
 
@@ -41,12 +389,15 @@ export default function Editor() {
 
                 </header>
                 
-                <Input
+                <TextInput
                 
                     
-                    label="Brand Name"
+                  
                     variant="bordered"
                     className="max-w-lg"
+                    value={jumbotronFields.brand_name}
+                    onChange={(e) =>  setJumbotronField((prevState) => ({ ...prevState,brand_name: e.target.value}))}
+
                 />
 
                 <header>
@@ -61,12 +412,14 @@ export default function Editor() {
 
                 </header>
 
-                <Input
+                <TextInput
 
 
-                    label="Slogan"
+                  
                     variant="bordered"
                     className="max-w-lg"
+                    value={jumbotronFields.slogan}
+                    onChange={(e) =>  setJumbotronField((prevState) => ({ ...prevState,slogan: e.target.value}))}
 
                 />
 
@@ -82,25 +435,75 @@ export default function Editor() {
 
                 </header>
 
-                <Input
+                <TextInput
 
 
-                    label="Tagline"
+                   
                     variant="bordered"
                     className="max-w-lg"
+                    value={jumbotronFields.tagline}
+                    onChange={(e) =>  setJumbotronField((prevState) => ({ ...prevState,tagline: e.target.value}))}
 
                 />
 
                 <Button
-                    className="float-end mt-16 text-white bg-slate-800"
+                    className="mt-16 text-white bg-slate-800"
                     radius="sm"
+                    onClick={handleEditJumbotron}
+                    isLoading={jumbotronFields.isProcessing}
                 >
                     Save
                 </Button>
             </Tab>
             <Tab key="services" title="Services">
                 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Add Name</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the name of service or offer
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+
+                    label="Title"
+                    variant="bordered"
+                    className="max-w-lg"
+
+                />
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Add description</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the description of service or offer
+                                
+                    </p>
+
+                </header>
+
+                <Textarea
+                 
+                    variant="bordered"
+                    className="max-w-xl"
+                />
+
+                
+
+                <Button
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                >
+                    Save
+                </Button>
                    
             </Tab>
             <Tab key="about" title="About Us">
@@ -116,8 +519,56 @@ export default function Editor() {
                     </p>
 
                 </header>
+               
+                <div>
+            
+                <div
+                    {...getRootProps({ className: 'dropzone' })}
+                        style={{
 
-                <ImagePicker></ImagePicker>
+                            border: '2px dashed #cccccc',
+                            borderRadius: '4px',
+                            padding: '20px',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                                                
+                        }}
+                        className="mb-5"
+                    >
+                        <input {...getInputProps()} />
+                        <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                    </div>
+                    {aboutFields.image_file.path && <span >selected file: {aboutFields.image_file.path}</span>}
+                </div>
+
+                {
+
+                    about &&  (
+
+
+
+                        about.image_url !== '' && (
+
+                                <>
+                                    <label htmlFor="">Current hero background image</label>
+                                    <SavedImg usedBy={selectedTab} fileName={about.image_url}></SavedImg>
+                                </>
+
+                            
+
+                        )
+                        
+                        
+
+                        
+                    ) 
+
+                        
+
+                }
+
+
+                
 
                 <header>
 
@@ -131,13 +582,14 @@ export default function Editor() {
 
                 </header>
 
-                <Input
+                <TextInput
 
 
-                    label="Title"
                     variant="bordered"
                     className="max-w-lg"
-
+                    value={aboutFields.title}
+                    onChange={(e) =>  setAboutField((prevState) => ({ ...prevState,title: e.target.value}))}
+                    
                 />
 
                 <header>
@@ -156,41 +608,424 @@ export default function Editor() {
                  
                     variant="bordered"
                     className="max-w-xl"
+                    value={aboutFields.description}
+                    onChange={(e) =>  setAboutField((prevState) => ({ ...prevState,description: e.target.value}))}
+
                 />
 
                 
 
                 <Button
-                    className="float-end mt-16 text-white bg-slate-800"
+
+                    className="mt-16 text-white bg-slate-800"
                     radius="sm"
+                    onClick={handleEditAbout}
+                    isLoading={aboutFields.isProcessing}
                 >
                     Save
                 </Button>
                    
             </Tab>
             <Tab key="mission" title="Mission">
-                
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Change the Mission image</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Upload the image
+                                
+                    </p>
+
+                </header>
+
+                <div>
+
+                <div
+                    {...getRootProps({ className: 'dropzone' })}
+                        style={{
+
+                            border: '2px dashed #cccccc',
+                            borderRadius: '4px',
+                            padding: '20px',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                                                
+                        }}
+                        className="mb-5"
+                    >
+                        <input {...getInputProps()} />
+                        <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                    </div>
+                    {missionFields.image_file.path && <span >selected file: {missionFields.image_file.path}</span>}
+                </div>
+
+                {
+
+                        mission &&  (
+
+
+
+                            mission.image_url !== '' && (
+
+                                    <>
+                                        <label htmlFor="">Current hero background image</label>
+                                        <SavedImg usedBy={selectedTab} fileName={mission.image_url}></SavedImg>
+                                    </>
+
+                                
+
+                            )
+                            
+                            
+
+                            
+                        ) 
+
+                        
+
+                }
+                                
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Mission</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the company's mission
+                                
+                    </p>
+
+                </header>
+
+                <Textarea
+
+                    variant="bordered"
+                    className="max-w-xl"
+                    value={missionFields.description}
+                    onChange={(e) =>  setMissionField((prevState) => ({ ...prevState,description: e.target.value}))}
+
+                />
+
+                <Button
+                    
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                    onClick={handleEditMission}
+                    isLoading={missionFields.isProcessing}
+                >
+                    Save
+                </Button>
                   
             </Tab>
             <Tab key="vision" title="Vision">
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Change the Mission image</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Upload the image
+                                
+                    </p>
+
+                </header>
+
+                <div>
+
+                    <div
+                    {...getRootProps({ className: 'dropzone' })}
+                        style={{
+
+                            border: '2px dashed #cccccc',
+                            borderRadius: '4px',
+                            padding: '20px',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                                                
+                        }}
+                        className="mb-5"
+                    >
+                        <input {...getInputProps()} />
+                        <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                    </div>
+
+                    {visionFields.image_file.path && <span >selected file: {visionFields.image_file.path}</span>}
                 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </div>
+
+                {
+
+                    vision &&  (
+
+
+
+                        vision.image_url !== '' && (
+
+                                <>
+                                    <label htmlFor="">Current hero background image</label>
+                                    <SavedImg usedBy={selectedTab} fileName={vision.image_url}></SavedImg>
+                                </>
+
+                            
+
+                        )
+                        
+                        
+
+                        
+                    ) 
+
+                    
+
+                }
+
+                 <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Vision</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the company's vision
+                                
+                    </p>
+
+                </header>
+
+                <Textarea
+
+                    variant="bordered"
+                    className="max-w-xl"
+                    value={visionFields.description}
+                    onChange={(e) =>  setVisionField((prevState) => ({ ...prevState,description: e.target.value}))}
+
+                />
+
+                <Button
+                    
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                    onClick={handleEditVision}
+                    isLoading={visionFields.isProcessing}
+                    
+                >
+                    Save
+                </Button>
                    
             </Tab>
             <Tab key="milestone" title="Milestones">
                 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Change the hero milestone</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Upload the milestone image
+                                
+                    </p>
+
+                </header>
+
+                <ImagePicker></ImagePicker>
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Adding Milestone</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        enter the milestone
+                                
+                    </p>
+
+                </header>
+
+                <Textarea
+
+                    variant="bordered"
+                    className="max-w-xl"
+
+                />
+
+                
+                <Button
+                    
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                >
+                    Save
+                </Button>
                    
             </Tab>
             <Tab key="testimonial" title="Testimonials">
                 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Add avatar image</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Upload the avatar image
+                                
+                    </p>
+
+                </header>
+
+                <ImagePicker width="200px"></ImagePicker>
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-10">Name</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the name of the person who has testimonial
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+
+                    label="Title"
+                    variant="bordered"
+                    className="max-w-lg"
+
+                />
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-10">Position and work place</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Add the current job position and the current work place of the person who has testimonial
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+
+                    label="Title"
+                    variant="bordered"
+                    className="max-w-lg"
+
+                />
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Testimony</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Summarize or describe the person's testimonial
+                                
+                    </p>
+
+                </header>
+
+                <Textarea
+
+                    variant="bordered"
+                    className="max-w-xl"
+                />
+
+
+
+                <Button
+
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                >
+                    Save
+                </Button>
                
             </Tab>
             <Tab key="contact" title="Contact Us">
                 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Email Address</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the email address that can contact by website visitors
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+                    variant="bordered"
+                    className="max-w-lg"
+                    value={contactFields.email}
+                    onChange={(e) =>  setContactField((prevState) => ({ ...prevState,email: e.target.value}))}
+
+                />  
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Add Office Address</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        Enter the office address
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+
+                   
+                    variant="bordered"
+                    className="max-w-lg"
+                    value={contactFields.office_address}
+                    onChange={(e) =>  setContactField((prevState) => ({ ...prevState,office_address: e.target.value}))}
+                /> 
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-4">Add Phone number</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        enter phone number that can contact by website visitors
+                                
+                    </p>
+
+                </header>
+
+                <TextInput
+
+
+                   
+                    variant="bordered"
+                    className="max-w-lg"
+                    value={contactFields.phone_number}
+                    onChange={(e) =>  setContactField((prevState) => ({ ...prevState,phone_number: e.target.value}))}
+
+                /> 
+
+                <Button
+                    
+                    className="mt-16 text-white bg-slate-800"
+                    radius="sm"
+                    onClick={handleEditContact}
+                    isLoading={contactFields.isProcessing}
+
+                >
+                    Save
+                </Button>
+
                
             </Tab>
             

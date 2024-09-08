@@ -10,7 +10,7 @@ import { useEffect,useState } from 'react';
 
 
 
-export default function ContentManager({auth}){
+export default function ContentManager({auth,jumbotron_data,about_us_data,mission_data,vision_data,contact_data}){
     
     const [isEditMode,setIsEditMode] = useState(false)
 
@@ -117,7 +117,15 @@ export default function ContentManager({auth}){
                                                                     <i class="fa-solid fa-check text-xl"></i>
                                                                 </Button>
                                                             </Tooltip>
-                                                            <Editor></Editor>
+                                                            <Editor 
+
+                                                                    jumbotron={jumbotron_data} 
+                                                                    about={about_us_data} 
+                                                                    mission={mission_data} 
+                                                                    vision={vision_data} 
+                                                                    contact={contact_data}
+                                                                    
+                                                            ></Editor>
                                                         </>
                                                     ): (
                                                         

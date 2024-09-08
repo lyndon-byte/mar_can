@@ -222,6 +222,24 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 
     Route::get('/manage-content',[ContentController::class,'index'])->middleware(['auth', 'verified'])->name('manage_content');
     
+    Route::post('/edit-jumbotron',[ContentController::class,'editJumbotron'])->middleware(['auth', 'verified'])->name('edit_jumbotron');
+
+    Route::post('/delete-jumbotron-img',[ContentController::class,'deleteJumbotronImg'])->middleware(['auth', 'verified'])->name('delete_jumbotron_img');
+
+    Route::post('/edit-about',[ContentController::class,'editAbout'])->middleware(['auth', 'verified'])->name('edit_about');
+
+    Route::post('/delete-about-img',[ContentController::class,'deleteAboutImg'])->middleware(['auth', 'verified'])->name('delete_about_img');
+
+    Route::post('/edit-mission',[ContentController::class,'editMission'])->middleware(['auth', 'verified'])->name('edit_mission');
+
+    Route::post('/delete-mission-img',[ContentController::class,'deleteMissionImg'])->middleware(['auth', 'verified'])->name('delete_mission_img');
+
+    Route::post('/edit-vision',[ContentController::class,'editVision'])->middleware(['auth', 'verified'])->name('edit_vision');
+
+    Route::post('/delete-vision-img',[ContentController::class,'deleteVisionImg'])->middleware(['auth', 'verified'])->name('delete_vision_img');
+
+    Route::post('/edit-contact',[ContentController::class,'editContact'])->middleware(['auth', 'verified'])->name('edit_contact');
+
 
 
 });

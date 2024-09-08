@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class ContentVision extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+
+        
+        'image_url',
+        'description'
+
+    ];
 }
