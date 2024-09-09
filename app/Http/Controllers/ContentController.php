@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\ContentOffers;
 use App\Models\ContentVision;
 use App\Models\ContentAboutUs;
 use App\Models\ContentMission;
@@ -24,14 +25,17 @@ class ContentController extends Controller
         $vision_data = ContentVision::get()->first();
 
         $contact_data = ContentContactUs::get()->first();
-       
+
+        $offer_data = ContentOffers::orderBy('created_at','DESC')->get()->toArray();
+
         return Inertia::render('ContentManager',[
 
             'jumbotron_data' => $jumbotron_data,
             'about_us_data' =>  $about_us_data,
             'mission_data' =>  $mission_data,
             'vision_data' =>  $vision_data,
-            'contact_data' => $contact_data
+            'contact_data' => $contact_data,
+            'offer_data' =>  $offer_data 
 
         ]);
 
@@ -261,6 +265,27 @@ class ContentController extends Controller
 
         }
 
+
+    }
+
+    public function addOffer(Request $request){
+
+        ContentOffers::create([
+
+            'offer_name' => $request->offer_name,
+            'offer_description' => $request->offer_description
+            
+
+
+        ]);
+        
+    }
+
+
+    public function deleteOffer(Request $request){
+
+
+        ContentOffers::where('id',$request->id)->delete();
 
     }
 }

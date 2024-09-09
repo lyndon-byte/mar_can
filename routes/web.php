@@ -240,6 +240,9 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 
     Route::post('/edit-contact',[ContentController::class,'editContact'])->middleware(['auth', 'verified'])->name('edit_contact');
 
+    Route::post('/add-offer',[ContentController::class,'addOffer'])->middleware(['auth', 'verified'])->name('add_offer');
+
+    Route::post('/delete-offer',[ContentController::class,'deleteOffer'])->middleware(['auth', 'verified'])->name('delete_offer');
 
 
 });

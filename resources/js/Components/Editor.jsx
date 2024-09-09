@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Button, Tabs, Tab,Textarea} from "@nextui-org/react";
+import {Button, Tabs, Tab,Textarea, Tooltip} from "@nextui-org/react";
 import TextInput from '@/Components/TextInput';
 import ImagePicker from "./ImagePicker";
 import SavedImg from "./SavedImg";
@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 
 
 
-export default function Editor({jumbotron,about,mission,vision,contact}) {
+export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
     const [selectedTab,setSelectedTab] = useState('hero')
 
@@ -29,6 +29,14 @@ export default function Editor({jumbotron,about,mission,vision,contact}) {
         brand_name: jumbotron ? jumbotron.brand : '',
         slogan: jumbotron ? jumbotron.slogan : '',
         tagline: jumbotron ? jumbotron.description : '',
+        isProcessing: false
+        
+    })
+
+    const [offerFields,setOfferField] = useState({
+
+        offer_name: '',
+        offer_description: '',
         isProcessing: false
         
     })
@@ -302,6 +310,43 @@ export default function Editor({jumbotron,about,mission,vision,contact}) {
     }
 
 
+    function addOffers(){
+
+
+        router.post('/add-offer',{
+
+            offer_name: offerFields.offer_name,
+            offer_description: offerFields.offer_description,
+         
+        },
+        {   onStart: () => {
+
+            
+                setOfferField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+            
+                setOfferField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true
+            
+        }
+        );
+
+
+
+    }
+
+
+    function handleDeleteOffer(id){
+
+        router.post('/delete-offer',{id},{ preserveState: true, preserveScroll: true})
+
+    }
+
 
     useEffect(() => {
 
@@ -472,9 +517,11 @@ export default function Editor({jumbotron,about,mission,vision,contact}) {
                 <TextInput
 
 
-                    label="Title"
+                   
                     variant="bordered"
                     className="max-w-lg"
+                    value={offerFields.offer_name}
+                    onChange={(e) =>  setOfferField((prevState) => ({ ...prevState,offer_name: e.target.value}))}
 
                 />
 
@@ -494,6 +541,9 @@ export default function Editor({jumbotron,about,mission,vision,contact}) {
                  
                     variant="bordered"
                     className="max-w-xl"
+                    value={offerFields.offer_description}
+                    onChange={(e) =>  setOfferField((prevState) => ({ ...prevState,offer_description: e.target.value}))}
+
                 />
 
                 
@@ -501,9 +551,73 @@ export default function Editor({jumbotron,about,mission,vision,contact}) {
                 <Button
                     className="mt-16 text-white bg-slate-800"
                     radius="sm"
+                    onClick={addOffers}
+                    isLoading={offerFields.isProcessing}
                 >
                     Save
                 </Button>
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-10">Saved offers</h2>
+
+                    <p className="mt-1 text-sm text-gray-600 mb-4">
+
+                        saved offers will show here
+                                
+                    </p>
+
+                </header>
+
+                {
+
+                        offer.map((element) => (
+
+
+
+                            <div class="mt-6 p-5 border-t border-gray-100">
+                                <dl class="divide-y divide-gray-100">
+
+                                    <div class="px-1 sm:text-start text-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            
+                                        <dt class="text-sm font-medium leading-6 text-gray-900">
+                                    
+                                            &nbsp;
+                                        
+                                            {element.offer_name}
+                                        
+                                        </dt>
+                                        <dd class="sm:mt-0">
+
+                                            <span className='text-lg font-bold text-gray-700'>
+                                                {element.offer_description} 
+                                            </span>
+                                            
+                                        </dd>
+                                        <dd class="sm:mt-0">
+
+                                            <Tooltip content="Delete this saved offer" className='bg-slate-800 text-white' radius='sm'>
+                                                <Button
+                                                    className='border-0'
+                                                    variant='ghost'
+                                                    isIconOnly
+                                                    color='danger'
+                                                    onPress={() => handleDeleteOffer(element.id)}
+                                                >
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </Button>
+                                            </Tooltip>
+
+                                        </dd>
+                                        
+                                    </div>
+
+                                </dl>
+                            </div>
+
+                        ))
+
+                    }
                    
             </Tab>
             <Tab key="about" title="About Us">

@@ -10,7 +10,7 @@ import { useEffect,useState } from 'react';
 
 
 
-export default function ContentManager({auth,jumbotron_data,about_us_data,mission_data,vision_data,contact_data}){
+export default function ContentManager({auth,jumbotron_data,about_us_data,mission_data,vision_data,contact_data,offer_data}){
     
     const [isEditMode,setIsEditMode] = useState(false)
 
@@ -124,7 +124,8 @@ export default function ContentManager({auth,jumbotron_data,about_us_data,missio
                                                                     mission={mission_data} 
                                                                     vision={vision_data} 
                                                                     contact={contact_data}
-                                                                    
+                                                                    offer={offer_data}
+
                                                             ></Editor>
                                                         </>
                                                     ): (
