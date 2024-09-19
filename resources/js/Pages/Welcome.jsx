@@ -4,7 +4,28 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 
 
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ 
+  
+    auth, 
+    laravelVersion, 
+    phpVersion, 
+    jumbotron_data,
+    about_us_data,
+    mission_data,
+    vision_data,
+    contact_data,
+    offer_data,
+    testimonial_data,
+    milestone_data,
+    milestone_img
+
+}) {
+
+   useEffect(() => {
+
+      console.log(about_us_data)
+
+   },[])
 
    const servicesRef = useRef(null)
    const aboutRef = useRef(null)
@@ -57,6 +78,15 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
       scrollToSection(ref)
       setOpenResponsiveNavOption(false)
    }
+
+   const shortenDate = (dateString) => {
+
+      const date = new Date(dateString);
+      const shortDate = date.toISOString().split('T')[0];
+
+      return shortDate;
+   }
+
     return (
         <>
             <Head title="Welcome" />
@@ -200,8 +230,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                        
 
                             <img
-                              src="https://www.pixel4k.com/wp-content/uploads/2018/09/montreal-canada-night-city-4k_1538068139.jpg.webp"
-                              alt="Montreal at Night"
+                              src={jumbotron_data && ('content_img/' + jumbotron_data.img_url )}
+                              alt="Image not found"
                               style={{
                     
                                 top: 0,
@@ -221,12 +251,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                     <div class="hidden sm:mb-8 sm:flex sm:justify-center">
                         <div class="relative rounded-full px-3 py-1 text-2xl leading-6 text-white ring-1 ring-white hover:ring-gray-900/20">
-                          Marcan Visa Consultancy 
+                          {jumbotron_data && ( jumbotron_data.brand )} 
                         </div>
                     </div>
                     <div class="text-center">
-                        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Dream, Work & Succeed</h1>
-                        <p class="mt-6 text-lg leading-8 text-slate-200">A visa consultancy that serves every filipino applicants for canadian dream</p>
+                        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">{jumbotron_data && ( jumbotron_data.slogan )}</h1>
+                        <p class="mt-6 text-lg leading-8 text-slate-200">{jumbotron_data && ( jumbotron_data.description )}</p>
                         <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a href="/select-account-type" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Get started</a>
                         {/* <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a> */}
@@ -237,89 +267,65 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </div>
              </div>
              
- <section ref={servicesRef} class="bg-white py-24 sm:py-32" >
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl lg:text-center">
-      <h2 class="font-semibold leading-7 text-xl text-green-600">" The best immigration consultancy in negros and panay "</h2>
-      <p class="mt-5 text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">What can we offer?</p>
-      <p class="mt-6 text-lg leading-8 text-gray-600"></p>
-    </div>
-    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-      <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-        <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-            <i class="fa-solid fa-school text-white"></i>
-            </div>
-            Student Visa
-          </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.</dd>
-        </div>
-        <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-              <i class="fa-solid fa-briefcase text-white"></i>
-            </div>
-            Working Visa
-          </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.</dd>
-        </div>
-        <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-              <i class="fa-solid fa-globe text-white"></i>
-            </div>
-            Visitor Visa
-          </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.</dd>
-        </div>
-        <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                <i class="fa-brands fa-canadian-maple-leaf text-white"></i>
-            </div>
-            Permanent resident visa
-          </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.</dd>
-        </div>
-        <div class="relative pl-16">
-          <dt class="text-base font-semibold leading-7 text-gray-900">
-            <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                <i class="fa-solid fa-users text-white"></i>
-            </div>
-            Citizenship
-          </dt>
-          <dd class="mt-2 text-base leading-7 text-gray-600">Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.</dd>
-        </div>
-      </dl>
-    </div>
-  </div>
-</section>
-
-
-<section ref={aboutRef}>
-
-       <header class="text-center py-12">
-            <h1 class="text-4xl md:text-5xl font-bold leading-tight text-gray-800">About Us</h1>
-            <p class="text-lg text-gray-600 mt-10">We are processing center direct to Canada,locally in Bacolod City, Negros Occidental</p>
-        </header>
-        <div class="py-16 bg-white">  
-        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
-            <div class="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
-              <div class="md:5/12 lg:w-5/12">
-                <img src="https://tailus.io/sources/blocks/left-image/preview/images/startup.png" alt="image" loading="lazy" width="" height=""/>
+          <section ref={servicesRef} class="bg-white py-24 sm:py-32" >
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+              <div class="mx-auto max-w-2xl lg:text-center">
+                <h2 class="font-semibold leading-7 text-xl text-green-600">" The best immigration consultancy in negros and panay "</h2>
+                <p class="mt-5 text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">What can we offer?</p>
+                <p class="mt-6 text-lg leading-8 text-gray-600"></p>
               </div>
-              <div class="md:7/12 lg:w-6/12">
-                <h2 class="text-2xl text-gray-900 font-bold md:text-4xl">We Rise Above!</h2>
-                <p class="mt-6 text-gray-600"></p>
-                <p class="mt-4 text-gray-600"> We were able to get a favorable outcome from a very difficult case wherein Passports were inadvertently switched to another nationality. It was very difficult but we have a good resolution of the case at a friendly price. We never thought that it was that difficult. But when we quote a price whether it is low or high, it will never change come hell or high water. </p>
-                <p className='mt-4 text-gray-600'>The company strives to realize the Canadian Dream by providing correct vision to each client. This means that a client may come in as a student or worker, but that is not the end goal. The real end goal is to get Permanent Residency in Canada. </p>
+              <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+                <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                  
+                  {offer_data &&(
+
+                      offer_data.map((item) => (
+
+                        
+                          <div class="relative pl-16">
+                            <dt class="text-base font-semibold leading-7 text-gray-900">
+                              <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg ">
+                                <i class="fa-solid fa-asterisk text-2xl text-slate-500"></i>
+                              </div>
+                              {item.offer_name}
+                            </dt>
+                            <dd class="mt-2 text-base leading-7 text-gray-600"> {item.offer_description}</dd>
+                          </div>
+
+
+                      ))
+
+                  )}
+                 
+                  
+                </dl>
               </div>
             </div>
-        </div>
-      </div>             
+          </section>
 
-</section>
+
+      <section ref={aboutRef}>
+
+            <header class="text-center py-12">
+                  <h1 class="text-4xl md:text-5xl font-bold leading-tight text-gray-800">About Us</h1>
+                  <p class="text-lg text-gray-600 mt-10">We are processing center direct to Canada,locally in Bacolod City, Negros Occidental</p>
+              </header>
+              <div class="py-16 bg-white">  
+              <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+                  <div class="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
+                    <div class="md:5/12 lg:w-5/12">
+                      <img src={about_us_data && ('content_img/' + about_us_data.image_url)} alt="image not found" loading="lazy" width="" height=""/>
+                    </div>
+                    <div class="md:7/12 lg:w-6/12">
+                      <h2 class="text-2xl text-gray-900 font-bold md:text-4xl">{about_us_data && (about_us_data.title)}</h2>
+                      <p class="mt-6 text-gray-600"></p>
+                      <p class="mt-4 text-gray-600">{about_us_data && (about_us_data.description)}</p>
+                    </div>
+                  </div>
+              </div>
+            </div>             
+
+      </section>
 
 
 <div class="bg-white py-24 sm:py-32">
@@ -370,7 +376,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <div class="absolute w-full bg-green-600 -z-10 md:h-96 rounded-2xl"></div>
             
             <div class="w-full p-6 bg-blue-600 md:flex md:items-center rounded-2xl md:bg-transparent md:p-0 lg:px-12 md:justify-evenly">
-                <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/33/f2/6b/caption.jpg?w=1400&h=1400&s=1" alt="client photo" />
+                <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src={mission_data && ('content_img/' +  mission_data.image_url)} alt="image not found" />
                 
                 <div class="mt-2 md:mx-6">
 
@@ -380,7 +386,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                       </h1>
                     </div>
 
-                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quibusdam ducimus libero ad tempora doloribus expedita laborum saepe voluptas perferendis delectus assumenda”.</p>
+                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “{mission_data && (mission_data.description)}”.</p>
                     
                    
                 </div>
@@ -395,7 +401,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <div class="absolute w-full bg-green-500 -z-10 md:h-96 rounded-2xl"></div>
             
             <div class="w-full p-6 bg-blue-600 md:flex md:items-center rounded-2xl md:bg-transparent md:p-0 lg:px-12 md:justify-evenly">
-                <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src="https://www.planetware.com/wpimages/2022/02/canada-tourist-attractions-quebec-city-chateau-frontenac-boardwalk.jpg" alt="client photo" />
+                <img class="h-24 w-24 md:mx-6 rounded-full object-cover shadow-md md:h-[32rem] md:w-80 lg:h-[36rem] lg:w-[26rem] md:rounded-2xl" src={vision_data && ('content_img/' + vision_data.image_url)} alt="client photo" />
                 
                 <div class="mt-2 md:mx-6">
                     <div>
@@ -404,7 +410,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                       </h1>
                     </div>
 
-                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quibusdam ducimus libero ad tempora doloribus expedita laborum saepe voluptas perferendis delectus assumenda”.</p>
+                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “{vision_data && (vision_data.description)}”.</p>
                     
                    
                 </div>
@@ -433,29 +439,28 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
       </div>
     </div>
     <div class="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-      <img class="w-[48rem] max-w-xl rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ihS89gjTRT54/v1/1200x799.jpg" alt=""/>
+      <img class="w-[48rem] max-w-xl rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" src={milestone_img && ('content_img/' + milestone_img.image_url)} alt=""/>
     </div>
     <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
       <div class="lg:pr-4">
         <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
           
+
           <ul role="list" class="mt-8 space-y-8 text-gray-600">
-            <li class="flex gap-x-3">
-              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
-              <span><strong class="font-semibold text-gray-900">Resolved an authorization issue</strong> for a student who initially had no authorization to work. </span>
-            </li>
-            <li class="flex gap-x-3">
-            <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
-              <span><strong class="font-semibold text-gray-900">Assisted a K12 student</strong> in becoming a Permanent Resident after one year of PSW study and one year of work.</span>
-            </li>
-            <li class="flex gap-x-3">
-              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
-              <span><strong class="font-semibold text-gray-900">Successfully had one student get IRCC</strong> approval for three different courses at a single school.</span>
-            </li>
-            <li class="flex gap-x-3">
-              <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
-              <span><strong class="font-semibold text-gray-900">Established links</strong> at least eight active referral agents and affiliates across Canada and the Philippines.</span>
-            </li>
+
+            {milestone_data && (
+
+                milestone_data.map((item) => (
+
+
+                  <li class="flex gap-x-3">
+                    <i class="fa-solid text-green-600 fa-circle-dot mt-2"></i>
+                    <span>{item.milestone}</span>
+                  </li>
+
+                ))
+            )}
+           
           </ul>
         </div>
       </div>
@@ -477,72 +482,47 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
       <p class="mt-2 text-lg leading-8 text-gray-600">Learn how Filipinos reached their dreams with our expert advice.</p>
     </div>
     <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-         
-        </div>
-        <div class="group relative">
-          
-          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <img src="https://live.staticflickr.com/7570/15633581340_5974b86d88_z.jpg" alt="" class="h-10 w-10 rounded-full bg-gray-50"/>
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                 Juan Dela cruz
-              </a>
-            </p>
-            <p class="text-gray-600">Medical Nurse / Toronto General Hospital </p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Jul 23, 2023</time>
-         
-        </div>
-        <div class="group relative">
+      
+          {testimonial_data && (
 
-          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnB7uV7LSN5t4-IqNvnkMxoUF4HfD0Tf90iQ&s" alt="" class="h-10 w-10 rounded-full bg-gray-50"/>
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                 Ben Naig
-              </a>
-            </p>
-            <p class="text-gray-600">Trucker / Challenger Motor Freight (Cambridge)</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">April 16, 2024</time>
-         
-        </div>
-        <div class="group relative">
-          
-          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <img src="https://live.staticflickr.com/7310/13197804604_747bc05acb_z.jpg" alt="" class="h-10 w-10 rounded-full bg-gray-50"/>
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Kyle kabayan
-              </a>
-            </p>
-            <p class="text-gray-600">Chef / Toqué! (Montreal, Quebec)</p>
-          </div>
-        </div>
-      </article>
+
+              testimonial_data.map((item) => (
+
+
+
+                    
+                  <article class="flex max-w-xl flex-col items-start justify-between">
+                        <div class="flex items-center gap-x-4 text-md">
+
+                          <time datetime="2020-03-16" class="text-gray-500">{shortenDate(item.created_at)}</time>
+                        
+                        </div>
+                        <div class="group relative">
+                          
+                          <p class="mt-5 line-clamp-3 text-md leading-6 text-gray-600">{item.testimony}</p>
+                       
+                        </div>
+                        <div class="relative mt-8 flex items-center gap-x-4">
+                          <img src={'content_img/' + item.avatar_img} alt="" class="h-10 w-10 rounded-full bg-gray-50"/>
+                          <div class="text-sm leading-6">
+                            <p class="font-semibold text-gray-900">
+                              <a href="#">
+                                <span class="absolute inset-0"></span>
+                                  {item.full_name}
+                              </a>
+                            </p>
+                            <p class="text-gray-600">{item.job}</p>
+                          </div>
+                        </div>
+                  </article>
+
+
+              ))
+
+
+          )}
+      
+     
     
     </div>
   </div>
@@ -572,7 +552,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Email</h2>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Our friendly team is here to help.</p>
-                <p class="mt-2 text-green-600 dark:text-blue-400">marcanvisaconsultancy2024@gmail.com</p>
+                <p class="mt-2 text-green-600 dark:text-blue-400">{contact_data && (contact_data.email)}</p>
             </div>
 
             <div class="flex flex-col items-center justify-center text-center">
@@ -585,7 +565,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Office</h2>
                 <p class="mt-2 text-gray-500 dark:text-gray-400">Come say hello at our office</p>
-                <p class="mt-2 text-green-600 dark:text-blue-400">Door No.4 JP Building, Corner Rosario Verbena St. Brgy. 33, Bacolod City, Negros Occidental</p>
+                <p class="mt-2 text-green-600 dark:text-blue-400">{contact_data && (contact_data.office_address)}</p>
             </div>
 
             <div class="flex flex-col items-center justify-center text-center">
@@ -597,7 +577,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 
                 <h2 class="mt-4 text-lg font-medium text-gray-800 dark:text-white">Phone</h2>
                 {/* <p class="mt-2 text-gray-500 dark:text-gray-400">Mon-Fri from 8am to 5pm.</p> */}
-                <p class="mt-2 text-green-500 dark:text-blue-400">+639127709548</p>
+                <p class="mt-2 text-green-500 dark:text-blue-400">{contact_data && (contact_data.phone_number)}</p>
             </div>
         </div>
     </div>

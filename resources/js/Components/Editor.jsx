@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Button, Tabs, Tab,Textarea, Tooltip} from "@nextui-org/react";
+import {Button, Image, Tabs, Tab,Textarea, Tooltip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react";
 import TextInput from '@/Components/TextInput';
 import ImagePicker from "./ImagePicker";
 import SavedImg from "./SavedImg";
@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 
 
 
-export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
+export default function Editor({jumbotron,about,mission,vision,contact,offer,milestone,testimonials}) {
 
     const [selectedTab,setSelectedTab] = useState('hero')
 
@@ -70,6 +70,16 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
         
     })
 
+    const [testimonialFields,setTestimonialField] = useState({
+
+        image_file: '',
+        name:'',
+        position_and_workplace:'',
+        testimony:'',
+        isProcessing: false
+    
+    })
+
 
     const [contactFields,setContactField] = useState({
 
@@ -82,6 +92,15 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
     })
 
 
+    const [milestoneFields,setMilestoneField] = useState({
+
+        milestone: '',
+        image_file: '',
+        isProcessing: false
+        
+    })
+
+
     const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
 
         accept: {
@@ -89,7 +108,7 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
             'image/jpeg': ['.jpeg', '.jpg'],
             'image/png': ['.png'],
             'image/gif': ['.gif'],
-            
+            'image/webp': ['.webp'],
           },
           onDrop: (acceptedFiles) => {
             const file = acceptedFiles[0];
@@ -139,9 +158,24 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                     case 'milestone':
 
+
+                        setMilestoneField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+
                     break;
 
                     case 'testimonial':
+
+                            
+                        setTestimonialField(prevState => ({
+                            ...prevState,        // Keep all the other existing fields
+                            image_file: file // Update only the image_file field
+                        }));
+
+
 
                     break;
                     
@@ -329,7 +363,7 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
             
                 setOfferField((prevState) => ({ ...prevState,isProcessing: false}))
-
+                setOfferField({offer_name:'',offer_description: ''})
             },
             preserveState: true
             
@@ -346,7 +380,88 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
         router.post('/delete-offer',{id},{ preserveState: true, preserveScroll: true})
 
     }
+    
 
+    function addTestimonial(){
+
+
+        router.post('/add-testimonial',{
+
+            image_file: testimonialFields.image_file,
+            name: testimonialFields.name,
+            position_and_workplace: testimonialFields.position_and_workplace,
+            testimony: testimonialFields.testimony,
+           
+         
+        },
+        {   onStart: () => {
+
+            
+                setTestimonialField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+                setTestimonialField({image_file:'',name: '',position_and_workplace: '',testimony:''})
+                setTestimonialField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true,
+            preserveScroll:true
+            
+        }
+        );
+
+
+
+    }
+
+    function addMilestone(){
+
+
+        router.post('/add-milestone',{
+
+            image_file: milestoneFields.image_file,
+            milestone: milestoneFields.milestone,
+           
+         
+        },
+        {   onStart: () => {
+
+            
+                setMilestoneField((prevState) => ({ ...prevState,isProcessing: true}))
+
+            },
+            onSuccess: () => {
+
+                setMilestoneField({image_file:'',milestone: ''})
+                setMilestoneField((prevState) => ({ ...prevState,isProcessing: false}))
+
+            },
+            preserveState: true,
+            preserveScroll:true
+            
+        }
+        );
+
+
+
+    }
+
+    function handleDeleteTestimonial(id){
+
+        router.post('/delete-testimonial',{id},{ preserveState: true, preserveScroll: true})
+
+    }
+
+    
+
+    function handleDeleteMilestone(id){
+
+        router.post('/delete-milestone',{id},{ preserveState: true, preserveScroll: true})
+
+    }
+    
 
     useEffect(() => {
 
@@ -943,7 +1058,56 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                 </header>
 
-                <ImagePicker></ImagePicker>
+                <div>
+            
+                    <div
+
+                        {...getRootProps({ className: 'dropzone' })}
+                            style={{
+
+                                border: '2px dashed #cccccc',
+                                borderRadius: '4px',
+                                padding: '20px',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                                    
+                            }}
+                            className="mb-5"
+                        >
+                            <input {...getInputProps()} />
+                            <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                        </div>
+
+                        {  milestoneFields.image_file.path && ( <span>selected file: {milestoneFields.image_file.path}</span>)}
+ 
+                </div>
+
+                {
+
+                    milestone.milestone_img &&  (
+
+
+                        milestone.milestone_img.image_url !== '' && (
+
+                                <>
+                                    <div className="mt-5">
+                                        <label htmlFor="" className="mt-10">Milestone image</label>
+                                        <SavedImg usedBy={selectedTab} fileName={milestone.milestone_img.image_url}></SavedImg>
+                                    </div>
+                                </>
+
+                            
+
+                        )
+                        
+                        
+
+                        
+                    ) 
+
+                        
+
+                }
 
                 <header>
 
@@ -961,6 +1125,8 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                     variant="bordered"
                     className="max-w-xl"
+                    value={milestoneFields.milestone}
+                    onChange={(e) =>  setMilestoneField((prevState) => ({ ...prevState,milestone: e.target.value}))}
 
                 />
 
@@ -969,9 +1135,71 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
                     
                     className="mt-16 text-white bg-slate-800"
                     radius="sm"
+                    onClick={addMilestone}
+                    isLoading={milestoneFields.isProcessing}
                 >
                     Save
                 </Button>
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-10">Saved Milestones</h2>
+
+
+                </header>
+
+                <Table aria-label="Example static collection table" className="mt-5">
+                <TableHeader>
+                   
+                    <TableColumn>Milesone</TableColumn>
+                    <TableColumn>Created at</TableColumn>
+                    
+                    <TableColumn>ACTION</TableColumn>
+                </TableHeader>
+                    <TableBody 
+
+                        items={milestone.milestone}
+                        emptyContent='No saved milestone yet'
+                    >
+
+                    {
+
+                        
+
+                        (item,index) => (
+
+                                <TableRow key={index}>
+                                  
+                                    <TableCell>{item.milestone === null ? 'Empty' : item.milestone}</TableCell>
+                                    <TableCell>{item.created_at}</TableCell>
+                                    <TableCell>
+                                        <Tooltip
+                                            className='bg-slate-800 text-white'
+                                            content='delete'
+                                        >
+
+                                            <Button 
+                                                color="danger" 
+                                                isIconOnly
+                                                variant="ghost"
+                                                className="border-none"
+                                                onClick={() => handleDeleteMilestone(item.id)}
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </Button>
+                                        </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+
+                            )
+                        
+
+                    }
+
+                    
+                        
+                    </TableBody>
+                </Table>
                    
             </Tab>
             <Tab key="testimonial" title="Testimonials">
@@ -988,7 +1216,28 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                 </header>
 
-                <ImagePicker width="200px"></ImagePicker>
+                <div>
+
+                    <div
+                    {...getRootProps({ className: 'dropzone' })}
+                        style={{
+
+                            border: '2px dashed #cccccc',
+                            borderRadius: '4px',
+                            padding: '20px',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                            width: '200px'                      
+                        }}
+                        className="mb-5"
+                    >
+                        <input {...getInputProps()} />
+                        <p className='text-slate-500'>Drag 'n' drop a &nbsp;<i class="fa-solid fa-image"></i>&nbsp; image file here, or click to select one </p>
+                    </div>
+
+                    {testimonialFields.image_file.path && <span >selected file: {testimonialFields.image_file.path}</span>}
+                
+                </div>
 
                 <header>
 
@@ -1005,9 +1254,11 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
                 <TextInput
 
 
-                    label="Title"
+                   
                     variant="bordered"
                     className="max-w-lg"
+                    value={testimonialFields.name}
+                    onChange={(e) =>  setTestimonialField((prevState) => ({ ...prevState,name: e.target.value}))}
 
                 />
 
@@ -1026,9 +1277,12 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
                 <TextInput
 
 
-                    label="Title"
+                  
                     variant="bordered"
                     className="max-w-lg"
+                    value={testimonialFields.position_and_workplace}
+                    onChange={(e) =>  setTestimonialField((prevState) => ({ ...prevState,position_and_workplace: e.target.value}))}
+
 
                 />
 
@@ -1048,6 +1302,9 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                     variant="bordered"
                     className="max-w-xl"
+                    value={testimonialFields.testimony}
+                    onChange={(e) =>  setTestimonialField((prevState) => ({ ...prevState,testimony: e.target.value}))}
+                    
                 />
 
 
@@ -1056,9 +1313,81 @@ export default function Editor({jumbotron,about,mission,vision,contact,offer}) {
 
                     className="mt-16 text-white bg-slate-800"
                     radius="sm"
+                    onClick={addTestimonial}
+                    isLoading={testimonialFields.isProcessing}
+
                 >
                     Save
                 </Button>
+
+                <header>
+
+                    <h2 className="text-lg font-medium text-gray-900 mt-10">Saved Testimonials</h2>
+
+                 
+                </header>
+
+                <Table aria-label="Example static collection table" className="mt-5">
+                    <TableHeader>
+                        <TableColumn>Image</TableColumn>
+                        <TableColumn>NAME</TableColumn>
+                        <TableColumn>TESTIMONY</TableColumn>
+                        <TableColumn>POSITION AND WORKPLACE</TableColumn>
+                        
+                        <TableColumn>ACTION</TableColumn>
+                    </TableHeader>
+                    <TableBody 
+                    
+                        items={testimonials}
+                        emptyContent='No saved testimonial yet'
+                    >
+
+                     {
+
+                        
+
+                           (item,index) => (
+
+                                <TableRow key={index}>
+                                    <TableCell>
+
+                                       
+                                        {item.avatar_img}
+                                            
+                                        
+
+                                    </TableCell>
+                                    <TableCell>{item.full_name}</TableCell>
+                                    <TableCell>{item.testimony}</TableCell>
+                                    <TableCell>{item.job}</TableCell>
+                                    <TableCell>
+                                        <Tooltip
+                                            className='bg-slate-800 text-white'
+                                            content='delete'
+                                        >
+
+                                            <Button 
+                                                color="danger" 
+                                                isIconOnly
+                                                variant="ghost"
+                                                className="border-none"
+                                                onClick={() => handleDeleteTestimonial(item.id)}
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </Button>
+                                        </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+    
+                            )
+                        
+
+                     }
+
+                       
+                        
+                    </TableBody>
+                </Table>
                
             </Tab>
             <Tab key="contact" title="Contact Us">

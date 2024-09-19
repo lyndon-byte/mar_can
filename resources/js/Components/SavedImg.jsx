@@ -39,6 +39,8 @@ export default function SavedImg({fileName,usedBy}){
 
             case 'milestone':
 
+                router.post('/delete-milestone-img',{},{preserveState: true});
+                
             break;
 
             case 'testimonial':
@@ -55,7 +57,7 @@ export default function SavedImg({fileName,usedBy}){
 
         <>
         
-            <div class="px-4 py-6 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0">
+            <div class="px-4 py-6 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 ">
                 
                 <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">

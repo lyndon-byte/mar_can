@@ -10,6 +10,8 @@ use App\Models\ContentAboutUs;
 use App\Models\ContentMission;
 use App\Models\ContentContactUs;
 use App\Models\ContentJumbotron;
+use App\Models\ContentMilesStone;
+use App\Models\ContentTestimonials;
 
 class ContentController extends Controller
 {
@@ -27,7 +29,15 @@ class ContentController extends Controller
         $contact_data = ContentContactUs::get()->first();
 
         $offer_data = ContentOffers::orderBy('created_at','DESC')->get()->toArray();
+        
+        $testimonial_data = ContentTestimonials::orderBy('created_at','DESC')->get()->toArray();
 
+        $milestone_data = [
+
+            'milestone' => ContentMilesStone::orderBy('created_at','DESC')->get()->toArray(),
+            'milestone_img' => ContentMilesStone::where('image_url','!=','')->orderBy('created_at','DESC')->first()
+        ];
+        
         return Inertia::render('ContentManager',[
 
             'jumbotron_data' => $jumbotron_data,
@@ -35,7 +45,9 @@ class ContentController extends Controller
             'mission_data' =>  $mission_data,
             'vision_data' =>  $vision_data,
             'contact_data' => $contact_data,
-            'offer_data' =>  $offer_data 
+            'offer_data' =>  $offer_data,
+            'testimonial_data' => $testimonial_data,
+            'milestone_data' => $milestone_data
 
         ]);
 
@@ -287,5 +299,78 @@ class ContentController extends Controller
 
         ContentOffers::where('id',$request->id)->delete();
 
+    }
+
+    public function addTestimonial(Request $request){
+
+        $filename = '';
+
+        if($request->hasFile('image_file')){
+
+            $file = $request->file('image_file');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('content_img'), $filename);
+        }
+
+        ContentTestimonials::create([
+
+            
+            'avatar_img' => $filename,
+            'full_name' => $request->name,
+            'testimony' => $request->testimony,
+            'job' => $request->position_and_workplace
+
+        ]);
+
+    }
+
+    public function deleteTestimonial(Request $request){
+
+        ContentTestimonials::where('id',$request->id)->delete();
+
+
+    }
+
+
+    
+
+    public function addMilestone(Request $request){
+
+        $filename = '';
+
+        if($request->hasFile('image_file')){
+
+            $file = $request->file('image_file');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('content_img'), $filename);
+        }
+
+        ContentMilesStone::create([
+
+            
+            
+            'milestone' => $request->milestone,
+            
+
+        ]);
+
+        if (ContentMilesStone::exists()) {
+
+            $records = ContentMilesStone::whereNull('image_url')
+                ->orWhere('image_url', '')
+                ->get();
+
+            foreach ($records as $record) {
+                $record->image_url = $filename; 
+                $record->save(); 
+            }
+        }
+      
+
+    }
+
+    public function deleteMilestone(Request $request){
+
+        ContentMilesStone::where('id',$request->id)->delete();
     }
 }

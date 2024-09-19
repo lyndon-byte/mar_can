@@ -12,6 +12,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\SuperAdminController;
+use App\Models\ContentOffers;
+use App\Models\ContentVision;
+use App\Models\ContentAboutUs;
+use App\Models\ContentMission;
+use App\Models\ContentContactUs;
+use App\Models\ContentJumbotron;
+use App\Models\ContentMilesStone;
+use App\Models\ContentTestimonials;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +46,46 @@ Route::get('/select-account-type',function(){
 })->name('select_account_type');
 
 Route::get('/', function () {
+
+
+
+    $jumbotron_data =  ContentJumbotron::get()->first();
+
+    $about_us_data =  ContentAboutUs::get()->first();
+
+    $mission_data = ContentMission::get()->first();
+
+    $vision_data = ContentVision::get()->first();
+
+    $contact_data = ContentContactUs::get()->first();
+
+    $offer_data = ContentOffers::orderBy('created_at','DESC')->get()->toArray();
+    
+    $testimonial_data = ContentTestimonials::orderBy('created_at','DESC')->get()->toArray();
+
+    $milestone_data = ContentMilesStone::orderBy('created_at','DESC')->get()->toArray();
+    
+    $milestone_img = ContentMilesStone::where('image_url','!=','')->orderBy('created_at','DESC')->first();
+    
+
+
+
     return Inertia::render('Welcome', [
+
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'jumbotron_data' => $jumbotron_data,
+        'about_us_data' =>  $about_us_data,
+        'mission_data' =>  $mission_data,
+        'vision_data' =>  $vision_data,
+        'contact_data' => $contact_data,
+        'offer_data' =>  $offer_data,
+        'testimonial_data' => $testimonial_data,
+        'milestone_data' => $milestone_data,
+        'milestone_img' => $milestone_img
+
     ]);
 });
 
@@ -243,6 +287,16 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
     Route::post('/add-offer',[ContentController::class,'addOffer'])->middleware(['auth', 'verified'])->name('add_offer');
 
     Route::post('/delete-offer',[ContentController::class,'deleteOffer'])->middleware(['auth', 'verified'])->name('delete_offer');
+
+    Route::post('/add-testimonial',[ContentController::class,'addTestimonial'])->middleware(['auth', 'verified'])->name('add_testimonial');
+
+    Route::post('/delete-testimonial',[ContentController::class,'deleteTestimonial'])->middleware(['auth', 'verified'])->name('delete_testimonial');
+
+    Route::post('/add-milestone',[ContentController::class,'addMilestone'])->middleware(['auth', 'verified'])->name('add_milestone');
+
+    Route::post('/delete-milestone',[ContentController::class,'deleteMilestone'])->middleware(['auth', 'verified'])->name('delete_milestone');
+   
+    Route::post('/delete-milestone-img',[ContentController::class,'deleteMilestoneImg'])->middleware(['auth', 'verified'])->name('delete_milestone');
 
 
 });

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ContentMilesStone extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+
+        'image_ur',
+        'milestone'
+
+    ];
 }
